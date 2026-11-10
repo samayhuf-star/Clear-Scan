@@ -1,0 +1,74 @@
+{
+  "expo": {
+    "name": "ClearScan",
+    "slug": "clear-scan",
+    "scheme": "clearscan",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "backgroundColor": "#0B1B33",
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.samayhuf.clearscan",
+      "buildNumber": "1",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSCameraUsageDescription": "ClearScan uses the camera to scan your documents. Images stay on your iPhone.",
+        "NSPhotoLibraryUsageDescription": "Choose photos from your library to turn into PDFs. Images stay on your iPhone.",
+        "NSFaceIDUsageDescription": "Use Face ID to keep your scans private."
+      }
+    },
+    "android": {
+      "package": "com.samayhuf.clearscan",
+      "adaptiveIcon": {
+        "backgroundColor": "#0B1B33",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#0B1B33"
+        }
+      ],
+      "expo-sharing",
+      "expo-sqlite",
+      [
+        "react-native-document-scanner-plugin",
+        {
+          "cameraPermission": "ClearScan uses the camera to scan your documents. Images stay on your iPhone."
+        }
+      ],
+      [
+        "expo-local-authentication",
+        {
+          "faceIDPermission": "Use Face ID to keep your scans private."
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Choose photos from your library to turn into PDFs. Images stay on your iPhone."
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "deploymentTarget": "16.4"
+          }
+        }
+      ],
+      "expo-font"
+    ]
+  }
+}
