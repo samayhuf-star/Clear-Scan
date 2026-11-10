@@ -11,7 +11,7 @@ export const CONFIG = {
   },
   fallbackPrices: { monthly: '$3.99', yearly: '$14.99' },
   // TODO: replace with hosted pages before App Review.
-  privacyUrl: 'https://github.com/samayhuf-star/Clear-Scan/blob/main/PRIVACY.md',
+  privacyUrl: 'https://samayhuf-star.github.io/Clear-Scan/',
   termsUrl: 'https://www.apple.com/legal/internet-services/itunes/dev/stdeula/',
   supportEmail: 'samayhuf@gmail.com',
 } as const;
