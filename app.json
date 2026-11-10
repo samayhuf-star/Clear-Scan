@@ -69,6 +69,12 @@
         }
       ],
       "expo-font"
-    ]
+    ],
+    "owner": "kroszs-team",
+    "extra": {
+      "eas": {
+        "projectId": "74c30f0c-e7cb-4532-80eb-32656208efc8"
+      }
+    }
   }
 }
