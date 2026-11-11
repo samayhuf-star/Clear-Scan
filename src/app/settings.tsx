@@ -8,6 +8,7 @@ import { Press } from '../components/Press';
 import { CONFIG } from '../config';
 import { kvGet, kvSet } from '../lib/db';
 import { restore, usePlus } from '../lib/purchases';
+import { openCustomerCenter } from '../lib/revenuecat';
 import { useTheme } from '../lib/theme';
 
 type Icon = React.ComponentProps<typeof Ionicons>['name'];
@@ -58,7 +59,7 @@ export default function Settings() {
           icon="sparkles"
           label={plus ? 'ClearScan Plus is active' : 'Get ClearScan Plus'}
           sub={plus ? 'Thank you for supporting ClearScan' : 'Auto-sort and Word or Markdown export'}
-          onPress={plus ? () => Linking.openURL('https://apps.apple.com/account/subscriptions') : () => router.push('/paywall')}
+          onPress={plus ? openCustomerCenter : () => router.push('/paywall')}
         />
         <Row
           icon="lock-closed"

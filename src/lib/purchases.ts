@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Platform } from 'react-native';
 import Purchases, { type CustomerInfo, type PurchasesPackage } from 'react-native-purchases';
 import { CONFIG } from '../config';
+import { initRevenueCat } from './revenuecat';
 
 let configured = false;
 let plus = false;
@@ -19,14 +20,16 @@ function fromInfo(info: CustomerInfo) {
 export const purchasesReady = () => configured;
 
 export async function initPurchases() {
-  if (configured || Platform.OS !== 'ios' || !CONFIG.revenueCatIosKey) return;
+  if (configured || Platform.OS !== 'ios') return;
+  // Shared RevenueCat setup: SDK config, attribution, subscriber attributes, trusted entitlements.
+  const ok = await initRevenueCat({ entitlementId: CONFIG.entitlementId, iosKey: CONFIG.revenueCatIosKey });
+  if (!ok) return; // no key in this build, or offline: the app keeps working on the free core
+  configured = true;
+  Purchases.addCustomerInfoUpdateListener(fromInfo);
   try {
-    Purchases.configure({ apiKey: CONFIG.revenueCatIosKey });
-    configured = true;
-    Purchases.addCustomerInfoUpdateListener(fromInfo);
     fromInfo(await Purchases.getCustomerInfo());
   } catch {
-    // Offline or not yet configured: the app keeps working on the free core.
+    // keep free-core behaviour until the next customer-info update
   }
 }
 

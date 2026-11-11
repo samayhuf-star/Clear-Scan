@@ -9,6 +9,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Press } from '../components/Press';
 import { CONFIG } from '../config';
 import { buy, loadOffer, purchasesReady, restore, usePlus, type Offer } from '../lib/purchases';
+import { setCustomAttributes } from '../lib/revenuecat';
 
 type Plan = 'yearly' | 'monthly';
 
@@ -27,6 +28,7 @@ export default function Paywall() {
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
+    setCustomAttributes({ last_paywall_source: 'paywall_screen', last_paywall_at: new Date().toISOString() });
     loadOffer().then(setOffer);
   }, []);
 
