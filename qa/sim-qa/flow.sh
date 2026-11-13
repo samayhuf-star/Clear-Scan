@@ -27,9 +27,11 @@ xcrun simctl boot "$UDID" 2>/dev/null || true
 xcrun simctl bootstatus "$UDID" -b
 
 echo "==> Locate .app"
-APP="$(find "$DERIVED_DATA/Build/Products" -path '*iphonesimulator/*.app' -maxdepth 3 | head -n1 || true)"
+# Skip the UI test runner (ClearScanQATests-Runner.app). Run 43453269152 installed the runner
+# instead of the app, so every Maestro launch failed with FBSOpenApplicationServiceErrorDomain 4.
+APP="$(find "$DERIVED_DATA/Build/Products" -maxdepth 3 -path '*iphonesimulator/*.app' ! -name '*-Runner.app' ! -name '*Tests*.app' | head -n1 || true)"
 if [[ -z "$APP" ]]; then
-  APP="$(find "$DERIVED_DATA/Build/Products" -name "$SCHEME.app" | head -n1 || true)"
+  APP="$(find "$DERIVED_DATA/Build/Products" -name "$SCHEME.app" ! -path '*.app/*' | head -n1 || true)"
 fi
 if [[ -z "$APP" ]]; then
   echo "No .app found under $DERIVED_DATA/Build/Products" | tee "$OUT/flow-error.txt"
@@ -200,6 +202,11 @@ xcrun simctl terminate "$UDID" "$BUNDLE_ID" >/dev/null 2>&1 || true
 xcrun simctl terminate "$UDID" dev.mobile.maestro-driver-iosUITests.xctrunner >/dev/null 2>&1 || true
 pkill -f maestro >/dev/null 2>&1 || true
 sleep 3
+# Like the Lulla flow: one plain launch so storekitd knows the app before the test session.
+xcrun simctl launch "$UDID" "$BUNDLE_ID" >/dev/null 2>&1 || true
+sleep 8
+xcrun simctl terminate "$UDID" "$BUNDLE_ID" >/dev/null 2>&1 || true
+sleep 2
 mkdir -p /tmp/clearscan-sk && cp "$ROOT/storekit/ClearScan.storekit" /tmp/clearscan-sk/ClearScan.storekit
 if grep -q _developerTeamID /tmp/clearscan-sk/ClearScan.storekit; then
   echo "storekit copy still has a team id" | tee -a "$OUT/flow-notes.txt"
