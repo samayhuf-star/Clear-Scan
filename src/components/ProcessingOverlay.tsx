@@ -16,9 +16,11 @@ export function ProcessingOverlay({ progress }: { progress: Progress | null }) {
     progress.step === 'ocr' ? 'Reading text on your iPhone' : progress.step === 'save' ? 'Saving' : 'Preparing pages';
   const pct = Math.round(((progress.page - (progress.step === 'ocr' ? 0.5 : 1)) / progress.total) * 100);
 
+  // testID lives on a regular View (the card) so Maestro can see it even if
+  // Reanimated drops accessibilityIdentifier on the fading wrapper.
   return (
-    <Animated.View entering={FadeIn.duration(180)} exiting={FadeOut.duration(200)} style={s.wrap} testID="scanning-screen">
-      <View style={s.card}>
+    <Animated.View entering={FadeIn.duration(180)} exiting={FadeOut.duration(200)} style={s.wrap}>
+      <View style={s.card} testID="scanning-screen" accessibilityLabel="scanning-screen">
         <Animated.View style={a}>
           <Ionicons name="sync" size={34} color="#5B97FF" />
         </Animated.View>

@@ -12,29 +12,31 @@ name: Import a seeded photo and reach the scan result
     text: "Choose Photos"
     optional: true
 # When the QA inbox file is present, import starts immediately and the system
-# picker never appears. Wait briefly for the overlay before any picker taps
-# so we do not tap through it.
+# picker never appears. The QA hold keeps the overlay up about 12 s. Wait
+# longer than that hold so we do not race it, and shoot as soon as it is up
+# (a later when-visible check can miss it).
 - extendedWaitUntil:
     visible:
       id: "scanning-screen"
-    timeout: 8000
+    timeout: 20000
     optional: true
-# Shoot the overlay as soon as it is up (the QA hold keeps it about 8 s).
 - runFlow:
     when:
       visible:
         id: "scanning-screen"
     commands:
       - takeScreenshot: 02-scanning
-# The iOS photo picker is system UI and can vary by simulator. Never keep a
-# permission dialog or the picker itself as a named main-screen shot.
 - runFlow:
     when:
-      notVisible:
-        id: "scanning-screen"
+      visible: ".*nothing leaves this device.*"
     commands:
-      - waitForAnimationToEnd:
-          timeout: 4000
+      - takeScreenshot: 02-scanning
+# Only poke the system picker when it is actually on screen. A blind
+# 20%,30% tap (older flow) hit the scanning overlay on run 43493934205.
+- runFlow:
+    when:
+      visible: "Allow Access to All Photos"
+    commands:
       - tapOn:
           text: "Allow Access to All Photos"
           optional: true
@@ -44,8 +46,14 @@ name: Import a seeded photo and reach the scan result
       - tapOn:
           text: "OK"
           optional: true
+- runFlow:
+    when:
+      visible: "Recents"
+    commands:
+      - waitForAnimationToEnd:
+          timeout: 4000
       - tapOn:
-          point: "20%,30%"
+          text: "Allow"
           optional: true
       - tapOn:
           text: "Add"
@@ -65,6 +73,11 @@ name: Import a seeded photo and reach the scan result
     when:
       visible:
         id: "scanning-screen"
+    commands:
+      - takeScreenshot: 02-scanning
+- runFlow:
+    when:
+      visible: ".*nothing leaves this device.*"
     commands:
       - takeScreenshot: 02-scanning
 - extendedWaitUntil:

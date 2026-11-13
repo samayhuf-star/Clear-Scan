@@ -1,16 +1,49 @@
 appId: com.samayhuf.clearscan
 name: Return to a clean home screen with the saved scan
 ---
+# A leftover export sheet blocks doc-back (run 43493934205 left us on the
+# document screen, so 01-home and home-paywall were never reached).
+- tapOn:
+    text: "Cancel"
+    optional: true
+- runFlow:
+    when:
+      visible: ".*Small.*"
+    commands:
+      - tapOn:
+          point: "50%,8%"
+          optional: true
+      - swipe:
+          start: "50%,70%"
+          end: "50%,20%"
+- extendedWaitUntil:
+    notVisible: ".*Small.*"
+    timeout: 5000
+    optional: true
 - tapOn:
     id: "doc-back"
     optional: true
 - tapOn:
-    text: "Cancel"
+    text: "Back"
     optional: true
 - extendedWaitUntil:
     visible:
       id: "home-screen"
-    timeout: 10000
+    timeout: 12000
+    optional: true
+- runFlow:
+    when:
+      notVisible:
+        id: "home-screen"
+    commands:
+      - back
+      - tapOn:
+          id: "doc-back"
+          optional: true
+      - extendedWaitUntil:
+          visible:
+            id: "home-screen"
+          timeout: 10000
 - tapOn:
     text: "Dismiss"
     optional: true

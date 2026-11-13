@@ -4,6 +4,27 @@ name: Open the paywall (App Store sandbox prices, QA log only) and check all thr
 # Maestro launches the app with simctl, so the local .storekit is NOT attached here and
 # prices come from the App Store sandbox. The official 05-paywall is taken by the
 # XCUITest (SimQATests) with the local StoreKit session. This flow is a cross-check.
+# If a previous step left us on the document screen, get back to home first.
+- runFlow:
+    when:
+      notVisible:
+        id: "home-paywall"
+    commands:
+      - tapOn:
+          text: "Cancel"
+          optional: true
+      - tapOn:
+          id: "doc-back"
+          optional: true
+      - tapOn:
+          text: "Back"
+          optional: true
+      - back
+      - extendedWaitUntil:
+          visible:
+            id: "home-screen"
+          timeout: 10000
+          optional: true
 - tapOn:
     id: "home-paywall"
 - extendedWaitUntil:

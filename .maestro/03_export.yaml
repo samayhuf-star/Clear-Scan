@@ -5,14 +5,44 @@ name: Open the Share PDF export options, then cancel
     id: "doc-screen"
 - tapOn:
     id: "doc-export-pdf"
-- extendedWaitUntil:
-    visible: "PDF size"
-    timeout: 8000
+# iOS 26 action sheets often omit the title ("PDF size") from the
+# accessibility tree (run 43493934205). The option rows stay visible.
 - extendedWaitUntil:
     visible: ".*Small.*"
+    timeout: 8000
+    optional: true
+- runFlow:
+    when:
+      notVisible: ".*Small.*"
+    commands:
+      - tapOn:
+          text: "Share PDF"
+          optional: true
+      - extendedWaitUntil:
+          visible: ".*Small.*"
+          timeout: 8000
+- extendedWaitUntil:
+    visible: ".*Medium.*"
     timeout: 5000
+    optional: true
 - takeScreenshot: 04-export
 - tapOn:
     text: "Cancel"
+    optional: true
+# Cancel is not always in the AX tree on iOS 26; tap above the sheet or swipe it down.
+- runFlow:
+    when:
+      visible: ".*Small.*"
+    commands:
+      - tapOn:
+          point: "50%,8%"
+          optional: true
+      - swipe:
+          start: "50%,70%"
+          end: "50%,20%"
+- extendedWaitUntil:
+    notVisible: ".*Small.*"
+    timeout: 8000
+    optional: true
 - assertVisible:
     id: "doc-screen"

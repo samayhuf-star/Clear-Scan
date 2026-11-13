@@ -124,7 +124,7 @@ run_flow() {
   echo "==> $tag exit $rc"
   tail -n 30 "$OUT/maestro/${tag}.log" || true
   # Maestro may write takeScreenshot files next to the test or under debug-output.
-  find "$OUT/maestro/$tag" "$ROOT" -maxdepth 3 -name '*.png' -newer "$OUT/maestro/${tag}.log" 2>/dev/null \
+  find "$OUT/maestro/$tag" "$ROOT" -maxdepth 8 -name '*.png' -newer "$OUT/maestro/${tag}.log" 2>/dev/null \
     | while read -r p; do cp "$p" "$OUT/screenshots/" 2>/dev/null || true; echo "maestro png: $p"; done || true
   return $rc
 }
