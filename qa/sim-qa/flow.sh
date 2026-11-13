@@ -38,38 +38,15 @@ fi
 echo "app: $APP"
 
 echo "==> Seed a document photo"
-python3 - "$OUT/media" << 'PY'
-from pathlib import Path
-import sys
-from PIL import Image, ImageDraw, ImageFont
-out = Path(sys.argv[1])
-out.mkdir(parents=True, exist_ok=True)
-img = Image.new("RGB", (1240, 1754), (250, 248, 240))
-d = ImageDraw.Draw(img)
-d.rectangle((80, 80, 1160, 1674), outline=(20, 40, 80), width=4)
-d.rectangle((80, 80, 1160, 240), fill=(20, 40, 80))
-try:
-    font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 48)
-    small = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 36)
-except Exception:
-    font = small = ImageFont.load_default()
-d.text((120, 120), "INVOICE 1042", fill=(255, 255, 255), font=font)
-lines = [
-    "ClearScan QA fixture",
-    "Bill to: Sample Customer",
-    "Date: 13 November 2026",
-    "Amount due: 42.00",
-    "This is a generated test page, not a real document.",
-]
-y = 320
-for line in lines:
-    d.text((140, y), line, fill=(20, 40, 80), font=small)
-    y += 70
-path = out / "clearscan-qa-invoice.jpg"
-img.save(path, quality=90)
-print(path)
-PY
 PHOTO="$OUT/media/clearscan-qa-invoice.jpg"
+mkdir -p "$OUT/media"
+FIXTURE="$ROOT/qa/sim-qa/fixtures/clearscan-qa-invoice.jpg"
+if [[ ! -f "$FIXTURE" ]]; then
+  echo "Missing fixture $FIXTURE" | tee "$OUT/flow-error.txt"
+  exit 1
+fi
+cp "$FIXTURE" "$PHOTO"
+echo "photo: $PHOTO"
 
 echo "==> Install and grant Photos / Camera (so permission dialogs never appear)"
 xcrun simctl install "$UDID" "$APP"
