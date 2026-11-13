@@ -1,17 +1,28 @@
-// Central place for IDs and links. Replace the TODO values before you submit to the App Store.
+// Product IDs follow the bundle id com.samayhuf.clearscan.
+// Monthly $2.99 and yearly $19.99 each get a 7-day free trial once created in ASC.
+// Lifetime $39.99 is a non-consumable. ASC products are not created by this repo.
+export const PRODUCT_IDS = {
+  monthly: 'com.samayhuf.clearscan.pro.monthly',
+  yearly: 'com.samayhuf.clearscan.pro.yearly',
+  lifetime: 'com.samayhuf.clearscan.pro.lifetime',
+} as const;
+
+export type ProductId = (typeof PRODUCT_IDS)[keyof typeof PRODUCT_IDS];
+export type PlanKind = 'monthly' | 'yearly' | 'lifetime';
+
+export const SUBSCRIPTION_IDS: ProductId[] = [PRODUCT_IDS.monthly, PRODUCT_IDS.yearly];
+export const ALL_PRODUCT_IDS: ProductId[] = [PRODUCT_IDS.monthly, PRODUCT_IDS.yearly, PRODUCT_IDS.lifetime];
+
+export const PLAN_KIND: Record<ProductId, PlanKind> = {
+  [PRODUCT_IDS.monthly]: 'monthly',
+  [PRODUCT_IDS.yearly]: 'yearly',
+  [PRODUCT_IDS.lifetime]: 'lifetime',
+};
+
 export const CONFIG = {
   appName: 'ClearScan',
-  // RevenueCat public SDK key for iOS (starts with "appl_"). Set EXPO_PUBLIC_RC_IOS_KEY in EAS secrets.
-  revenueCatIosKey: process.env.EXPO_PUBLIC_RC_IOS_KEY ?? '',
-  entitlementId: 'plus',
-  // Product IDs to create in App Store Connect and attach to a RevenueCat offering.
-  products: {
-    monthly: 'clearscan_plus_monthly', // 3.99 USD
-    yearly: 'clearscan_plus_yearly', // 14.99 USD
-  },
-  fallbackPrices: { monthly: '$3.99', yearly: '$14.99' },
-  // TODO: replace with hosted pages before App Review.
-  privacyUrl: 'https://samayhuf-star.github.io/Clear-Scan/',
-  termsUrl: 'https://www.apple.com/legal/internet-services/itunes/dev/stdeula/',
+  products: PRODUCT_IDS,
+  privacyUrl: 'https://samayhuf-star.github.io/app-legal/clearscan/privacy.html',
+  termsUrl: 'https://samayhuf-star.github.io/app-legal/clearscan/terms.html',
   supportEmail: 'samayhuf@gmail.com',
 } as const;

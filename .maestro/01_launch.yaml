@@ -1,0 +1,20 @@
+appId: com.samayhuf.clearscan
+name: Launch and reach the home screen
+---
+- launchApp:
+    appId: "com.samayhuf.clearscan"
+    clearState: false
+- extendedWaitUntil:
+    visible:
+      text: ".*"
+    timeout: 20000
+- tapOn:
+    id: "onboarding-skip"
+    optional: true
+- tapOn:
+    text: "Skip"
+    optional: true
+- extendedWaitUntil:
+    visible:
+      id: "home-screen"
+    timeout: 15000

@@ -13,16 +13,18 @@ type Props = {
   disabled?: boolean;
   accessibilityLabel?: string;
   hitSlop?: number;
+  testID?: string;
 };
 
 /** Button wrapper with a springy press and a haptic tick. */
-export function Press({ children, onPress, style, haptic = 'light', disabled, accessibilityLabel, hitSlop }: Props) {
+export function Press({ children, onPress, style, haptic = 'light', disabled, accessibilityLabel, hitSlop, testID }: Props) {
   const scale = useSharedValue(1);
   const a = useAnimatedStyle(() => ({ transform: [{ scale: scale.value }] }));
   return (
     <AnimatedPressable
       accessibilityRole="button"
       accessibilityLabel={accessibilityLabel}
+      testID={testID}
       disabled={disabled}
       hitSlop={hitSlop}
       onPressIn={() => {

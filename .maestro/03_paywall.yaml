@@ -1,0 +1,28 @@
+appId: com.samayhuf.clearscan
+name: Open the paywall and assert chrome, prices and trial copy
+---
+- tapOn:
+    id: "home-paywall"
+- extendedWaitUntil:
+    visible:
+      id: "paywall-screen"
+    timeout: 10000
+- waitForAnimationToEnd:
+    timeout: 5000
+- assertVisible:
+    id: "paywall-close"
+- assertVisible:
+    id: "paywall-restore"
+- assertVisible:
+    id: "paywall-terms"
+- assertVisible:
+    id: "paywall-privacy"
+- assertVisible:
+    id: "paywall-autorenew"
+- assertVisible: ".*2\\.99.*"
+- assertVisible: ".*19\\.99.*"
+- assertVisible: ".*39\\.99.*"
+- assertVisible: "Try 7 days free, then .*2\\.99.*/month"
+- assertVisible: "Try 7 days free, then .*19\\.99.*/year"
+- assertVisible: "one-time"
+- assertNotVisible: "Try 7 days free, then .*39\\.99.*"

@@ -20,7 +20,7 @@ export async function shareText(doc: Doc, pages: PageRow[]) {
   await Share.share({ message: pages.map((p) => p.text).join('\n\n'), title: doc.title });
 }
 
-/** Plus: Markdown file with one heading per page. */
+/** Pro: Markdown file with one heading per page. */
 export async function shareMarkdown(doc: Doc, pages: PageRow[]) {
   await ensureDir(`scans/${doc.id}`);
   const rel = `scans/${doc.id}/${safeName(doc.title)}.md`;
@@ -29,7 +29,7 @@ export async function shareMarkdown(doc: Doc, pages: PageRow[]) {
   await Sharing.shareAsync(abs(rel), { mimeType: 'text/markdown', UTI: 'net.daringfireball.markdown', dialogTitle: doc.title });
 }
 
-/** Plus: Word-compatible file (HTML saved as .doc opens in Word and Pages). */
+/** Pro: Word-compatible file (HTML saved as .doc opens in Word and Pages). */
 export async function shareWord(doc: Doc, pages: PageRow[]) {
   await ensureDir(`scans/${doc.id}`);
   const rel = `scans/${doc.id}/${safeName(doc.title)}.doc`;

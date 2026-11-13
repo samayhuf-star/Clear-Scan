@@ -32,8 +32,8 @@ export default function Settings() {
     setLock(v);
   };
 
-  const Row = ({ icon, label, sub, onPress, right }: { icon: Icon; label: string; sub?: string; onPress?: () => void; right?: React.ReactNode }) => (
-    <Press onPress={onPress} haptic={onPress ? 'light' : 'none'} style={[s.row, { backgroundColor: t.surface, borderColor: t.line }]}>
+  const Row = ({ icon, label, sub, onPress, right, testID }: { icon: Icon; label: string; sub?: string; onPress?: () => void; right?: React.ReactNode; testID?: string }) => (
+    <Press onPress={onPress} haptic={onPress ? 'light' : 'none'} style={[s.row, { backgroundColor: t.surface, borderColor: t.line }]} testID={testID}>
       <View style={[s.icon, { backgroundColor: t.brandSoft }]}>
         <Ionicons name={icon} size={18} color={t.brand} />
       </View>
@@ -56,8 +56,9 @@ export default function Settings() {
       <ScrollView contentContainerStyle={{ padding: 20, gap: 10 }}>
         <Row
           icon="sparkles"
-          label={plus ? 'ClearScan Plus is active' : 'Get ClearScan Plus'}
+          label={plus ? 'ClearScan Pro is active' : 'Get ClearScan Pro'}
           sub={plus ? 'Thank you for supporting ClearScan' : 'Auto-sort and Word or Markdown export'}
+          testID="settings-pro"
           onPress={plus ? () => Linking.openURL('https://apps.apple.com/account/subscriptions') : () => router.push('/paywall')}
         />
         <Row
@@ -85,10 +86,10 @@ export default function Settings() {
           ))}
         </View>
 
-        <Row icon="refresh" label="Restore purchases" onPress={async () => {
+        <Row icon="refresh" label="Restore purchases" testID="settings-restore" onPress={async () => {
           try {
             const ok = await restore();
-            Alert.alert(ok ? 'Restored' : 'Nothing to restore', ok ? 'ClearScan Plus is active again.' : 'No active subscription found on this Apple ID.');
+            Alert.alert(ok ? 'Restored' : 'Nothing to restore', ok ? 'ClearScan Pro is active again.' : 'No active subscription found on this Apple ID.');
           } catch (e: any) {
             Alert.alert('Restore failed', e?.message ?? 'Please try again.');
           }

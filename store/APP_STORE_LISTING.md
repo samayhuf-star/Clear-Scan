@@ -7,7 +7,7 @@
 **Category:** Productivity (secondary: Business)
 **Age rating:** 4+
 **Privacy label:** Data Not Collected
-**Price:** Free, with optional ClearScan Plus (monthly $3.99, yearly $14.99)
+**Price:** Free, with optional ClearScan Pro (monthly $2.99 with a 7-day free trial, yearly $19.99 with a 7-day free trial, lifetime $39.99 one-time)
 
 ## Description
 Scan anything. Keep it private. Pay nothing for the basics.
@@ -36,7 +36,7 @@ Terms: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
 Privacy: see in-app Settings.
 
 ## Review notes
-No login required. Tap Scan, grant camera access, scan any paper. OCR runs on device. Plus can be tested with the sandbox account.
+No login required. Tap Scan, grant camera access, scan any paper. OCR runs on device. Pro can be tested with the sandbox account.
 
 ## Screenshots (6.9")
 1. "Scan in a second" 2. "Text read on your iPhone" 3. "Search inside every page" 4. "No watermark. Ever." 5. "Share a searchable PDF" 6. "Private by design"

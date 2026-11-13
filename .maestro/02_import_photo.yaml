@@ -1,0 +1,28 @@
+appId: com.samayhuf.clearscan
+name: Import a seeded photo as a scan
+---
+- assertVisible:
+    id: "home-screen"
+- tapOn:
+    id: "home-import"
+- tapOn:
+    text: "Choose photos"
+    optional: true
+- tapOn:
+    text: "Choose Photos"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 4000
+# The iOS photo picker is system UI and can vary by simulator.
+- tapOn:
+    point: "20%,30%"
+    optional: true
+- tapOn:
+    text: "Add"
+    optional: true
+- tapOn:
+    text: "Done"
+    optional: true
+- tapOn:
+    text: "Choose"
+    optional: true

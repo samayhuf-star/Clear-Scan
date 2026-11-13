@@ -66,19 +66,19 @@ export default function Home() {
     );
 
   return (
-    <View style={[s.root, { backgroundColor: t.bg, paddingTop: insets.top }]}>
+    <View style={[s.root, { backgroundColor: t.bg, paddingTop: insets.top }]} testID="home-screen">
       <View style={s.header}>
         <View>
           <Text style={[s.h1, { color: t.ink }]}>Scans</Text>
-          <Text style={[s.sub, { color: t.muted }]}>{plus ? 'ClearScan Plus' : 'Free, no watermark'}</Text>
+          <Text style={[s.sub, { color: t.muted }]}>{plus ? 'ClearScan Pro' : 'Free, no watermark'}</Text>
         </View>
         <View style={{ flexDirection: 'row', gap: 10 }}>
           {!plus && (
-            <Press onPress={() => router.push('/paywall')} style={[s.iconBtn, { backgroundColor: t.accentSoft }]} accessibilityLabel="ClearScan Plus">
+            <Press onPress={() => router.push('/paywall')} style={[s.iconBtn, { backgroundColor: t.accentSoft }]} accessibilityLabel="ClearScan Pro" testID="home-paywall">
               <Ionicons name="sparkles" size={20} color={t.accent} />
             </Press>
           )}
-          <Press onPress={() => router.push('/settings')} style={[s.iconBtn, { backgroundColor: t.surface }]} accessibilityLabel="Settings">
+          <Press onPress={() => router.push('/settings')} style={[s.iconBtn, { backgroundColor: t.surface }]} accessibilityLabel="Settings" testID="home-settings">
             <Ionicons name="settings-outline" size={20} color={t.ink} />
           </Press>
         </View>
@@ -125,7 +125,7 @@ export default function Home() {
               <Ionicons name="sparkles" size={20} color={t.accent} />
               <View style={{ flex: 1 }}>
                 <Text style={{ color: t.ink, fontWeight: '700' }}>Enjoying ClearScan?</Text>
-                <Text style={{ color: t.muted, fontSize: 13 }}>Plus sorts scans for you. Everything you use now stays free.</Text>
+                <Text style={{ color: t.muted, fontSize: 13 }}>Pro sorts scans for you. Everything you use now stays free.</Text>
               </View>
               <Press onPress={() => router.push('/paywall')} style={[s.promoBtn, { backgroundColor: t.accent }]}>
                 <Text style={{ color: '#fff', fontWeight: '700', fontSize: 13 }}>See</Text>
@@ -150,7 +150,7 @@ export default function Home() {
       />
 
       <View style={[s.bar, { paddingBottom: insets.bottom + 12 }]} pointerEvents="box-none">
-        <Press onPress={importMenu} style={[s.secondary, { backgroundColor: t.surface, borderColor: t.line }]} accessibilityLabel="Import photos">
+        <Press onPress={importMenu} style={[s.secondary, { backgroundColor: t.surface, borderColor: t.line }]} accessibilityLabel="Import photos" testID="home-import">
           <Ionicons name="images-outline" size={24} color={t.ink} />
         </Press>
         <ScanButton onPress={scan} />
@@ -209,7 +209,7 @@ function ScanButton({ onPress }: { onPress: () => void }) {
   return (
     <View style={{ alignItems: 'center', justifyContent: 'center' }}>
       <Animated.View style={[s.pulse, ring]} />
-      <Press onPress={onPress} haptic="medium" style={s.scanBtn} accessibilityLabel="Scan a document">
+      <Press onPress={onPress} haptic="medium" style={s.scanBtn} accessibilityLabel="Scan a document" testID="home-scan">
         <Ionicons name="scan" size={26} color="#fff" />
         <Text style={s.scanText}>Scan</Text>
       </Press>

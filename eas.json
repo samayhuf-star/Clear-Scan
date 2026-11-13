@@ -5,5 +5,12 @@
     "preview": { "distribution": "internal" },
     "production": { "autoIncrement": true }
   },
-  "submit": { "production": {} }
+  "submit": {
+    "production": {
+      "ios": {
+        "appleTeamId": "PGLT2QZX88",
+        "ascAppId": "6833164518"
+      }
+    }
+  }
 }

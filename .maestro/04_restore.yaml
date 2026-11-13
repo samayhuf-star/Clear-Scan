@@ -1,0 +1,14 @@
+appId: com.samayhuf.clearscan
+name: Tap Restore purchases on the paywall
+---
+- assertVisible:
+    id: "paywall-restore"
+- tapOn:
+    id: "paywall-restore"
+- waitForAnimationToEnd:
+    timeout: 5000
+- extendedWaitUntil:
+    visible:
+      text: ".*(Nothing to restore|Restored|ClearScan Pro|active).*"
+    timeout: 15000
+    optional: true

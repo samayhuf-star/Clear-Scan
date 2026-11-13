@@ -73,8 +73,8 @@ export default function DocScreen() {
       doc.favorite ? 'Remove star' : 'Star',
       'Rename',
       'Share text',
-      plus ? 'Export as Word' : 'Export as Word (Plus)',
-      plus ? 'Export as Markdown' : 'Export as Markdown (Plus)',
+      plus ? 'Export as Word' : 'Export as Word (Pro)',
+      plus ? 'Export as Markdown' : 'Export as Markdown (Pro)',
       'Delete',
       'Cancel',
     ];
@@ -165,7 +165,7 @@ export default function DocScreen() {
       <View style={[s.actions, { paddingBottom: insets.bottom + 12, backgroundColor: t.bg }]}>
         <Press onPress={chooseQuality} disabled={busy} haptic="medium" style={[s.primary, { backgroundColor: t.brand }]}>
           <Ionicons name="share-outline" size={20} color="#fff" />
-          <Text style={s.primaryText}>{busy ? 'Preparing…' : 'Share PDF'}</Text>
+          <Text style={s.primaryText}>{busy ? 'Preparing' : 'Share PDF'}</Text>
         </Press>
         <Press
           onPress={async () => {

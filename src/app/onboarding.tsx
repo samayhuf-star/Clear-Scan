@@ -85,12 +85,12 @@ export default function Onboarding() {
   const last = page === SLIDES.length - 1;
 
   return (
-    <View style={s.root}>
+    <View style={s.root} testID="onboarding-screen">
       <LinearGradient colors={['#0B1B33', '#10294D', '#0B1B33']} style={StyleSheet.absoluteFill} />
       <View style={[s.top, { paddingTop: insets.top + 8 }]}>
         <Text style={s.brand}>ClearScan</Text>
         {!last && (
-          <Press onPress={() => finish(false)} hitSlop={12} accessibilityLabel="Skip introduction">
+          <Press onPress={() => finish(false)} hitSlop={12} accessibilityLabel="Skip introduction" testID="onboarding-skip">
             <Text style={s.skip}>Skip</Text>
           </Press>
         )}
