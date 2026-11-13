@@ -14,11 +14,9 @@ import { buy, loadOffer, purchasesReady, restore, usePlus, type Offer } from '..
 const AUTO_RENEW =
   'Subscriptions automatically renew unless you cancel at least 24 hours before the end of the current period. Your Apple ID account will be charged for renewal within 24 hours prior to the end of the current period, at the price shown by the App Store at purchase. You can manage or cancel a subscription in your Apple ID account settings. Lifetime is a one-time purchase and does not renew.';
 
-const BENEFITS: { icon: React.ComponentProps<typeof Ionicons>['name']; title: string; sub: string; soon?: boolean }[] = [
+const BENEFITS: { icon: React.ComponentProps<typeof Ionicons>['name']; title: string; sub: string }[] = [
   { icon: 'albums', title: 'Auto-sort by type', sub: 'Receipts, invoices, IDs and letters filed for you' },
   { icon: 'document-text', title: 'Word and Markdown export', sub: 'Turn any scan into editable text' },
-  { icon: 'book', title: 'Book mode', sub: 'Flatten curved pages, remove fingers', soon: true },
-  { icon: 'create', title: 'Sign and fill forms', sub: 'Add a signature in seconds', soon: true },
 ];
 
 export default function Paywall() {
@@ -112,7 +110,6 @@ export default function Paywall() {
               <View style={{ flex: 1 }}>
                 <Text style={s.benefitTitle}>
                   {b.title}
-                  {b.soon ? <Text style={s.soon}>  COMING SOON</Text> : null}
                 </Text>
                 <Text style={s.benefitSub}>{b.sub}</Text>
               </View>
@@ -122,7 +119,7 @@ export default function Paywall() {
 
         <Animated.View entering={FadeInUp.delay(500)} style={s.freeBox}>
           <Ionicons name="shield-checkmark" size={18} color="#25C27A" />
-          <Text style={s.freeText}>Always free: no watermark, OCR, search, PDF export, folders, app lock.</Text>
+          <Text style={s.freeText}>Always free: no watermark, OCR, search, PDF export, app lock.</Text>
         </Animated.View>
 
         <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 12, marginTop: 22 }}>
@@ -224,7 +221,6 @@ const s = StyleSheet.create({
   benefitIcon: { width: 40, height: 40, borderRadius: 12, backgroundColor: 'rgba(91,151,255,0.16)', alignItems: 'center', justifyContent: 'center' },
   benefitTitle: { color: '#fff', fontSize: 16, fontWeight: '700' },
   benefitSub: { color: '#93A1BA', fontSize: 13, marginTop: 2 },
-  soon: { color: '#FFA13F', fontSize: 10, fontWeight: '800', letterSpacing: 0.6 },
   freeBox: { flexDirection: 'row', gap: 10, alignItems: 'center', marginTop: 16, padding: 12, borderRadius: 14, backgroundColor: 'rgba(37,194,122,0.12)' },
   freeText: { color: '#CDEFDD', fontSize: 13, flex: 1, lineHeight: 18 },
   plan: { flexGrow: 1, flexBasis: '45%', borderRadius: 18, padding: 14, borderWidth: 2, borderColor: 'rgba(255,255,255,0.14)', backgroundColor: 'rgba(255,255,255,0.05)' },
