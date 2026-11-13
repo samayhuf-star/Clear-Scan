@@ -19,6 +19,13 @@ name: Import a seeded photo and reach the scan result
       id: "scanning-screen"
     timeout: 8000
     optional: true
+# Shoot the overlay as soon as it is up (the QA hold keeps it about 8 s).
+- runFlow:
+    when:
+      visible:
+        id: "scanning-screen"
+    commands:
+      - takeScreenshot: 02-scanning
 # The iOS photo picker is system UI and can vary by simulator. Never keep a
 # permission dialog or the picker itself as a named main-screen shot.
 - runFlow:
@@ -64,4 +71,16 @@ name: Import a seeded photo and reach the scan result
     visible:
       id: "doc-screen"
     timeout: 60000
+# Let the "Saved" toast go, then show the recognised text for 03-result.
+- extendedWaitUntil:
+    notVisible: "Saved. Text read on-device"
+    timeout: 10000
+    optional: true
+- tapOn:
+    text: "Text"
+    optional: true
+- extendedWaitUntil:
+    visible: ".*Amount due.*"
+    timeout: 8000
+    optional: true
 - takeScreenshot: 03-result

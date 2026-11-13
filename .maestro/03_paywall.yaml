@@ -1,6 +1,9 @@
 appId: com.samayhuf.clearscan
-name: Open the paywall and assert chrome, prices and trial copy
+name: Open the paywall (App Store sandbox prices, QA log only) and check all three plans
 ---
+# Maestro launches the app with simctl, so the local .storekit is NOT attached here and
+# prices come from the App Store sandbox. The official 05-paywall is taken by the
+# XCUITest (SimQATests) with the local StoreKit session. This flow is a cross-check.
 - tapOn:
     id: "home-paywall"
 - extendedWaitUntil:
@@ -19,11 +22,28 @@ name: Open the paywall and assert chrome, prices and trial copy
     id: "paywall-privacy"
 - assertVisible:
     id: "paywall-autorenew"
+# Plan cards sit below the fold; the lifetime card is last.
+- scrollUntilVisible:
+    element:
+      id: "paywall-plan-lifetime"
+    direction: DOWN
+    timeout: 15000
+- extendedWaitUntil:
+    visible: ".*39\\.99.*one-time.*"
+    timeout: 20000
 - assertVisible: ".*2\\.99.*"
 - assertVisible: ".*19\\.99.*"
-- assertVisible: ".*39\\.99.*"
-- assertVisible: "Try 7 days free, then .*2\\.99.*/month"
-- assertVisible: "Try 7 days free, then .*19\\.99.*/year"
-- assertVisible: "one-time"
 - assertNotVisible: "Try 7 days free, then .*39\\.99.*"
-- takeScreenshot: 05-paywall
+- assertVisible:
+    text: "Try 7 days free, then .*2\\.99.*/month"
+    optional: true
+- assertVisible:
+    text: "Try 7 days free, then .*19\\.99.*/year"
+    optional: true
+- takeScreenshot: 05-paywall-sandbox
+- tapOn:
+    id: "paywall-close"
+- extendedWaitUntil:
+    visible:
+      id: "home-screen"
+    timeout: 10000

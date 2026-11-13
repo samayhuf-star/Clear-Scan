@@ -88,14 +88,21 @@ collect_maestro_shot() {
   return 1
 }
 
+# Maestro does not read a flow from stdin, so write a temp file (run 43427632722:
+# `maestro test -` always failed, so doc-screen looked absent and export was skipped).
 visible() {
-  local id="$1"
-  maestro test - <<YAML >/dev/null 2>&1
+  local id="$1" f rc
+  f="$(mktemp -t csvis).yaml"
+  cat > "$f" <<YAML
 appId: ${BUNDLE_ID}
 ---
 - assertVisible:
     id: "${id}"
 YAML
+  maestro test "$f" >/dev/null 2>&1
+  rc=$?
+  rm -f "$f"
+  return $rc
 }
 
 if ! command -v maestro >/dev/null 2>&1; then
@@ -131,10 +138,8 @@ echo "==> Import a seeded photo (scanning overlay, then result)"
 if run_flow 02_import_photo.yaml 02_import; then
   collect_maestro_shot "02-scanning" || true
   collect_maestro_shot "03-result" || true
-  if visible "scanning-screen"; then
-    shot "02-scanning"
-  fi
-  if visible "doc-screen"; then
+  # Official 02/03 come from Maestro (overlay mid-scan; result on the Text tab).
+  if [[ ! -f "$OUT/screenshots/03-result.png" ]] && visible "doc-screen"; then
     shot "03-result"
   elif [[ ! -f "$OUT/screenshots/03-result.png" ]]; then
     echo "Result screen was not visible; not saving a substitute shot" | tee -a "$OUT/flow-error.txt"
@@ -168,7 +173,7 @@ fi
 echo "==> Home with the saved scan"
 if run_flow 04_back_home.yaml 04_home; then
   collect_maestro_shot "01-home" || true
-  if visible "home-screen"; then
+  if [[ ! -f "$OUT/screenshots/01-home.png" ]] && visible "home-screen"; then
     shot "01-home"
   fi
 else
@@ -176,24 +181,62 @@ else
   RC=1
 fi
 
-echo "==> Paywall (prices and 7-day trial copy)"
-if run_flow 03_paywall.yaml 05_paywall; then
-  collect_maestro_shot "05-paywall" || true
-  if visible "paywall-screen"; then
-    shot "05-paywall"
-  elif [[ ! -f "$OUT/screenshots/05-paywall.png" ]]; then
-    echo "Paywall was not visible; not saving a substitute shot" | tee -a "$OUT/flow-error.txt"
-    RC=1
-  fi
+echo "==> Paywall cross-check with App Store sandbox prices (QA log only, not an official shot)"
+SANDBOX_PAYWALL=fail
+if run_flow 03_paywall.yaml 05_paywall_sandbox; then
+  SANDBOX_PAYWALL=pass
+  collect_maestro_shot "05-paywall-sandbox" || true
 else
-  echo "Paywall flow failed" | tee -a "$OUT/flow-error.txt"
-  shot "05-paywall-failed"
+  shot "05-paywall-sandbox-failed"
+fi
+echo "sandbox paywall cross-check: $SANDBOX_PAYWALL" | tee -a "$OUT/flow-notes.txt"
+
+# Official 05-paywall, purchase (22) and restore (23) run in the ClearScanQATests UI test
+# with an SKTestSession from storekit/ClearScan.storekit (simctl launch cannot load it).
+echo "==> Paywall, purchase and restore with the local StoreKit session (XCUITest)"
+IAP_OUT="$OUT/iap"
+mkdir -p "$IAP_OUT"
+xcrun simctl terminate "$UDID" "$BUNDLE_ID" >/dev/null 2>&1 || true
+xcrun simctl terminate "$UDID" dev.mobile.maestro-driver-iosUITests.xctrunner >/dev/null 2>&1 || true
+pkill -f maestro >/dev/null 2>&1 || true
+sleep 3
+mkdir -p /tmp/clearscan-sk && cp "$ROOT/storekit/ClearScan.storekit" /tmp/clearscan-sk/ClearScan.storekit
+if grep -q _developerTeamID /tmp/clearscan-sk/ClearScan.storekit; then
+  echo "storekit copy still has a team id" | tee -a "$OUT/flow-notes.txt"
+else
+  echo "storekit copy: no team id" | tee -a "$OUT/flow-notes.txt"
+fi
+IAP_START=$(date "+%Y-%m-%d %H:%M:%S")
+set +e
+TEST_RUNNER_SIM_QA_OUT="$IAP_OUT" TEST_RUNNER_STOREKIT_CONFIG="/tmp/clearscan-sk/ClearScan.storekit" \
+xcodebuild test-without-building -workspace "${WORKSPACE:-ios/ClearScan.xcworkspace}" -scheme "$SCHEME" -configuration Release \
+  -destination "platform=iOS Simulator,id=$UDID" -derivedDataPath "$DERIVED_DATA" \
+  -resultBundlePath "$IAP_OUT/iap.xcresult" -only-testing:ClearScanQATests/SimQATests/testPaywallPurchaseAndRestore \
+  > "$OUT/xcodebuild-test-iap.log" 2>&1
+IAP_RC=$?
+set -e
+echo "xcodebuild test exit: $IAP_RC" | tee -a "$OUT/flow-notes.txt"
+tail -n 40 "$OUT/xcodebuild-test-iap.log" || true
+xcrun simctl spawn "$UDID" log show --start "$IAP_START" --style compact \
+  --predicate 'process CONTAINS "ClearScan" OR process == "storekitd" OR process CONTAINS "StoreKit"' > "$OUT/app-iap.log" 2>&1 || true
+grep -hE 'SKTestSession|SKInternalErrorDomain|\[clearscan-qa\]' "$OUT/app-iap.log" "$OUT/xcodebuild-test-iap.log" > "$OUT/iap.log" 2>/dev/null || true
+if grep -q SKInternalErrorDomain "$OUT/iap.log"; then
+  echo "storekit_session_errors=yes" > "$OUT/storekit-note.txt"
+else
+  echo "storekit_session_errors=no" > "$OUT/storekit-note.txt"
+fi
+for f in "$IAP_OUT"/*.png; do if [[ -f "$f" ]]; then cp "$f" "$OUT/screenshots/"; fi; done
+PAYWALL_LOCAL=$(python3 -c 'import json,sys
+try:
+    st=json.load(open(sys.argv[1]))["steps"]
+    print("pass" if any(s["step"]=="05" and s["pass"] for s in st) else "fail")
+except Exception: print("missing")' "$IAP_OUT/results.json")
+echo "local StoreKit paywall: $PAYWALL_LOCAL" | tee -a "$OUT/flow-notes.txt"
+if [[ "$PAYWALL_LOCAL" != "pass" ]]; then
+  rm -f "$OUT/screenshots/05-paywall.png"
+  echo "Local StoreKit paywall did not pass (see iap/results.json)" | tee -a "$OUT/flow-error.txt"
   RC=1
 fi
-
-# QA only: tap Restore for the log. Do not screenshot Settings or Restore.
-echo "==> Restore (QA log only, no main-screen shot)"
-run_flow 04_restore.yaml 06_restore || true
 
 echo "==> Main screens present"
 missing=0
@@ -208,9 +251,17 @@ done
 if [[ "$missing" -ne 0 ]]; then
   RC=1
 fi
+IAP_PASS=$(python3 -c 'import json,sys
+try:
+    st=json.load(open(sys.argv[1]))["steps"]
+    print("pass" if all(s["pass"] for s in st if s["step"] in ("22","23")) and any(s["step"]=="23" for s in st) else "fail")
+except Exception: print("fail")' "$OUT/iap/results.json")
+echo "purchase and restore: $IAP_PASS" | tee -a "$OUT/flow-notes.txt"
+[[ "$IAP_PASS" == "pass" ]] || { echo "FAIL purchase/restore (see iap/results.json)" | tee -a "$OUT/flow-error.txt"; RC=1; }
 
 # Do not leave failed-picker / restore leftovers under the official names.
 rm -f "$OUT/screenshots/04-restore.png" "$OUT/screenshots/05-final.png" || true
+python3 "$ROOT/qa/sim-qa/summary.py" "$OUT" "$RC" "${IAP_RC:-na}" || true
 
 echo "flow exit $RC"
 exit $RC
