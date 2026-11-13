@@ -56,11 +56,15 @@ xcrun simctl privacy "$UDID" grant camera "$BUNDLE_ID" || true
 xcrun simctl addmedia "$UDID" "$PHOTO" | tee -a "$OUT/seed.txt" || echo "addmedia failed" | tee -a "$OUT/seed.txt"
 
 # Marker lets saveScan hold the in-app scanning overlay long enough for 02-scanning.
+# The inbox JPEG lets pickFromLibrary skip the system photo picker, whose File
+# Provider URIs hung ImageManipulator on the iOS 26 simulator (run 43408603258).
 DATA="$(xcrun simctl get_app_container "$UDID" "$BUNDLE_ID" data 2>/dev/null || true)"
 if [[ -n "${DATA:-}" ]]; then
   mkdir -p "$DATA/Documents"
   touch "$DATA/Documents/.clearscan-qa-hold"
+  cp "$PHOTO" "$DATA/Documents/.clearscan-qa-inbox.jpg"
   echo "qa hold marker: $DATA/Documents/.clearscan-qa-hold" | tee -a "$OUT/seed.txt"
+  echo "qa inbox: $DATA/Documents/.clearscan-qa-inbox.jpg" | tee -a "$OUT/seed.txt"
 fi
 sleep 3
 

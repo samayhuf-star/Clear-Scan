@@ -11,31 +11,44 @@ name: Import a seeded photo and reach the scan result
 - tapOn:
     text: "Choose Photos"
     optional: true
-- waitForAnimationToEnd:
-    timeout: 4000
+# When the QA inbox file is present, import starts immediately and the system
+# picker never appears. Wait briefly for the overlay before any picker taps
+# so we do not tap through it.
+- extendedWaitUntil:
+    visible:
+      id: "scanning-screen"
+    timeout: 8000
+    optional: true
 # The iOS photo picker is system UI and can vary by simulator. Never keep a
 # permission dialog or the picker itself as a named main-screen shot.
-- tapOn:
-    text: "Allow Access to All Photos"
-    optional: true
-- tapOn:
-    text: "Allow"
-    optional: true
-- tapOn:
-    text: "OK"
-    optional: true
-- tapOn:
-    point: "20%,30%"
-    optional: true
-- tapOn:
-    text: "Add"
-    optional: true
-- tapOn:
-    text: "Done"
-    optional: true
-- tapOn:
-    text: "Choose"
-    optional: true
+- runFlow:
+    when:
+      notVisible:
+        id: "scanning-screen"
+    commands:
+      - waitForAnimationToEnd:
+          timeout: 4000
+      - tapOn:
+          text: "Allow Access to All Photos"
+          optional: true
+      - tapOn:
+          text: "Allow"
+          optional: true
+      - tapOn:
+          text: "OK"
+          optional: true
+      - tapOn:
+          point: "20%,30%"
+          optional: true
+      - tapOn:
+          text: "Add"
+          optional: true
+      - tapOn:
+          text: "Done"
+          optional: true
+      - tapOn:
+          text: "Choose"
+          optional: true
 - extendedWaitUntil:
     visible:
       id: "scanning-screen"
