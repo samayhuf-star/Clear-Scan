@@ -108,7 +108,7 @@ async function holdIfQaRequested() {
   // The file is never shipped with the app and is absent in App Store builds.
   try {
     if (await exists('.clearscan-qa-hold')) {
-      await new Promise((r) => setTimeout(r, 2800));
+      await new Promise((r) => setTimeout(r, 8000));
     }
   } catch {
     /* ignore */
