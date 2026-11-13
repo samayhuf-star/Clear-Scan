@@ -166,7 +166,7 @@ function Row({ doc, index }: { doc: Doc; index: number }) {
   const thumb = thumbOf(doc.id);
   return (
     <Animated.View entering={FadeInDown.delay(Math.min(index, 8) * 40).duration(320)}>
-      <Press onPress={() => router.push({ pathname: '/doc/[id]', params: { id: doc.id } })} style={[s.row, { backgroundColor: t.surface, borderColor: t.line }]}>
+      <Press onPress={() => router.push({ pathname: '/doc/[id]', params: { id: doc.id } })} style={[s.row, { backgroundColor: t.surface, borderColor: t.line }]} testID="home-doc">
         {thumb ? <Image source={{ uri: thumb }} style={s.thumb} /> : <View style={[s.thumb, { backgroundColor: t.brandSoft }]} />}
         <View style={{ flex: 1 }}>
           <Text numberOfLines={2} style={{ color: t.ink, fontWeight: '700', fontSize: 15 }}>

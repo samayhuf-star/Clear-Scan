@@ -17,7 +17,7 @@ export function ProcessingOverlay({ progress }: { progress: Progress | null }) {
   const pct = Math.round(((progress.page - (progress.step === 'ocr' ? 0.5 : 1)) / progress.total) * 100);
 
   return (
-    <Animated.View entering={FadeIn.duration(180)} exiting={FadeOut.duration(200)} style={s.wrap}>
+    <Animated.View entering={FadeIn.duration(180)} exiting={FadeOut.duration(200)} style={s.wrap} testID="scanning-screen">
       <View style={s.card}>
         <Animated.View style={a}>
           <Ionicons name="sync" size={34} color="#5B97FF" />

@@ -30,3 +30,8 @@ export async function move(from: string, rel: string) {
   await FS.deleteAsync(abs(rel), { idempotent: true });
   await FS.moveAsync({ from, to: abs(rel) });
 }
+
+export async function exists(relOrAbs: string) {
+  const path = relOrAbs.startsWith('file:') || relOrAbs.startsWith('/') ? relOrAbs : abs(relOrAbs);
+  return (await FS.getInfoAsync(path)).exists;
+}

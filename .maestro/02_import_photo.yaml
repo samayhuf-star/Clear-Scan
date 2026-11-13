@@ -1,5 +1,5 @@
 appId: com.samayhuf.clearscan
-name: Import a seeded photo as a scan
+name: Import a seeded photo and reach the scan result
 ---
 - assertVisible:
     id: "home-screen"
@@ -13,7 +13,17 @@ name: Import a seeded photo as a scan
     optional: true
 - waitForAnimationToEnd:
     timeout: 4000
-# The iOS photo picker is system UI and can vary by simulator.
+# The iOS photo picker is system UI and can vary by simulator. Never keep a
+# permission dialog or the picker itself as a named main-screen shot.
+- tapOn:
+    text: "Allow Access to All Photos"
+    optional: true
+- tapOn:
+    text: "Allow"
+    optional: true
+- tapOn:
+    text: "OK"
+    optional: true
 - tapOn:
     point: "20%,30%"
     optional: true
@@ -26,3 +36,19 @@ name: Import a seeded photo as a scan
 - tapOn:
     text: "Choose"
     optional: true
+- extendedWaitUntil:
+    visible:
+      id: "scanning-screen"
+    timeout: 15000
+    optional: true
+- runFlow:
+    when:
+      visible:
+        id: "scanning-screen"
+    commands:
+      - takeScreenshot: 02-scanning
+- extendedWaitUntil:
+    visible:
+      id: "doc-screen"
+    timeout: 60000
+- takeScreenshot: 03-result

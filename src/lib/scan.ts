@@ -2,7 +2,7 @@ import DocumentScanner, { ScanDocumentResponseStatus } from 'react-native-docume
 import * as ImagePicker from 'expo-image-picker';
 import * as ImageManipulator from 'expo-image-manipulator';
 import { extractTextFromImage, isSupported } from 'expo-text-extractor';
-import { copyIn, ensureDir, abs } from './files';
+import { copyIn, ensureDir, abs, exists } from './files';
 import { classify, smartTitle } from './classify';
 import { insertDoc } from './db';
 
@@ -44,9 +44,23 @@ async function recognise(uri: string): Promise<string> {
  * Saves scanned images as a document: copies them into the app, reads the text on-device,
  * names and sorts the document, and stores everything locally.
  */
+async function holdIfQaRequested() {
+  // Used only by the sim-QA runner: a marker file in Documents keeps the
+  // in-app scanning overlay on screen long enough for a clean screenshot.
+  // The file is never shipped with the app and is absent in App Store builds.
+  try {
+    if (await exists('.clearscan-qa-hold')) {
+      await new Promise((r) => setTimeout(r, 2800));
+    }
+  } catch {
+    /* ignore */
+  }
+}
+
 export async function saveScan(uris: string[], onProgress?: (p: Progress) => void): Promise<string> {
   const id = newId();
   const created = Date.now();
+  await holdIfQaRequested();
   await ensureDir(`scans/${id}`);
 
   const pages: { image: string; text: string }[] = [];

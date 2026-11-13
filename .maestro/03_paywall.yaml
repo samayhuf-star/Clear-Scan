@@ -26,3 +26,4 @@ name: Open the paywall and assert chrome, prices and trial copy
 - assertVisible: "Try 7 days free, then .*19\\.99.*/year"
 - assertVisible: "one-time"
 - assertNotVisible: "Try 7 days free, then .*39\\.99.*"
+- takeScreenshot: 05-paywall

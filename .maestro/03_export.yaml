@@ -1,0 +1,18 @@
+appId: com.samayhuf.clearscan
+name: Open the Share PDF export options, then cancel
+---
+- assertVisible:
+    id: "doc-screen"
+- tapOn:
+    id: "doc-export-pdf"
+- extendedWaitUntil:
+    visible: "PDF size"
+    timeout: 8000
+- extendedWaitUntil:
+    visible: ".*Small.*"
+    timeout: 5000
+- takeScreenshot: 04-export
+- tapOn:
+    text: "Cancel"
+- assertVisible:
+    id: "doc-screen"

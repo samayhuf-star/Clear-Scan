@@ -111,9 +111,9 @@ export default function DocScreen() {
   };
 
   return (
-    <View style={[s.root, { backgroundColor: t.bg, paddingTop: insets.top }]}>
+    <View style={[s.root, { backgroundColor: t.bg, paddingTop: insets.top }]} testID="doc-screen">
       <View style={s.nav}>
-        <Press onPress={() => router.back()} style={[s.iconBtn, { backgroundColor: t.surface }]} accessibilityLabel="Back">
+        <Press onPress={() => router.back()} style={[s.iconBtn, { backgroundColor: t.surface }]} accessibilityLabel="Back" testID="doc-back">
           <Ionicons name="chevron-back" size={22} color={t.ink} />
         </Press>
         <View style={{ flex: 1, paddingHorizontal: 12 }}>
@@ -122,7 +122,7 @@ export default function DocScreen() {
             {fmtDate(doc.created)} · {doc.pages} {doc.pages === 1 ? 'page' : 'pages'} · {doc.kind}
           </Text>
         </View>
-        <Press onPress={more} style={[s.iconBtn, { backgroundColor: t.surface }]} accessibilityLabel="More">
+        <Press onPress={more} style={[s.iconBtn, { backgroundColor: t.surface }]} accessibilityLabel="More" testID="doc-more">
           <Ionicons name="ellipsis-horizontal" size={20} color={t.ink} />
         </Press>
       </View>
@@ -163,7 +163,7 @@ export default function DocScreen() {
       )}
 
       <View style={[s.actions, { paddingBottom: insets.bottom + 12, backgroundColor: t.bg }]}>
-        <Press onPress={chooseQuality} disabled={busy} haptic="medium" style={[s.primary, { backgroundColor: t.brand }]}>
+        <Press onPress={chooseQuality} disabled={busy} haptic="medium" style={[s.primary, { backgroundColor: t.brand }]} testID="doc-export-pdf">
           <Ionicons name="share-outline" size={20} color="#fff" />
           <Text style={s.primaryText}>{busy ? 'Preparing' : 'Share PDF'}</Text>
         </Press>

@@ -1,0 +1,19 @@
+appId: com.samayhuf.clearscan
+name: Return to a clean home screen with the saved scan
+---
+- tapOn:
+    id: "doc-back"
+    optional: true
+- tapOn:
+    text: "Cancel"
+    optional: true
+- extendedWaitUntil:
+    visible:
+      id: "home-screen"
+    timeout: 10000
+- tapOn:
+    text: "Dismiss"
+    optional: true
+- assertVisible:
+    id: "home-doc"
+- takeScreenshot: 01-home
