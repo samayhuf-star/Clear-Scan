@@ -45,7 +45,6 @@ export default function Home() {
   }, [query, chip]);
 
   useFocusEffect(refresh);
-  useEffect(refresh, [refresh]);
 
   if (!onboarded) return <Redirect href="/onboarding" />;
 

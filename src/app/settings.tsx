@@ -12,6 +12,22 @@ import { useTheme } from '../lib/theme';
 
 type Icon = React.ComponentProps<typeof Ionicons>['name'];
 
+function Row({ icon, label, sub, onPress, right }: { icon: Icon; label: string; sub?: string; onPress?: () => void; right?: React.ReactNode }) {
+  const t = useTheme();
+  return (
+    <Press onPress={onPress} haptic={onPress ? 'light' : 'none'} style={[s.row, { backgroundColor: t.surface, borderColor: t.line }]}>
+      <View style={[s.icon, { backgroundColor: t.brandSoft }]}>
+        <Ionicons name={icon} size={18} color={t.brand} />
+      </View>
+      <View style={{ flex: 1 }}>
+        <Text style={{ color: t.ink, fontWeight: '700', fontSize: 15 }}>{label}</Text>
+        {sub ? <Text style={{ color: t.muted, fontSize: 13, marginTop: 2 }}>{sub}</Text> : null}
+      </View>
+      {right ?? (onPress ? <Ionicons name="chevron-forward" size={18} color={t.muted} /> : null)}
+    </Press>
+  );
+}
+
 export default function Settings() {
   const t = useTheme();
   const plus = usePlus();
@@ -31,19 +47,6 @@ export default function Settings() {
     kvSet('lock', v ? '1' : '0');
     setLock(v);
   };
-
-  const Row = ({ icon, label, sub, onPress, right }: { icon: Icon; label: string; sub?: string; onPress?: () => void; right?: React.ReactNode }) => (
-    <Press onPress={onPress} haptic={onPress ? 'light' : 'none'} style={[s.row, { backgroundColor: t.surface, borderColor: t.line }]}>
-      <View style={[s.icon, { backgroundColor: t.brandSoft }]}>
-        <Ionicons name={icon} size={18} color={t.brand} />
-      </View>
-      <View style={{ flex: 1 }}>
-        <Text style={{ color: t.ink, fontWeight: '700', fontSize: 15 }}>{label}</Text>
-        {sub ? <Text style={{ color: t.muted, fontSize: 13, marginTop: 2 }}>{sub}</Text> : null}
-      </View>
-      {right ?? (onPress ? <Ionicons name="chevron-forward" size={18} color={t.muted} /> : null)}
-    </Press>
-  );
 
   return (
     <View style={[s.root, { backgroundColor: t.bg }]}>
@@ -85,18 +88,18 @@ export default function Settings() {
           ))}
         </View>
 
-        <Row icon="refresh" label="Restore purchases" onPress={async () => {
+        <Row icon="refresh" label="Restore Purchases" onPress={async () => {
           try {
             const ok = await restore();
-            Alert.alert(ok ? 'Restored' : 'Nothing to restore', ok ? 'ClearScan Plus is active again.' : 'No active subscription found on this Apple ID.');
+            Alert.alert(ok ? 'Restored' : 'Nothing to restore', ok ? 'ClearScan Plus is active again.' : 'No active ClearScan Plus purchase was found on this Apple ID.');
           } catch (e: any) {
             Alert.alert('Restore failed', e?.message ?? 'Please try again.');
           }
         }} />
         <Row icon="star" label="Rate ClearScan" onPress={async () => { if (await StoreReview.hasAction()) StoreReview.requestReview(); }} />
         <Row icon="mail" label="Contact support" sub={CONFIG.supportEmail} onPress={() => Linking.openURL(`mailto:${CONFIG.supportEmail}?subject=ClearScan%20support`)} />
-        <Row icon="document-text" label="Privacy policy" onPress={() => Linking.openURL(CONFIG.privacyUrl)} />
-        <Row icon="reader" label="Terms of use" onPress={() => Linking.openURL(CONFIG.termsUrl)} />
+        <Row icon="document-text" label="Privacy Policy" onPress={() => Linking.openURL(CONFIG.privacyUrl)} />
+        <Row icon="reader" label="Terms of Use" onPress={() => Linking.openURL(CONFIG.termsUrl)} />
         <Text style={{ color: t.muted, textAlign: 'center', marginTop: 8, fontSize: 12 }}>ClearScan 1.0.0</Text>
       </ScrollView>
     </View>
