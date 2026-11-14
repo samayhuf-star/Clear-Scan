@@ -26,9 +26,12 @@ export function Press({ children, onPress, style, haptic = 'light', disabled, ac
       disabled={disabled}
       hitSlop={hitSlop}
       onPressIn={() => {
+        // Reanimated shared values are meant to be written. The hooks immutability rule does not model that.
+        // eslint-disable-next-line react-hooks/immutability
         scale.value = withSpring(0.96, { damping: 18, stiffness: 400 });
       }}
       onPressOut={() => {
+        // eslint-disable-next-line react-hooks/immutability
         scale.value = withSpring(1, { damping: 14, stiffness: 300 });
       }}
       onPress={() => {
