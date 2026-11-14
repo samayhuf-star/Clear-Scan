@@ -1,0 +1,271 @@
+{
+  "6834361474": {
+    "state": "READY_TO_SUBMIT",
+    "reviewNote": "ClearScan Pro Monthly. Pro unlocks filtering the library by document type (Receipt, Invoice, ID, Letter) and export as Word or Markdown. Scanning, on-device text recognition, search, PDF export and app lock stay free with no watermark. In the US it is $2.99 a month with a 7-day free trial for new subscribers; it renews unless cancelled at least 24 hours before the trial or period ends. To open the paywall: Settings > Get ClearScan Pro, or tap a type filter on the home screen, or choose Export as Word or Markdown on a document. Restore purchases is on the paywall and in Settings. No account is required.",
+    "shot": [
+      "412ed46b-6abf-48e7-b910-b15b746a88e4",
+      "COMPLETE",
+      [
+        1290,
+        2796
+      ]
+    ],
+    "loc": [
+      [
+        "en-US",
+        "ClearScan Pro Monthly",
+        "Auto-sort and Word or Markdown export, billed monthly",
+        "PREPARE_FOR_SUBMISSION"
+      ]
+    ],
+    "USA": [
+      "2.99"
+    ],
+    "introCount": 175,
+    "USAintro": [
+      {
+        "startDate": "2026-11-13",
+        "endDate": null,
+        "duration": "ONE_WEEK",
+        "offerMode": "FREE_TRIAL",
+        "numberOfPeriods": 1,
+        "targetSubscriptionPlanType": "UPFRONT"
+      }
+    ]
+  },
+  "6834351556": {
+    "state": "READY_TO_SUBMIT",
+    "reviewNote": "ClearScan Pro Yearly. Pro unlocks filtering the library by document type (Receipt, Invoice, ID, Letter) and export as Word or Markdown. Scanning, on-device text recognition, search, PDF export and app lock stay free with no watermark. In the US it is $19.99 a year with a 7-day free trial for new subscribers; it renews unless cancelled at least 24 hours before the trial or period ends. To open the paywall: Settings > Get ClearScan Pro, or tap a type filter on the home screen, or choose Export as Word or Markdown on a document. Restore purchases is on the paywall and in Settings. No account is required.",
+    "shot": [
+      "446a48a0-d37e-4cd1-bdd7-17af915b4dc8",
+      "COMPLETE",
+      [
+        1290,
+        2796
+      ]
+    ],
+    "loc": [
+      [
+        "en-US",
+        "ClearScan Pro Yearly",
+        "Auto-sort and Word or Markdown export, billed yearly",
+        "PREPARE_FOR_SUBMISSION"
+      ]
+    ],
+    "USA": [
+      "19.99"
+    ],
+    "introCount": 175,
+    "USAintro": [
+      {
+        "startDate": "2026-11-13",
+        "endDate": null,
+        "duration": "ONE_WEEK",
+        "offerMode": "FREE_TRIAL",
+        "numberOfPeriods": 1,
+        "targetSubscriptionPlanType": "UPFRONT"
+      }
+    ]
+  },
+  "6834367887": {
+    "state": "READY_TO_SUBMIT",
+    "reviewNote": "ClearScan Pro Lifetime. Pro unlocks filtering the library by document type (Receipt, Invoice, ID, Letter) and export as Word or Markdown. Scanning, on-device text recognition, search, PDF export and app lock stay free with no watermark. In the US it is $39.99 as a one-time non-consumable purchase with no trial and no renewal. To open the paywall: Settings > Get ClearScan Pro, or tap a type filter on the home screen, or choose Export as Word or Markdown on a document. Restore purchases is on the paywall and in Settings. No account is required.",
+    "shot": [
+      "0fc464eb-11b7-4948-ab95-857d0df23ed4",
+      "COMPLETE"
+    ],
+    "loc": [
+      [
+        "en-US",
+        "ClearScan Pro Lifetime",
+        "Unlock ClearScan Pro forever on this Apple ID.",
+        "PREPARE_FOR_SUBMISSION"
+      ]
+    ],
+    "manualPrices": [
+      "AFG",
+      "AGO",
+      "AIA",
+      "ALB",
+      "ARE",
+      "ARG",
+      "ARM",
+      "ATG",
+      "AUS",
+      "AUT",
+      "AZE",
+      "BEL",
+      "BEN",
+      "BFA",
+      "BGR",
+      "BHR",
+      "BHS",
+      "BIH",
+      "BLR",
+      "BLZ",
+      "BMU",
+      "BOL",
+      "BRA",
+      "BRB",
+      "BRN",
+      "BTN",
+      "BWA",
+      "CAN",
+      "CHE",
+      "CHL",
+      "CHN",
+      "CIV",
+      "CMR",
+      "COD",
+      "COG",
+      "COL",
+      "CPV",
+      "CRI",
+      "CYM",
+      "CYP",
+      "CZE",
+      "DEU",
+      "DMA",
+      "DNK",
+      "DOM",
+      "DZA",
+      "ECU",
+      "EGY",
+      "ESP",
+      "EST"
+    ],
+    "pricePoints": [
+      "39.99",
+      "39.99",
+      "39.99",
+      "49.99",
+      "149.99",
+      "39.99",
+      "49.99",
+      "39.99",
+      "59.99",
+      "44.99",
+      "49.99",
+      "44.99",
+      "49.99",
+      "39.99",
+      "44.99",
+      "39.99",
+      "39.99",
+      "44.99",
+      "49.99",
+      "39.99",
+      "39.99",
+      "39.99",
+      "249.9",
+      "49.99",
+      "39.99",
+      "39.99",
+      "39.99",
+      "49.99",
+      "35.0",
+      "49990",
+      "298.0",
+      "49.99",
+      "49.99",
+      "39.99",
+      "49.99",
+      "199900.0",
+      "39.99",
+      "39.99",
+      "39.99",
+      "44.99",
+      "999.0",
+      "44.99",
+      "39.99",
+      "349.0",
+      "39.99",
+      "39.99",
+      "39.99",
+      "1999.99",
+      "44.99",
+      "44.99"
+    ],
+    "availableTerritories": 175,
+    "availInNew": {
+      "availableInNewTerritories": true
+    }
+  },
+  "group": {
+    "name": "ClearScan Pro",
+    "customAppName": null,
+    "locale": "en-US",
+    "state": "PREPARE_FOR_SUBMISSION"
+  },
+  "info": {
+    "appStoreState": "PREPARE_FOR_SUBMISSION",
+    "state": "PREPARE_FOR_SUBMISSION",
+    "appStoreAgeRating": "FOUR_PLUS",
+    "australiaAgeRating": null,
+    "brazilAgeRating": "L",
+    "brazilAgeRatingV2": "SELF_RATED_L",
+    "franceAgeRating": null,
+    "koreaAgeRating": null
+  },
+  "age": {
+    "advertising": false,
+    "alcoholTobaccoOrDrugUseOrReferences": "NONE",
+    "contests": "NONE",
+    "gambling": false,
+    "gamblingSimulated": "NONE",
+    "gunsOrOtherWeapons": "NONE",
+    "healthOrWellnessTopics": false,
+    "kidsAgeBand": null,
+    "lootBox": false,
+    "medicalOrTreatmentInformation": "NONE",
+    "messagingAndChat": false,
+    "parentalControls": false,
+    "profanityOrCrudeHumor": "NONE",
+    "ageAssurance": false,
+    "sexualContentGraphicAndNudity": "NONE",
+    "sexualContentOrNudity": "NONE",
+    "socialMedia": false,
+    "socialMediaAgeRestricted": false,
+    "horrorOrFearThemes": "NONE",
+    "matureOrSuggestiveThemes": "NONE",
+    "unrestrictedWebAccess": false,
+    "userGeneratedContent": false,
+    "violenceCartoonOrFantasy": "NONE",
+    "violenceRealisticProlongedGraphicOrSadistic": "NONE",
+    "violenceRealistic": "NONE",
+    "ageRatingOverride": "NONE",
+    "ageRatingOverrideV2": "NONE",
+    "koreaAgeRatingOverride": "NONE",
+    "gracRatingClassificationNumber": null,
+    "developerAgeRatingInfoUrl": null
+  },
+  "contentRights": "DOES_NOT_USE_THIRD_PARTY_CONTENT",
+  "reviewDetail": {
+    "id": "b3d29f58-cee2-428a-b4cf-06642ef65256",
+    "contactFirstName": "Samay",
+    "contactLastName": "Vashsht",
+    "contactPhone": "[phone redacted]",
+    "contactEmail": "samayhuf@gmail.com",
+    "demoAccountName": null,
+    "demoAccountPassword": null,
+    "demoAccountRequired": false,
+    "notesMatch": true,
+    "notesLen": 3907,
+    "fileLen": 3907,
+    "stripMatch": true
+  },
+  "version": "PREPARE_FOR_SUBMISSION",
+  "reviewSubmissions": 0,
+  "appPrice": {
+    "manual": [
+      [
+        "USA",
+        [
+          "0.0"
+        ]
+      ]
+    ],
+    "base": "USA",
+    "auto": 174
+  }
+}

@@ -1,0 +1,193 @@
+[
+  {
+    "step": "old_shot_delete",
+    "pid": "6834361474",
+    "id": "412ed46b-6abf-48e7-b910-b15b746a88e4",
+    "status": 204
+  },
+  {
+    "step": "reserve",
+    "pid": "6834361474",
+    "status": 201,
+    "text": null
+  },
+  {
+    "step": "chunk",
+    "pid": "6834361474",
+    "status": 200,
+    "offset": 0
+  },
+  {
+    "step": "commit",
+    "pid": "6834361474",
+    "shot": "aff8a0b9-311e-49eb-ac94-ac77e2369259",
+    "status": 200,
+    "text": null
+  },
+  {
+    "step": "shot_state",
+    "pid": "6834361474",
+    "shot": "aff8a0b9-311e-49eb-ac94-ac77e2369259",
+    "state": "COMPLETE"
+  },
+  {
+    "step": "old_shot_delete",
+    "pid": "6834351556",
+    "id": "446a48a0-d37e-4cd1-bdd7-17af915b4dc8",
+    "status": 204
+  },
+  {
+    "step": "reserve",
+    "pid": "6834351556",
+    "status": 201,
+    "text": null
+  },
+  {
+    "step": "chunk",
+    "pid": "6834351556",
+    "status": 200,
+    "offset": 0
+  },
+  {
+    "step": "commit",
+    "pid": "6834351556",
+    "shot": "0423636a-6dac-46a1-a5c3-7e6d95389984",
+    "status": 200,
+    "text": null
+  },
+  {
+    "step": "shot_state",
+    "pid": "6834351556",
+    "shot": "0423636a-6dac-46a1-a5c3-7e6d95389984",
+    "state": "COMPLETE"
+  },
+  {
+    "step": "old_shot_delete",
+    "pid": "6834367887",
+    "id": "0fc464eb-11b7-4948-ab95-857d0df23ed4",
+    "status": 204
+  },
+  {
+    "step": "reserve",
+    "pid": "6834367887",
+    "status": 201,
+    "text": null
+  },
+  {
+    "step": "chunk",
+    "pid": "6834367887",
+    "status": 200,
+    "offset": 0
+  },
+  {
+    "step": "commit",
+    "pid": "6834367887",
+    "shot": "ce68ed48-78d3-44c1-950d-7f931039ae32",
+    "status": 200,
+    "text": null
+  },
+  {
+    "step": "shot_state",
+    "pid": "6834367887",
+    "shot": "ce68ed48-78d3-44c1-950d-7f931039ae32",
+    "state": "COMPLETE"
+  },
+  {
+    "step": "sub_state",
+    "pid": "6834361474",
+    "state": "READY_TO_SUBMIT"
+  },
+  {
+    "step": "sub_state",
+    "pid": "6834351556",
+    "state": "READY_TO_SUBMIT"
+  },
+  {
+    "step": "iap_state",
+    "pid": "6834367887",
+    "state": "READY_TO_SUBMIT"
+  },
+  {
+    "step": "version",
+    "state": "PREPARE_FOR_SUBMISSION",
+    "release": "AFTER_APPROVAL",
+    "build": "a889c064-96f1-42c7-8cb4-7e0fc4a111a1"
+  },
+  {
+    "step": "existing_subs",
+    "subs": []
+  },
+  {
+    "step": "create_sub",
+    "status": 201,
+    "text": null
+  },
+  {
+    "step": "item",
+    "rel": "appStoreVersion",
+    "id": "40d9a518-40d8-4418-9622-54b6e7904e77",
+    "status": 201,
+    "text": null
+  },
+  {
+    "step": "item",
+    "rel": "subscriptionVersion",
+    "id": "7875813d-b7d0-4e43-b4c3-302e4972b640",
+    "status": 201,
+    "text": null
+  },
+  {
+    "step": "item",
+    "rel": "subscriptionVersion",
+    "id": "9f6903c7-ad96-4c8e-a646-94209d866e69",
+    "status": 201,
+    "text": null
+  },
+  {
+    "step": "item",
+    "rel": "subscriptionGroupVersion",
+    "id": "2d877d78-e08a-44b4-b002-434c2874bb7b",
+    "status": 201,
+    "text": null
+  },
+  {
+    "step": "item",
+    "rel": "inAppPurchaseVersion",
+    "id": "2b640f60-bc3d-4057-b694-77773070cfa0",
+    "status": 201,
+    "text": null
+  },
+  {
+    "step": "submit",
+    "id": "c06823b1-9e20-457e-bdd1-74d9449763dd",
+    "status": 200,
+    "text": null
+  },
+  {
+    "step": "readback",
+    "id": "c06823b1-9e20-457e-bdd1-74d9449763dd",
+    "state": "WAITING_FOR_REVIEW",
+    "items": [
+      [
+        "YzA2ODIzYjEtOWUyMC00NTdlLWJkZDEtNzRkOTQ0OTc2M2RkfDZ8ODk0OTk5OTUz",
+        "READY_FOR_REVIEW"
+      ],
+      [
+        "YzA2ODIzYjEtOWUyMC00NTdlLWJkZDEtNzRkOTQ0OTc2M2RkfDE4fDc4NzU4MTNkLWI3ZDAtNGU0My1iNGMzLTMwMmU0OTcyYjY0MA",
+        "READY_FOR_REVIEW"
+      ],
+      [
+        "YzA2ODIzYjEtOWUyMC00NTdlLWJkZDEtNzRkOTQ0OTc2M2RkfDE4fDlmNjkwM2M3LWFkOTYtNGM4ZS1hNjQ2LTk0MjA5ZDg2NmU2OQ",
+        "READY_FOR_REVIEW"
+      ],
+      [
+        "YzA2ODIzYjEtOWUyMC00NTdlLWJkZDEtNzRkOTQ0OTc2M2RkfDE5fDJkODc3ZDc4LWUwOGEtNDRiNC1iMDAyLTQzNGMyODc0YmI3Yg",
+        "READY_FOR_REVIEW"
+      ],
+      [
+        "YzA2ODIzYjEtOWUyMC00NTdlLWJkZDEtNzRkOTQ0OTc2M2RkfDE3fDJiNjQwZjYwLWJjM2QtNDA1Ny1iNjk0LTc3NzczMDcwY2ZhMA",
+        "READY_FOR_REVIEW"
+      ]
+    ]
+  }
+]

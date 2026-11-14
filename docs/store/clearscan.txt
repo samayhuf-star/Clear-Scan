@@ -1,0 +1,35 @@
+1. Purpose and target audience
+ClearScan is a document scanner for everyday iPhone users who want a clean, searchable PDF of a page or receipt, with text read on the device and no watermark. It is a general consumer app and does not provide identity verification or payment processing. The app is free to download (US $0.00).
+
+2. Setup and how to reach the main and paid features
+No account or sign-in is required. The app is not a hard paywall.
+
+• First launch shows a short introduction. The user can skip it or tap “Try your first scan”.
+• Scan: tap Scan to open the system document camera, or Import photos to choose images from the library. Pages stay on the device. Text is extracted automatically on the iPhone and embedded in the PDF so the file can be searched. There is no watermark on any plan.
+• Home: search looks inside the text of every scan. Documents can be starred. Optional app lock uses Face ID or the device passcode (Settings > Lock with Face ID).
+• Document: open a scan to review pages and text, then share a PDF, images or plain text (all free).
+
+Paid features (ClearScan Pro) open only when a Pro control is tapped. The paywall has a close control and a “Not now” link.
+• Open Settings > Get ClearScan Pro. Or, on the home screen, tap a type filter (Receipt, Invoice, ID or Letter). Or, on a document, choose Export as Word or Export as Markdown.
+• Pro unlocks: filtering the library by those types (suggested from the on-device text), and export as Word or Markdown.
+• Scanning, on-device text recognition, search, PDF export, starring documents and app lock stay free.
+• Restore purchases is on the paywall and in Settings.
+
+Products sold through Apple In-App Purchase (StoreKit 2), US prices:
+• com.samayhuf.clearscan.pro.monthly — $2.99/month, 7-day free trial for new subscribers
+• com.samayhuf.clearscan.pro.yearly — $19.99/year, 7-day free trial for new subscribers
+• com.samayhuf.clearscan.pro.lifetime — $39.99 one-time non-consumable, no trial
+After a trial, the subscription starts unless cancelled at least 24 hours before the trial ends. Lifetime does not renew. In-app prices are the App Store’s localised prices.
+
+3. External services
+Payments use Apple In-App Purchase (StoreKit 2 via expo-iap). There is no other payment processor and no account service of ours. Scanning uses the system document camera and the photo library. Text is extracted on the device; scans are stored in a local SQLite database and are not uploaded to a server of ours. Sharing uses the system share sheet. Optional app lock uses Face ID or the device passcode. Privacy and Terms links open in the system browser. There are no analytics or tracking SDKs.
+
+4. Regional differences
+Features and content are the same in every region. The download price is Free. Paid prices follow the App Store.
+
+5. Regulated or third-party material
+None. ClearScan is not a medical, financial or other regulated-industry service. A document may be labelled with a type such as receipt, invoice, letter or ID from words found in the text; this is only a library filter, not identity verification. No licensed third-party material.
+Privacy Policy: https://samayhuf-star.github.io/app-legal/clearscan/privacy.html
+Terms of Use: https://samayhuf-star.github.io/app-legal/clearscan/terms.html
+
+Contact: Samay Vashsht, [phone redacted], samayhuf@gmail.com.

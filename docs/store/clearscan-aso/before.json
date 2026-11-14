@@ -1,0 +1,60 @@
+{
+  "appId": "6833164518",
+  "label": "ClearScan",
+  "app_status": 200,
+  "bundle": "com.samayhuf.clearscan",
+  "name": "ClearScan: Private PDF Scanner",
+  "primaryLocale": "en-US",
+  "versions": [
+    {
+      "id": "40d9a518-40d8-4418-9622-54b6e7904e77",
+      "version": "1.0",
+      "state": "PREPARE_FOR_SUBMISSION",
+      "releaseType": "AFTER_APPROVAL",
+      "copyright": "2026 Samay Vashsht",
+      "localizations": [
+        {
+          "id": "9e3ba7e2-1c68-48f3-9ef5-e8c8fe6b9fc7",
+          "locale": "en-US",
+          "description": null,
+          "keywords": null,
+          "promotionalText": null,
+          "whatsNew": null,
+          "supportUrl": null,
+          "marketingUrl": null
+        }
+      ]
+    }
+  ],
+  "appInfos": [
+    {
+      "id": "9e167966-5753-4781-b1bd-2307a437a984",
+      "state": "PREPARE_FOR_SUBMISSION",
+      "ageRating": {
+        "appStoreState": "PREPARE_FOR_SUBMISSION",
+        "state": "PREPARE_FOR_SUBMISSION",
+        "appStoreAgeRating": null,
+        "australiaAgeRating": null,
+        "brazilAgeRating": null,
+        "brazilAgeRatingV2": null,
+        "franceAgeRating": null,
+        "koreaAgeRating": null
+      },
+      "primaryCategory": null,
+      "secondaryCategory": null,
+      "primarySubcategoryOne": null,
+      "primarySubcategoryTwo": null,
+      "secondarySubcategoryOne": null,
+      "secondarySubcategoryTwo": null,
+      "localizations": [
+        {
+          "id": "ac480bcb-9de4-4448-813e-a1da73c94b81",
+          "locale": "en-US",
+          "name": "ClearScan: Private PDF Scanner",
+          "subtitle": null,
+          "privacyPolicyUrl": null
+        }
+      ]
+    }
+  ]
+}

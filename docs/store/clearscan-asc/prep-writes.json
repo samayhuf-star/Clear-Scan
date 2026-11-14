@@ -1,0 +1,111 @@
+[
+  {
+    "step": "sub_note",
+    "pid": "6834361474",
+    "status": 200,
+    "text": null
+  },
+  {
+    "step": "sub_note",
+    "pid": "6834351556",
+    "status": 200,
+    "text": null
+  },
+  {
+    "step": "iap_note",
+    "pid": "6834367887",
+    "status": 200,
+    "text": null
+  },
+  {
+    "step": "reserve",
+    "pid": "6834361474",
+    "status": 201,
+    "text": null
+  },
+  {
+    "step": "chunk",
+    "pid": "6834361474",
+    "status": 200,
+    "offset": 0
+  },
+  {
+    "step": "commit",
+    "pid": "6834361474",
+    "shot": "412ed46b-6abf-48e7-b910-b15b746a88e4",
+    "status": 200,
+    "text": null
+  },
+  {
+    "step": "shot_state",
+    "pid": "6834361474",
+    "shot": "412ed46b-6abf-48e7-b910-b15b746a88e4",
+    "state": "COMPLETE"
+  },
+  {
+    "step": "reserve",
+    "pid": "6834351556",
+    "status": 201,
+    "text": null
+  },
+  {
+    "step": "chunk",
+    "pid": "6834351556",
+    "status": 200,
+    "offset": 0
+  },
+  {
+    "step": "commit",
+    "pid": "6834351556",
+    "shot": "446a48a0-d37e-4cd1-bdd7-17af915b4dc8",
+    "status": 200,
+    "text": null
+  },
+  {
+    "step": "shot_state",
+    "pid": "6834351556",
+    "shot": "446a48a0-d37e-4cd1-bdd7-17af915b4dc8",
+    "state": "COMPLETE"
+  },
+  {
+    "step": "reserve",
+    "pid": "6834367887",
+    "status": 201,
+    "text": null
+  },
+  {
+    "step": "chunk",
+    "pid": "6834367887",
+    "status": 200,
+    "offset": 0
+  },
+  {
+    "step": "commit",
+    "pid": "6834367887",
+    "shot": "0fc464eb-11b7-4948-ab95-857d0df23ed4",
+    "status": 200,
+    "text": null
+  },
+  {
+    "step": "shot_state",
+    "pid": "6834367887",
+    "shot": "0fc464eb-11b7-4948-ab95-857d0df23ed4",
+    "state": "COMPLETE"
+  },
+  {
+    "step": "age",
+    "status": 200,
+    "text": null
+  },
+  {
+    "step": "content_rights",
+    "status": 200,
+    "text": null
+  },
+  {
+    "step": "review_detail",
+    "status": 201,
+    "id": "b3d29f58-cee2-428a-b4cf-06642ef65256",
+    "text": null
+  }
+]

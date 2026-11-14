@@ -1,0 +1,113 @@
+{
+  "intended": {
+    "name": "ClearScan: PDF Scanner & OCR",
+    "name_len": 28,
+    "subtitle": "Scan Documents, No Watermark",
+    "subtitle_len": 28,
+    "keywords": "document,receipt,invoice,offline,private,photo,camera,text,export,free,converter,image,pages,folder",
+    "keywords_len": 99,
+    "promo": "Scan documents and receipts on your iPhone. Text is read on device, so you can search every page. No watermark, no account, no ads. Try Pro free for 7 days.",
+    "promo_len": 156,
+    "description": "Scan a document, receipt or ID and get a clean PDF with no watermark.\n\nText is read on your iPhone, so you can search every page. Nothing is uploaded. No account and no ads.\n\nUnlimited scans are free. Try Pro for 7 days, then $2.99 a month or $19.99 a year, or buy lifetime for $39.99.\n\nFREE, ALWAYS\n- Unlimited scans with automatic edge detection\n- Text recognition (OCR) on your iPhone, no internet needed\n- Search names and the text inside every scan\n- Export searchable PDF, plain text or images\n- Choose PDF size: small, medium or original\n- Lock the app with Face ID\n- Import photos from your library\n\nPRIVATE BY DESIGN\n- Nothing is uploaded. Ever.\n- No sign-up, no tracking, no ads\n\nCLEARSCAN PRO (optional)\n- Auto-sort scans into Receipts, Invoices, IDs and Letters\n- Export as Word or Markdown\n\nClearScan Pro is an auto-renewing subscription, billed monthly or yearly at the price shown in the app before you buy. If you are eligible, the monthly and yearly plans start with a 7-day free trial; the app shows the trial on the plan button only when it applies to you. Payment is charged to your Apple ID when the trial ends, or at purchase if there is no trial. The subscription renews unless cancelled at least 24 hours before the end of the trial or period. Manage or cancel it in your Apple ID settings. Lifetime is a one-time $39.99 purchase with no trial and no renewal. Already subscribed or purchased on another device? Tap Restore purchases.\n\nTerms of Use: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/",
+    "desc_len": 1538,
+    "primary": "BUSINESS",
+    "secondary": "PRODUCTIVITY"
+  },
+  "writes": [
+    {
+      "step": "version localization (desc/keywords/promo)",
+      "status": 200,
+      "error": null
+    },
+    {
+      "step": "app info localization (name/subtitle)",
+      "status": 409,
+      "error": "{\n  \"errors\" : [ {\n    \"id\" : \"beae52bf-6525-418d-a384-74d9054c0987\",\n    \"status\" : \"409\",\n    \"code\" : \"ENTITY_ERROR.ATTRIBUTE.INVALID.DUPLICATE.DIFFERENT_ACCOUNT\",\n    \"title\" : \"The provided entity includes an attribute with a value that has already been used on a different account.\",\n    \"detail\" : \"The app name you entered is already being used. If you have trademark rights to this name and would like it released for your use, submit a claim.\",\n    \"source\" : {\n      \"pointer\" : \"/data/attributes/name\"\n    }\n  } ]\n}"
+    },
+    {
+      "step": "categories BUSINESS / PRODUCTIVITY",
+      "status": 200,
+      "error": null
+    }
+  ],
+  "readback": {
+    "version": {
+      "locale": "en-US",
+      "keywords": "document,receipt,invoice,offline,private,photo,camera,text,export,free,converter,image,pages,folder",
+      "keywords_len": 99,
+      "promotionalText": "Scan documents and receipts on your iPhone. Text is read on device, so you can search every page. No watermark, no account, no ads. Try Pro free for 7 days.",
+      "promo_len": 156,
+      "description": "Scan a document, receipt or ID and get a clean PDF with no watermark.\n\nText is read on your iPhone, so you can search every page. Nothing is uploaded. No account and no ads.\n\nUnlimited scans are free. Try Pro for 7 days, then $2.99 a month or $19.99 a year, or buy lifetime for $39.99.\n\nFREE, ALWAYS\n- Unlimited scans with automatic edge detection\n- Text recognition (OCR) on your iPhone, no internet needed\n- Search names and the text inside every scan\n- Export searchable PDF, plain text or images\n- Choose PDF size: small, medium or original\n- Lock the app with Face ID\n- Import photos from your library\n\nPRIVATE BY DESIGN\n- Nothing is uploaded. Ever.\n- No sign-up, no tracking, no ads\n\nCLEARSCAN PRO (optional)\n- Auto-sort scans into Receipts, Invoices, IDs and Letters\n- Export as Word or Markdown\n\nClearScan Pro is an auto-renewing subscription, billed monthly or yearly at the price shown in the app before you buy. If you are eligible, the monthly and yearly plans start with a 7-day free trial; the app shows the trial on the plan button only when it applies to you. Payment is charged to your Apple ID when the trial ends, or at purchase if there is no trial. The subscription renews unless cancelled at least 24 hours before the end of the trial or period. Manage or cancel it in your Apple ID settings. Lifetime is a one-time $39.99 purchase with no trial and no renewal. Already subscribed or purchased on another device? Tap Restore purchases.\n\nTerms of Use: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/",
+      "desc_len": 1538,
+      "desc_first3": "Scan a document, receipt or ID and get a clean PDF with no watermark.\n\nText is read on your iPhone, so you can search every page. Nothing is uploaded. No account and no ads.\n\nUnlimited scans are free. Try Pro for 7 days, then $2.99 a month or $19.99 a year, or buy lifetime for $39.99.",
+      "match_kw": true,
+      "match_promo": true,
+      "match_desc": true,
+      "supportUrl": null,
+      "whatsNew": null
+    },
+    "infoLoc": {
+      "locale": "en-US",
+      "name": "ClearScan: Private PDF Scanner",
+      "name_len": 30,
+      "subtitle": null,
+      "subtitle_len": 0,
+      "match_name": false,
+      "match_subtitle": false,
+      "privacyPolicyUrl": null
+    },
+    "primary": "BUSINESS",
+    "secondary": "PRODUCTIVITY"
+  },
+  "keyword_skips": [
+    [
+      "id",
+      "no-fit",
+      102
+    ],
+    [
+      "letter",
+      "no-fit",
+      106
+    ],
+    [
+      "import",
+      "no-fit",
+      106
+    ],
+    [
+      "edge",
+      "no-fit",
+      104
+    ],
+    [
+      "search",
+      "no-fit",
+      106
+    ],
+    [
+      "files",
+      "no-fit",
+      105
+    ],
+    [
+      "paper",
+      "no-fit",
+      105
+    ]
+  ],
+  "final": {
+    "name": "ClearScan: Document Scanner",
+    "name_len": 27,
+    "subtitle": "PDF & OCR, No Watermark",
+    "subtitle_len": 23,
+    "keywords": "receipt,invoice,offline,private,photo,camera,text,export,free,converter,image,pages,folder,scan,id",
+    "keywords_len": 98,
+    "promo_len": 156,
+    "desc_len": 1538,
+    "primary": "BUSINESS",
+    "secondary": "PRODUCTIVITY",
+    "captions": "/home/box/shared/app-monitor/reports/clearscan-aso/captions.json",
+    "name_note": "First name \"ClearScan: PDF Scanner & OCR\" was 409 duplicate on another account; \"ClearScan: Document Scanner\" was accepted."
+  }
+}
