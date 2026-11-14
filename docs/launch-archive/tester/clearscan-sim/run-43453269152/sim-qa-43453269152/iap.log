@@ -1,0 +1,14 @@
+2026-11-13 16:19:40.292 Df ClearScanQATests-Runner[20992:47924] (Foundation) [clearscan-qa] SKTestSession (setup) from /tmp/clearscan-sk/ClearScan.storekit
+2026-11-13 16:21:33.105 Df ClearScanQATests-Runner[20992:47924] (Foundation) [clearscan-qa] step 05 FAIL Paywall: local StoreKit prices, 7-day trial, lifetime (attempt 1): monthly trial line=false yearly trial line=false lifetime $39.99 one-time=false no lifetime trial=true session=true swipes=1
+2026-11-13 16:21:42.539 Df ClearScanQATests-Runner[20992:47924] (Foundation) [clearscan-qa] retry: new SKTestSession and relaunch
+2026-11-13 16:21:47.044 Df ClearScanQATests-Runner[20992:47924] (Foundation) [clearscan-qa] SKTestSession (retry) from /tmp/clearscan-sk/ClearScan.storekit
+2026-11-13 16:23:07.884 Df ClearScanQATests-Runner[20992:47924] (Foundation) [clearscan-qa] step 05 FAIL Paywall: local StoreKit prices, 7-day trial, lifetime (attempt 2): monthly trial line=false yearly trial line=false lifetime $39.99 one-time=false no lifetime trial=true session=true swipes=1
+2026-11-13 16:23:13.637 Df ClearScanQATests-Runner[20992:47924] (Foundation) [clearscan-qa] step 22 FAIL Monthly purchase through local StoreKit (no sandbox sign-in): attempt 2: app alert Plans unavailable
+2026-11-13 16:23:13.638 Df ClearScanQATests-Runner[20992:47924] (Foundation) [clearscan-qa] step 23 FAIL Restore purchases (Settings row): skipped, purchase did not complete
+2026-11-13 16:19:40.293178+0000 ClearScanQATests-Runner[20992:293156] [clearscan-qa] SKTestSession (setup) from /tmp/clearscan-sk/ClearScan.storekit
+2026-11-13 16:21:33.106062+0000 ClearScanQATests-Runner[20992:293156] [clearscan-qa] step 05 FAIL Paywall: local StoreKit prices, 7-day trial, lifetime (attempt 1): monthly trial line=false yearly trial line=false lifetime $39.99 one-time=false no lifetime trial=true session=true swipes=1
+2026-11-13 16:21:42.540348+0000 ClearScanQATests-Runner[20992:293156] [clearscan-qa] retry: new SKTestSession and relaunch
+2026-11-13 16:21:47.045959+0000 ClearScanQATests-Runner[20992:293156] [clearscan-qa] SKTestSession (retry) from /tmp/clearscan-sk/ClearScan.storekit
+2026-11-13 16:23:07.885172+0000 ClearScanQATests-Runner[20992:293156] [clearscan-qa] step 05 FAIL Paywall: local StoreKit prices, 7-day trial, lifetime (attempt 2): monthly trial line=false yearly trial line=false lifetime $39.99 one-time=false no lifetime trial=true session=true swipes=1
+2026-11-13 16:23:13.638467+0000 ClearScanQATests-Runner[20992:293156] [clearscan-qa] step 22 FAIL Monthly purchase through local StoreKit (no sandbox sign-in): attempt 2: app alert Plans unavailable
+2026-11-13 16:23:13.639876+0000 ClearScanQATests-Runner[20992:293156] [clearscan-qa] step 23 FAIL Restore purchases (Settings row): skipped, purchase did not complete

@@ -1,0 +1,15 @@
+app: ClearScan.app
+bundle id: com.samayhuf.clearscan
+version: 1.0.0
+build: 5
+Identifier=com.samayhuf.clearscan
+Authority=iPhone Distribution: Sunny Vashisht (PGLT2QZX88)
+Authority=Apple Worldwide Developer Relations Certification Authority
+Authority=Apple Root CA
+TeamIdentifier=PGLT2QZX88
+profile: ClearScan App Store
+profile team: PGLT2QZX88
+profile expires: Wed Nov 10 21:15:51 UTC 2027
+get-task-allow: false
+profile type: APP STORE (no device list)
+codesign verify: OK

@@ -1,0 +1,5 @@
+sandbox paywall cross-check: pass
+storekit copy: no team id
+xcodebuild test exit: 0
+local StoreKit paywall: pass
+purchase and restore: pass

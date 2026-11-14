@@ -1,0 +1,22 @@
+Copied StoreKit config to /Users/runner/work/sim-qa-runner/sim-qa-runner/ios/ClearScan.storekit
+Patched StoreKitConfigurationFileReference into /Users/runner/work/sim-qa-runner/sim-qa-runner/ios/ClearScan.xcodeproj/xcshareddata/xcschemes/ClearScan.xcscheme
+Patched 1 scheme(s)
+==> StoreKit scheme references
+42:      <StoreKitConfigurationFileReference
+43-         identifier = "../ClearScan.storekit">
+44:      </StoreKitConfigurationFileReference>
+45-   </TestAction>
+--
+66:      <StoreKitConfigurationFileReference
+67-         identifier = "../ClearScan.storekit">
+68:      </StoreKitConfigurationFileReference>
+69-   </LaunchAction>
+--
+86:      <StoreKitConfigurationFileReference
+87-         identifier = "../ClearScan.storekit">
+88:      </StoreKitConfigurationFileReference>
+89-   </ProfileAction>
+==> Products in ios/ClearScan.storekit
+com.samayhuf.clearscan.pro.yearly: {'internalID': 'C1D2E3F4', 'paymentMode': 'free', 'subscriptionPeriod': 'P1W'} price=19.99
+com.samayhuf.clearscan.pro.monthly: {'internalID': 'D2E3F4A5', 'paymentMode': 'free', 'subscriptionPeriod': 'P1W'} price=2.99
+com.samayhuf.clearscan.pro.lifetime: introductoryOffer=None price=39.99

@@ -1,0 +1,184 @@
+Command line invocation:
+    /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/xcodebuild test-without-building -workspace ios/ClearScan.xcworkspace -scheme ClearScan -configuration Release -destination "platform=iOS Simulator,id=98A0BFA3-CEC3-4FD6-9916-5A2149774DBF" -derivedDataPath /Users/runner/work/sim-qa-runner/sim-qa-runner/ios/DerivedData -resultBundlePath /tmp/sim-qa/iap/iap.xcresult "-only-testing:ClearScanQATests/SimQATests/testPaywallPurchaseAndRestore"
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  OpenIAP: https://github.com/hyodotdev/openiap.git @ 4.1.0
+
+Writing result bundle at path:
+	/tmp/sim-qa/iap/iap.xcresult
+
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:iOS Simulator, arch:arm64, id:98A0BFA3-CEC3-4FD6-9916-5A2149774DBF, OS:26.2, name:iPhone 17 Pro }
+{ platform:iOS Simulator, arch:x86_64, id:98A0BFA3-CEC3-4FD6-9916-5A2149774DBF, OS:26.2, name:iPhone 17 Pro }
+2026-11-13 21:01:25.374971+0000 ClearScanQATests-Runner[85235:443378] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-13 21:01:28.168.
+Test Suite 'ClearScanQATests.xctest' started at 2026-11-13 21:01:28.171.
+Test Suite 'SimQATests' started at 2026-11-13 21:01:28.171.
+Test Case '-[ClearScanQATests.SimQATests testPaywallPurchaseAndRestore]' started.
+    t =     0.00s Start Test at 2026-11-13 21:01:28.174
+    t =     1.63s Set Up
+2026-11-13 21:01:30.630452+0000 ClearScanQATests-Runner[85235:443378] [clearscan-qa] SKTestSession (setup) from /tmp/clearscan-sk/ClearScan.storekit
+    t =     2.46s Open com.samayhuf.clearscan
+    t =     2.46s     Launch com.samayhuf.clearscan
+2026-11-13 21:01:31.551 xcodebuild[84153:440784] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-11-13 21:01:31.551 xcodebuild[84153:440784] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     7.99s         Setting up automation session
+    t =    10.74s         Wait for com.samayhuf.clearscan to idle
+    t =    12.47s Waiting 25.0s for "home-screen" Any to exist
+    t =    13.56s     Checking `Expect predicate `existsNoRetry == 1` for object "home-screen" Any`
+    t =    13.56s         Checking existence of `"home-screen" Any`
+    t =    15.92s Find the "home-paywall" Any
+    t =    16.15s Tap "home-paywall" Button
+    t =    16.15s     Wait for com.samayhuf.clearscan to idle
+    t =    16.16s     Find the "home-paywall" Button
+    t =    16.28s     Check for interrupting elements affecting "home-paywall" Button
+    t =    16.50s     Synthesize event
+    t =    16.86s     Wait for com.samayhuf.clearscan to idle
+    t =    17.39s Waiting 15.0s for "paywall-screen" Any to exist
+    t =    18.44s     Checking `Expect predicate `existsNoRetry == 1` for object "paywall-screen" Any`
+    t =    18.44s         Checking existence of `"paywall-screen" Any`
+    t =    20.53s Waiting 40.0s for Any (First Match) to exist
+    t =    21.58s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    21.58s         Checking existence of `Any (First Match)`
+    t =    21.76s Checking existence of `"paywall-plan-lifetime" Any`
+    t =    22.00s Find the "paywall-plan-lifetime" Any
+    t =    22.28s Swipe up ScrollView (First Match)
+    t =    22.28s     Wait for com.samayhuf.clearscan to idle
+    t =    22.28s     Find the ScrollView (First Match)
+    t =    22.38s     Check for interrupting elements affecting ScrollView
+    t =    22.51s     Synthesize event
+    t =    23.12s     Wait for com.samayhuf.clearscan to idle
+    t =    24.78s Checking existence of `"paywall-plan-lifetime" Button`
+    t =    24.99s Find the "paywall-plan-lifetime" Button
+    t =    25.26s Find the "paywall-plan-lifetime" Button
+    t =    25.48s Find the Target Application 'com.samayhuf.clearscan'
+    t =    27.02s Waiting 20.0s for Any (First Match) to exist
+    t =    28.09s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    28.09s         Checking existence of `Any (First Match)`
+    t =    28.17s Checking existence of `Any (First Match)`
+    t =    28.23s Checking existence of `Any (First Match)`
+    t =    28.32s Checking existence of `Any (First Match)`
+    t =    28.71s Added attachment named '05-paywall'
+2026-11-13 21:01:56.891514+0000 ClearScanQATests-Runner[85235:443378] [clearscan-qa] step 05 PASS Paywall: local StoreKit prices, 7-day trial, lifetime (attempt 1): monthly trial line=true yearly trial line=true lifetime $39.99 one-time=true no lifetime trial=true session=true swipes=1
+    t =    28.72s Checking existence of `"paywall-plan-monthly" Any`
+    t =    28.95s Find the "paywall-plan-monthly" Any
+    t =    29.12s Tap "paywall-plan-monthly" Button
+    t =    29.12s     Wait for com.samayhuf.clearscan to idle
+    t =    29.13s     Find the "paywall-plan-monthly" Button
+    t =    29.23s     Check for interrupting elements affecting "paywall-plan-monthly" Button
+    t =    29.32s     Synthesize event
+    t =    29.66s     Wait for com.samayhuf.clearscan to idle
+    t =    30.46s Find the "paywall-buy" Any
+    t =    30.60s Tap "paywall-buy" Button
+    t =    30.60s     Wait for com.samayhuf.clearscan to idle
+    t =    30.61s     Find the "paywall-buy" Button
+    t =    30.69s     Check for interrupting elements affecting "paywall-buy" Button
+    t =    30.86s     Synthesize event
+    t =    31.18s     Wait for com.samayhuf.clearscan to idle
+    t =    31.20s Checking existence of `Any (First Match)`
+    t =    31.46s Checking existence of `Any (First Match)`
+    t =    31.67s Checking existence of `Any (First Match)`
+    t =    31.85s Checking existence of `Any (First Match)`
+    t =    32.52s Checking existence of `Any (First Match)`
+    t =    33.00s Checking existence of `Any (First Match)`
+    t =    33.38s Checking existence of `"Subscribe" Button`
+    t =    33.77s Checking existence of `"Purchase" Button`
+    t =    34.07s Checking existence of `"Buy" Button`
+    t =    34.34s Checking existence of `"Confirm" Button`
+    t =    34.58s Checking existence of `"Start Free Trial" Button`
+    t =    34.77s Checking existence of `"Try It Free" Button`
+    t =    35.15s Checking existence of `"Subscribe" Button`
+    t =    35.29s Checking existence of `"Purchase" Button`
+    t =    35.42s Checking existence of `"Buy" Button`
+    t =    35.52s Checking existence of `"Confirm" Button`
+    t =    35.60s Checking existence of `"Start Free Trial" Button`
+    t =    35.69s Checking existence of `"Try It Free" Button`
+    t =    35.78s Checking existence of `Alert (First Match)`
+    t =    36.05s Checking existence of `"paywall-screen" Any`
+    t =    36.64s Checking existence of `Any (First Match)`
+    t =    36.77s Checking existence of `Any (First Match)`
+    t =    36.93s Checking existence of `Any (First Match)`
+    t =    37.01s Checking existence of `Any (First Match)`
+    t =    37.60s Checking existence of `Any (First Match)`
+    t =    38.12s Checking existence of `Any (First Match)`
+    t =    38.74s Checking existence of `"Subscribe" Button`
+    t =    39.18s Checking existence of `"Purchase" Button`
+    t =    39.54s Checking existence of `"Buy" Button`
+    t =    39.78s Checking existence of `"Confirm" Button`
+    t =    39.98s Checking existence of `"Start Free Trial" Button`
+    t =    40.13s Checking existence of `"Try It Free" Button`
+    t =    40.28s Checking existence of `"Subscribe" Button`
+    t =    40.37s Checking existence of `"Purchase" Button`
+    t =    40.46s Checking existence of `"Buy" Button`
+    t =    40.56s Checking existence of `"Confirm" Button`
+    t =    40.62s Checking existence of `"Start Free Trial" Button`
+    t =    40.71s Checking existence of `"Try It Free" Button`
+    t =    40.79s Checking existence of `Alert (First Match)`
+    t =    40.94s Checking existence of `"paywall-screen" Any`
+    t =    43.25s Checking existence of `"paywall-screen" Any`
+    t =    43.53s Waiting 10.0s for "home-settings" Any to exist
+    t =    44.57s     Checking `Expect predicate `existsNoRetry == 1` for object "home-settings" Any`
+    t =    44.58s         Checking existence of `"home-settings" Any`
+    t =    44.70s Find the "home-settings" Any
+    t =    44.88s Tap "home-settings" Button
+    t =    44.88s     Wait for com.samayhuf.clearscan to idle
+    t =    44.88s     Find the "home-settings" Button
+    t =    45.03s     Check for interrupting elements affecting "home-settings" Button
+    t =    45.34s     Synthesize event
+    t =    45.69s     Wait for com.samayhuf.clearscan to idle
+    t =    46.15s Waiting 15.0s for Any (First Match) to exist
+    t =    47.16s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    47.16s         Checking existence of `Any (First Match)`
+    t =    47.49s Added attachment named '22-purchase-success'
+    t =    47.49s Checking existence of `"paywall-screen" Any`
+2026-11-13 21:02:16.365671+0000 ClearScanQATests-Runner[85235:443378] [clearscan-qa] step 22 PASS Monthly purchase through local StoreKit (no sandbox sign-in): attempt 1: paywallClosed=true localSheetShown=false proActive=true; local tx com.samayhuf.clearscan.pro.monthly expires in 7.0d
+    t =    48.20s Checking existence of `"settings-restore" Any`
+    t =    48.52s Waiting 10.0s for "settings-restore" Any to exist
+    t =    49.58s     Checking `Expect predicate `existsNoRetry == 1` for object "settings-restore" Any`
+    t =    49.59s         Checking existence of `"settings-restore" Any`
+    t =    49.94s Find the "settings-restore" Any
+    t =    50.32s Tap "settings-restore" Button
+    t =    50.32s     Wait for com.samayhuf.clearscan to idle
+    t =    50.33s     Find the "settings-restore" Button
+    t =    50.72s     Check for interrupting elements affecting "settings-restore" Button
+    t =    50.91s     Synthesize event
+    t =    51.24s     Wait for com.samayhuf.clearscan to idle
+    t =    51.26s Checking existence of `Any (First Match)`
+    t =    51.37s Checking existence of `Any (First Match)`
+    t =    51.49s Checking existence of `Any (First Match)`
+    t =    51.61s Checking existence of `Any (First Match)`
+    t =    52.60s Checking existence of `Any (First Match)`
+    t =    53.09s Checking existence of `Any (First Match)`
+    t =    53.56s Checking existence of `Alert (First Match)`
+    t =    53.60s Find the Alert (First Match)
+    t =    53.89s Added attachment named '23-restore-success'
+    t =    53.89s Tap Button (First Match)
+    t =    53.89s     Wait for com.samayhuf.clearscan to idle
+    t =    53.90s     Find the Button (First Match)
+    t =    54.14s     Check for interrupting elements affecting "OK" Button
+    t =    54.42s     Synthesize event
+    t =    54.80s     Wait for com.samayhuf.clearscan to idle
+    t =    56.08s Checking existence of `Any (First Match)`
+2026-11-13 21:02:24.379625+0000 ClearScanQATests-Runner[85235:443378] [clearscan-qa] step 23 PASS Restore purchases (Settings row): alert: Restored; local tx com.samayhuf.clearscan.pro.monthly expires in 7.0d; proActiveAfter=true
+    t =    56.21s Tear Down
+Test Case '-[ClearScanQATests.SimQATests testPaywallPurchaseAndRestore]' passed (56.957 seconds).
+Test Suite 'SimQATests' passed at 2026-11-13 21:02:25.133.
+	 Executed 1 test, with 0 failures (0 unexpected) in 56.957 (56.962) seconds
+Test Suite 'ClearScanQATests.xctest' passed at 2026-11-13 21:02:25.134.
+	 Executed 1 test, with 0 failures (0 unexpected) in 56.957 (56.963) seconds
+Test Suite 'Selected tests' passed at 2026-11-13 21:02:25.134.
+	 Executed 1 test, with 0 failures (0 unexpected) in 56.957 (56.966) seconds
+2026-11-13 21:02:26.840 xcodebuild[84153:440784] [MT] IDETestOperationsObserverDebug: 70.266 elapsed -- Testing started completed.
+2026-11-13 21:02:26.841 xcodebuild[84153:440784] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-13 21:02:26.841 xcodebuild[84153:440784] [MT] IDETestOperationsObserverDebug: 70.266 sec, +70.266 sec -- end
+
+Test session results, code coverage, and logs:
+	/tmp/sim-qa/iap/iap.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started

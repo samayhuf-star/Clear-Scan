@@ -1,0 +1,9 @@
+Running altool at path '/Applications/Xcode_26.6.app/Contents/SharedFrameworks/ContentDelivery.framework/Resources/altool'...
+
+2026-11-14 03:29:21.672  INFO: [ContentDelivery.Uploader.A70C5CA00] 
+==========================================
+UPLOAD SUCCEEDED with no errors
+Delivery UUID: a889c064-96f1-42c7-8cb4-7e0fc4a111a1
+Transferred 23420626 bytes in 0.708 seconds (33.1MB/s, 264.541Mbps)
+==========================================
+No errors uploading archive at '/Users/runner/work/sim-qa-runner/sim-qa-runner/build.ipa'.

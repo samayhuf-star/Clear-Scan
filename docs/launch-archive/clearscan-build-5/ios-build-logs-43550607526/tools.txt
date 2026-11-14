@@ -1,0 +1,6 @@
+Xcode 26.6
+Build version 17F113
+v22.23.4
+10.9.9
+1.17.0
+fastlane 2.241.2

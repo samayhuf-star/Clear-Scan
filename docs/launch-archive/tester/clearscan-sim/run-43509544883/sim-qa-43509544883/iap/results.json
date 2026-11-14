@@ -1,0 +1,22 @@
+{
+  "steps" : [
+    {
+      "detail" : "monthly trial line=true yearly trial line=true lifetime $39.99 one-time=true no lifetime trial=true session=true swipes=1",
+      "step" : "05",
+      "name" : "Paywall: local StoreKit prices, 7-day trial, lifetime (attempt 1)",
+      "pass" : true
+    },
+    {
+      "detail" : "attempt 1: paywallClosed=true localSheetShown=false proActive=true; local tx com.samayhuf.clearscan.pro.monthly expires in 7.0d",
+      "pass" : true,
+      "step" : "22",
+      "name" : "Monthly purchase through local StoreKit (no sandbox sign-in)"
+    },
+    {
+      "name" : "Restore purchases (Settings row)",
+      "step" : "23",
+      "detail" : "alert: Restored; local tx com.samayhuf.clearscan.pro.monthly expires in 7.0d; proActiveAfter=true",
+      "pass" : true
+    }
+  ]
+}

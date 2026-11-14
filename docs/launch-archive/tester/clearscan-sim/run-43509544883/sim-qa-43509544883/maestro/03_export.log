@@ -1,0 +1,14 @@
+Running on iPhone 17 Pro - iOS 26.2 - 98A0BFA3-CEC3-4FD6-9916-5A2149774DBF
+ > Flow Open the Share PDF export options, then cancel
+Assert that id: doc-screen is visible... COMPLETED
+Tap on id: doc-export-pdf... COMPLETED
+Assert that (Optional) ".*Small.*" is visible... COMPLETED
+Run flow when ".*Small.*" is not visible...
+Run flow when ".*Small.*" is not visible... SKIPPED
+Assert that (Optional) ".*Medium.*" is visible... COMPLETED
+Take screenshot 04-export... COMPLETED
+Tap on (Optional) "Cancel"... COMPLETED
+Run flow when ".*Small.*" is visible...
+Run flow when ".*Small.*" is visible... SKIPPED
+Assert that (Optional) ".*Small.*" is not visible... COMPLETED
+Assert that id: doc-screen is visible... COMPLETED

@@ -1,0 +1,6 @@
+Running on iPhone 17 Pro - iOS 26.2 - 98A0BFA3-CEC3-4FD6-9916-5A2149774DBF
+ > Flow Tap Restore purchases on the paywall
+Assert that id: paywall-restore is visible... COMPLETED
+Tap on id: paywall-restore... COMPLETED
+Wait for animation to end within 5000 ms... COMPLETED
+Assert that (Optional) ".*(Nothing to restore|Restored|ClearScan Pro|active).*" is visible... WARNED

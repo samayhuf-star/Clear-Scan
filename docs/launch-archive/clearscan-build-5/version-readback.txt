@@ -1,0 +1,5 @@
+version 1.0 PREPARE_FOR_SUBMISSION releaseType AFTER_APPROVAL
+build a889c064-96f1-42c7-8cb4-7e0fc4a111a1 5 VALID nonExemptEnc False
+reviewDetail b3d29f58-cee2-428a-b4cf-06642ef65256 notesMatch True 3350 samayhuf@gmail.com [phone redacted]
+shots APP_IPHONE_67 [('01-02-scanning-1320x2868.png', 'COMPLETE'), ('02-03-result-1320x2868.png', 'COMPLETE'), ('03-01-home-1320x2868.png', 'COMPLETE'), ('04-04-export-1320x2868.png', 'COMPLETE')]
+reviewSubmissions 0

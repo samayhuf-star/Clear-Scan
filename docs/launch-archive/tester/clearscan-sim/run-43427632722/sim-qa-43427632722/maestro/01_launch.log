@@ -1,0 +1,9 @@
+Anonymous analytics enabled. To opt out, set MAESTRO_CLI_NO_ANALYTICS environment variable to any value before running Maestro.
+
+Running on iPhone 17 Pro - iOS 26.2 - 98A0BFA3-CEC3-4FD6-9916-5A2149774DBF
+ > Flow Launch and reach the home screen
+Launch app "com.samayhuf.clearscan"... COMPLETED
+Assert that ".*" is visible... COMPLETED
+Tap on (Optional) id: onboarding-skip... COMPLETED
+Tap on (Optional) "Skip"... WARNED
+Assert that id: home-screen is visible... COMPLETED

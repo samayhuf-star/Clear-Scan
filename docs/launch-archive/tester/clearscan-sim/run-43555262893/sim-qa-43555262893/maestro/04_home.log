@@ -1,0 +1,14 @@
+Running on iPhone 17 Pro - iOS 26.2 - 98A0BFA3-CEC3-4FD6-9916-5A2149774DBF
+ > Flow Return to a clean home screen with the saved scan
+Tap on (Optional) "Cancel"... WARNED
+Run flow when ".*Small.*" is visible...
+Run flow when ".*Small.*" is visible... SKIPPED
+Assert that (Optional) ".*Small.*" is not visible... COMPLETED
+Tap on (Optional) id: doc-back... COMPLETED
+Tap on (Optional) "Back"... WARNED
+Assert that (Optional) id: home-screen is visible... COMPLETED
+Run flow when id: home-screen is not visible...
+Run flow when id: home-screen is not visible... SKIPPED
+Tap on (Optional) "Dismiss"... WARNED
+Assert that id: home-doc is visible... COMPLETED
+Take screenshot 01-home... COMPLETED

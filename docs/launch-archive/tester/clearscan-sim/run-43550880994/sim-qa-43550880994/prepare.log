@@ -1,0 +1,25 @@
+storekit (CI copy only): settings ['_applicationInternalID', '_developerTeamID', '_failTransactionsEnabled', '_locale', '_storeKitErrors', '_storefront'] -> ['_failTransactionsEnabled', '_locale', '_storeKitErrors', '_storefront']; version 3.0; local internal ids
+added UI test target ClearScanQATests to /Users/runner/work/sim-qa-runner/sim-qa-runner/ios/ClearScan.xcodeproj
+ClearScanQATests Release: PRODUCT_NAME=ClearScanQATests TEST_TARGET_NAME=ClearScan
+ClearScanQATests Debug: PRODUCT_NAME=ClearScanQATests TEST_TARGET_NAME=ClearScan
+updated scheme /Users/runner/work/sim-qa-runner/sim-qa-runner/ios/ClearScan.xcodeproj/xcshareddata/xcschemes/ClearScan.xcscheme
+storekit reference: ../../storekit/ClearScan.storekit in LaunchAction and TestAction, plus test-target resource
+Copied StoreKit config to /Users/runner/work/sim-qa-runner/sim-qa-runner/ios/ClearScan.storekit
+Already referenced in /Users/runner/work/sim-qa-runner/sim-qa-runner/ios/ClearScan.xcodeproj/xcshareddata/xcschemes/ClearScan.xcscheme
+Patched 0 scheme(s)
+==> StoreKit scheme references
+66:      <StoreKitConfigurationFileReference
+67-         identifier = "../../storekit/ClearScan.storekit">
+68:      </StoreKitConfigurationFileReference>
+69-   </TestAction>
+--
+90:      <StoreKitConfigurationFileReference
+91-         identifier = "../../storekit/ClearScan.storekit">
+92:      </StoreKitConfigurationFileReference>
+93-   </LaunchAction>
+scheme has the UI test host
+==> Products in storekit/ClearScan.storekit
+com.samayhuf.clearscan.pro.yearly: {'internalID': 'C1EA5CA0-0000-4000-8000-000000000004', 'paymentMode': 'free', 'subscriptionPeriod': 'P1W'} price=19.99
+com.samayhuf.clearscan.pro.monthly: {'internalID': 'C1EA5CA0-0000-4000-8000-000000000006', 'paymentMode': 'free', 'subscriptionPeriod': 'P1W'} price=2.99
+com.samayhuf.clearscan.pro.lifetime: introductoryOffer=None price=39.99
+team id present: False

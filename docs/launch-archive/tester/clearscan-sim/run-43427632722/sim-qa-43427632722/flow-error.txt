@@ -1,0 +1,5 @@
+Skipping export; document screen never appeared
+Paywall flow failed
+FAIL 02-scanning missing
+FAIL 04-export missing
+FAIL 05-paywall missing

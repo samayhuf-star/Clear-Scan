@@ -1,0 +1,2 @@
+qa hold marker: /Users/runner/Library/Developer/CoreSimulator/Devices/98A0BFA3-CEC3-4FD6-9916-5A2149774DBF/data/Containers/Data/Application/8E97C751-F344-479E-AD8B-5E15C34DCAB2/Documents/.clearscan-qa-hold
+qa inbox: /Users/runner/Library/Developer/CoreSimulator/Devices/98A0BFA3-CEC3-4FD6-9916-5A2149774DBF/data/Containers/Data/Application/8E97C751-F344-479E-AD8B-5E15C34DCAB2/Documents/.clearscan-qa-inbox.jpg

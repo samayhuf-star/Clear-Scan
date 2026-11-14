@@ -1,0 +1,29 @@
+Running on iPhone 17 Pro - iOS 26.2 - 98A0BFA3-CEC3-4FD6-9916-5A2149774DBF
+ > Flow Import a seeded photo and reach the scan result
+Assert that id: home-screen is visible... COMPLETED
+Tap on id: home-import... COMPLETED
+Tap on (Optional) "Choose photos"... COMPLETED
+Tap on (Optional) "Choose Photos"... WARNED
+Assert that (Optional) id: scanning-screen is visible... COMPLETED
+Run flow when id: scanning-screen is visible...
+  Take screenshot 02-scanning... COMPLETED
+Run flow when id: scanning-screen is visible... COMPLETED
+Run flow when ".*nothing leaves this device.*" is visible...
+  Take screenshot 02-scanning... COMPLETED
+Run flow when ".*nothing leaves this device.*" is visible... COMPLETED
+Run flow when "Allow Access to All Photos" is visible...
+Run flow when "Allow Access to All Photos" is visible... SKIPPED
+Run flow when "Recents" is visible...
+Run flow when "Recents" is visible... SKIPPED
+Assert that (Optional) id: scanning-screen is visible... COMPLETED
+Run flow when id: scanning-screen is visible...
+  Take screenshot 02-scanning... COMPLETED
+Run flow when id: scanning-screen is visible... COMPLETED
+Run flow when ".*nothing leaves this device.*" is visible...
+  Take screenshot 02-scanning... COMPLETED
+Run flow when ".*nothing leaves this device.*" is visible... COMPLETED
+Assert that id: doc-screen is visible... COMPLETED
+Assert that (Optional) "Saved. Text read on-device" is not visible... WARNED
+Tap on (Optional) "Text"... COMPLETED
+Assert that (Optional) ".*Amount due.*" is visible... COMPLETED
+Take screenshot 03-result... COMPLETED

@@ -1,0 +1,28 @@
+{
+  "steps" : [
+    {
+      "pass" : false,
+      "name" : "Paywall: local StoreKit prices, 7-day trial, lifetime (attempt 1)",
+      "step" : "05",
+      "detail" : "monthly trial line=false yearly trial line=false lifetime $39.99 one-time=false no lifetime trial=true session=true swipes=1"
+    },
+    {
+      "detail" : "monthly trial line=false yearly trial line=false lifetime $39.99 one-time=false no lifetime trial=true session=true swipes=1",
+      "pass" : false,
+      "name" : "Paywall: local StoreKit prices, 7-day trial, lifetime (attempt 2)",
+      "step" : "05"
+    },
+    {
+      "name" : "Monthly purchase through local StoreKit (no sandbox sign-in)",
+      "pass" : false,
+      "step" : "22",
+      "detail" : "attempt 2: app alert Plans unavailable"
+    },
+    {
+      "name" : "Restore purchases (Settings row)",
+      "detail" : "skipped, purchase did not complete",
+      "step" : "23",
+      "pass" : false
+    }
+  ]
+}
