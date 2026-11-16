@@ -74,6 +74,7 @@
           "color": "#0E8F7E"
         }
       ],
+      "./plugins/no-push-entitlement.js",
       "expo-font"
     ],
     "owner": "krosz",
