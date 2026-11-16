@@ -77,6 +77,9 @@ export default function Home() {
               <Ionicons name="sparkles" size={20} color={t.accent} />
             </Press>
           )}
+          <Press onPress={() => router.push('/deadlines')} style={[s.iconBtn, { backgroundColor: t.surface }]} accessibilityLabel="Deadlines">
+            <Ionicons name="calendar-outline" size={20} color={t.ink} />
+          </Press>
           <Press onPress={() => router.push('/settings')} style={[s.iconBtn, { backgroundColor: t.surface }]} accessibilityLabel="Settings">
             <Ionicons name="settings-outline" size={20} color={t.ink} />
           </Press>

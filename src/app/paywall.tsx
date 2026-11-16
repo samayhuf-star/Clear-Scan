@@ -79,7 +79,7 @@ export default function Paywall() {
 
   return (
     <View style={s.root}>
-      <LinearGradient colors={['#0B1B33', '#12306A', '#0B1B33']} style={StyleSheet.absoluteFill} />
+      <LinearGradient colors={['#062A2A', '#0B4A47', '#062A2A']} style={StyleSheet.absoluteFill} />
       <View style={[s.close, { top: insets.top + 8 }]}>
         <Press onPress={() => router.back()} hitSlop={14} accessibilityLabel="Close">
           <Ionicons name="close" size={26} color="#B6C3DA" />
@@ -99,7 +99,7 @@ export default function Paywall() {
           {BENEFITS.map((b, i) => (
             <Animated.View key={b.title} entering={FadeInDown.delay(120 + i * 80).duration(400)} style={s.benefit}>
               <View style={s.benefitIcon}>
-                <Ionicons name={b.icon} size={20} color="#5B97FF" />
+                <Ionicons name={b.icon} size={20} color="#2FC4AE" />
               </View>
               <View style={{ flex: 1 }}>
                 <Text style={s.benefitTitle}>{b.title}</Text>
@@ -181,7 +181,7 @@ function PlanCard(p: { active: boolean; onPress: () => void; label: string; head
         </View>
       ) : null}
       <View style={s.radioRow}>
-        <View style={[s.radio, p.active && { borderColor: '#1F6BFF' }]}>{p.active && <View style={s.radioDot} />}</View>
+        <View style={[s.radio, p.active && { borderColor: '#0E8F7E' }]}>{p.active && <View style={s.radioDot} />}</View>
         <Text style={s.planLabel}>{p.label}</Text>
       </View>
       <Text style={s.planPrice}>{p.headline}</Text>
@@ -191,9 +191,9 @@ function PlanCard(p: { active: boolean; onPress: () => void; label: string; head
 }
 
 const s = StyleSheet.create({
-  root: { flex: 1, backgroundColor: '#0B1B33' },
+  root: { flex: 1, backgroundColor: '#062A2A' },
   close: { position: 'absolute', right: 20, zIndex: 5 },
-  crown: { width: 60, height: 60, borderRadius: 18, backgroundColor: '#1F6BFF', alignItems: 'center', justifyContent: 'center', marginBottom: 16 },
+  crown: { width: 60, height: 60, borderRadius: 18, backgroundColor: '#0E8F7E', alignItems: 'center', justifyContent: 'center', marginBottom: 16 },
   title: { color: '#fff', fontSize: 34, fontWeight: '800', letterSpacing: -0.5 },
   sub: { color: '#B6C3DA', fontSize: 16, lineHeight: 23, marginTop: 8 },
   benefit: { flexDirection: 'row', alignItems: 'center', gap: 14, backgroundColor: 'rgba(255,255,255,0.06)', borderRadius: 16, padding: 14 },
@@ -204,17 +204,17 @@ const s = StyleSheet.create({
   freeText: { color: '#CDEFDD', fontSize: 13, flex: 1, lineHeight: 18 },
   plan: { flex: 1, borderRadius: 18, padding: 14, borderWidth: 2, borderColor: 'rgba(255,255,255,0.14)', backgroundColor: 'rgba(255,255,255,0.05)' },
   planWide: { borderRadius: 18, padding: 14, borderWidth: 2, borderColor: 'rgba(255,255,255,0.14)', backgroundColor: 'rgba(255,255,255,0.05)' },
-  planActive: { borderColor: '#1F6BFF', backgroundColor: 'rgba(31,107,255,0.16)' },
+  planActive: { borderColor: '#0E8F7E', backgroundColor: 'rgba(31,107,255,0.16)' },
   badge: { position: 'absolute', top: -11, right: 10, backgroundColor: '#FF8A1F', borderRadius: 999, paddingHorizontal: 8, paddingVertical: 3 },
   badgeText: { color: '#fff', fontSize: 10, fontWeight: '800', letterSpacing: 0.5 },
   radioRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   radio: { width: 20, height: 20, borderRadius: 10, borderWidth: 2, borderColor: '#5B6B88', alignItems: 'center', justifyContent: 'center' },
-  radioDot: { width: 10, height: 10, borderRadius: 5, backgroundColor: '#1F6BFF' },
+  radioDot: { width: 10, height: 10, borderRadius: 5, backgroundColor: '#0E8F7E' },
   planLabel: { color: '#fff', fontWeight: '700', fontSize: 15 },
   planPrice: { color: '#fff', fontSize: 15, fontWeight: '800', marginTop: 10, lineHeight: 20 },
   planNote: { color: '#93A1BA', fontSize: 12, marginTop: 4, lineHeight: 16 },
-  footer: { paddingHorizontal: 24, paddingTop: 12, backgroundColor: '#0B1B33', borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: '#1D2B44' },
-  cta: { backgroundColor: '#1F6BFF', borderRadius: 18, paddingVertical: 17, alignItems: 'center', minHeight: 56, justifyContent: 'center', paddingHorizontal: 16 },
+  footer: { paddingHorizontal: 24, paddingTop: 12, backgroundColor: '#062A2A', borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: '#1D2B44' },
+  cta: { backgroundColor: '#0E8F7E', borderRadius: 18, paddingVertical: 17, alignItems: 'center', minHeight: 56, justifyContent: 'center', paddingHorizontal: 16 },
   ctaText: { color: '#fff', fontSize: 17, fontWeight: '700', textAlign: 'center' },
   selection: { color: '#C5D0E4', fontSize: 12, textAlign: 'center', marginTop: 10, lineHeight: 17 },
   legal: { color: '#6F7F9B', fontSize: 11, textAlign: 'center', marginTop: 8, lineHeight: 15 },

@@ -15,8 +15,8 @@ import Animated, {
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 
-const NAVY = '#0B1B33';
-const BLUE = '#1F6BFF';
+const NAVY = '#062A2A';
+const BLUE = '#0E8F7E';
 const ORANGE = '#FF8A1F';
 const GREEN = '#25C27A';
 

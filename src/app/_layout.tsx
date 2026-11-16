@@ -70,6 +70,7 @@ export default function RootLayout() {
             <Stack.Screen name="onboarding" options={{ gestureEnabled: false, animation: 'fade' }} />
             <Stack.Screen name="doc/[id]" options={{ animation: 'slide_from_right' }} />
             <Stack.Screen name="settings" options={{ presentation: 'modal' }} />
+            <Stack.Screen name="deadlines" options={{ animation: 'slide_from_right' }} />
             <Stack.Screen name="paywall" options={{ presentation: 'fullScreenModal', animation: 'slide_from_bottom' }} />
           </Stack>
         </LockGate>
@@ -81,6 +82,6 @@ export default function RootLayout() {
 const s = StyleSheet.create({
   lock: { ...StyleSheet.absoluteFill, alignItems: 'center', justifyContent: 'center', gap: 16, zIndex: 100 },
   lockTitle: { color: '#fff', fontSize: 20, fontWeight: '700' },
-  lockBtn: { backgroundColor: '#1F6BFF', paddingHorizontal: 32, paddingVertical: 14, borderRadius: 999 },
+  lockBtn: { backgroundColor: '#0E8F7E', paddingHorizontal: 32, paddingVertical: 14, borderRadius: 999 },
   lockBtnText: { color: '#fff', fontWeight: '700', fontSize: 16 },
 });

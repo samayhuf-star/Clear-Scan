@@ -12,6 +12,9 @@ import { abs, remove } from '../../lib/files';
 import { fmtDate } from '../../lib/classify';
 import { QUALITY, type Quality } from '../../lib/pdf';
 import { shareMarkdown, sharePdf, shareText, shareWord } from '../../lib/export';
+import { extractFacts, maskValue, redactText, type Fact } from '../../lib/facts';
+import { addReminder, clearDocReminders, removeReminder } from '../../lib/reminders';
+import { getDocReminders } from '../../lib/db';
 import { usePlus } from '../../lib/purchases';
 import { useTheme } from '../../lib/theme';
 
@@ -23,13 +26,17 @@ export default function DocScreen() {
   const plus = usePlus();
   const [doc, setDoc] = useState<Doc | null>(() => getDoc(id));
   const pages = useMemo(() => getPages(id), [id]);
-  const [tab, setTab] = useState<'scan' | 'text'>('scan');
+  const [tab, setTab] = useState<'scan' | 'text' | 'facts'>('scan');
+  const [reveal, setReveal] = useState(false);
+  const [reminded, setReminded] = useState<Set<string>>(() => new Set(getDocReminders(id).map((r) => `${r.iso}|${r.label}`)));
   const [index, setIndex] = useState(0);
   const [busy, setBusy] = useState(false);
   const [showDone, setShowDone] = useState(fresh === '1');
 
+  const allText = useMemo(() => pages.map((p) => p.text).join('\n\n').trim(), [pages]);
+  const facts = useMemo(() => extractFacts(allText), [allText]);
+
   if (!doc) return null;
-  const allText = pages.map((p) => p.text).join('\n\n').trim();
   const pageW = width - 40;
 
   const reload = () => setDoc(getDoc(id));
@@ -42,6 +49,25 @@ export default function DocScreen() {
       Alert.alert('Could not export', e?.message ?? 'Please try again.');
     } finally {
       setBusy(false);
+    }
+  };
+
+  const toggleReminder = async (f: Fact) => {
+    if (!f.iso) return;
+    const key = `${f.iso}|${f.label}`;
+    if (reminded.has(key)) {
+      await removeReminder(doc.id, f.iso, f.label);
+      setReminded((prev) => { const n = new Set(prev); n.delete(key); return n; });
+      return;
+    }
+    const res = await addReminder(doc.id, doc.title, f.label, f.iso);
+    if (res === 'ok') {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      setReminded((prev) => new Set(prev).add(key));
+    } else if (res === 'denied') {
+      Alert.alert('Notifications are off', 'Turn on notifications for ClearScan in Settings to get reminders.');
+    } else {
+      Alert.alert('Already passed', 'That date is in the past, so there is nothing to remind you about.');
     }
   };
 
@@ -73,12 +99,13 @@ export default function DocScreen() {
       doc.favorite ? 'Remove star' : 'Star',
       'Rename',
       'Share text',
+      'Share text, hide sensitive numbers',
       plus ? 'Export as Word' : 'Export as Word (Plus)',
       plus ? 'Export as Markdown' : 'Export as Markdown (Plus)',
       'Delete',
       'Cancel',
     ];
-    ActionSheetIOS.showActionSheetWithOptions({ options: opts, cancelButtonIndex: 6, destructiveButtonIndex: 5 }, (i) => {
+    ActionSheetIOS.showActionSheetWithOptions({ options: opts, cancelButtonIndex: 7, destructiveButtonIndex: 6 }, (i) => {
       if (i === 0) {
         setFavorite(doc.id, !doc.favorite);
         reload();
@@ -91,15 +118,21 @@ export default function DocScreen() {
         }, 'plain-text', doc.title);
       } else if (i === 2) {
         withBusy(() => shareText(doc, pages));
-      } else if (i === 3) needPlus(() => shareWord(doc, pages));
-      else if (i === 4) needPlus(() => shareMarkdown(doc, pages));
-      else if (i === 5) {
+      } else if (i === 3) {
+        const r = redactText(allText);
+        withBusy(async () => {
+          await shareText(doc, [{ doc_id: doc.id, idx: 0, image: '', text: r.text }]);
+        });
+      } else if (i === 4) needPlus(() => shareWord(doc, pages));
+      else if (i === 5) needPlus(() => shareMarkdown(doc, pages));
+      else if (i === 6) {
         Alert.alert('Delete this scan?', 'This removes it from your iPhone.', [
           { text: 'Cancel', style: 'cancel' },
           {
             text: 'Delete',
             style: 'destructive',
             onPress: async () => {
+              await clearDocReminders(doc.id);
               deleteDoc(doc.id);
               await remove(`scans/${doc.id}`);
               router.back();
@@ -128,9 +161,9 @@ export default function DocScreen() {
       </View>
 
       <View style={[s.tabs, { backgroundColor: t.surface, borderColor: t.line }]}>
-        {(['scan', 'text'] as const).map((k) => (
+        {(['scan', 'text', 'facts'] as const).map((k) => (
           <Press key={k} onPress={() => setTab(k)} haptic="none" style={[s.tab, tab === k && { backgroundColor: t.brand }]}>
-            <Text style={{ color: tab === k ? '#fff' : t.ink, fontWeight: '700' }}>{k === 'scan' ? 'Scan' : 'Text'}</Text>
+            <Text style={{ color: tab === k ? '#fff' : t.ink, fontWeight: '700' }}>{k === 'scan' ? 'Scan' : k === 'text' ? 'Text' : `Facts${facts.length ? ` ${facts.length}` : ''}`}</Text>
           </Press>
         ))}
       </View>
@@ -152,6 +185,50 @@ export default function DocScreen() {
           />
           <Text style={[s.pageNo, { color: t.muted }]}>Page {index + 1} of {pages.length}</Text>
         </View>
+      ) : tab === 'facts' ? (
+        <ScrollView style={{ flex: 1 }} contentContainerStyle={{ padding: 20, paddingBottom: 140 }}>
+          {facts.length === 0 ? (
+            <Text style={{ color: t.muted, lineHeight: 22 }}>
+              No dates, amounts or contact details were found in this scan. Facts appear here when ClearScan reads them.
+            </Text>
+          ) : (
+            <>
+              <Text style={{ color: t.muted, fontSize: 13, marginBottom: 12 }}>
+                Found on your iPhone. Tap a fact to copy it. Tap the bell on a date to get a reminder.
+              </Text>
+              {facts.map((f) => {
+                const key = `${f.iso}|${f.label}`;
+                const on = reminded.has(key);
+                const shown = f.sensitive && !reveal ? maskValue(f.value) : f.value;
+                return (
+                  <View key={`${f.kind}${f.value}`} style={[s.fact, { backgroundColor: t.surface, borderColor: t.line }]}>
+                    <Press
+                      haptic="none"
+                      style={{ flex: 1 }}
+                      onPress={async () => {
+                        await Clipboard.setStringAsync(f.value);
+                        Haptics.selectionAsync();
+                      }}
+                    >
+                      <Text style={{ color: t.muted, fontSize: 12, fontWeight: '700' }}>{f.label.toUpperCase()}</Text>
+                      <Text selectable style={{ color: t.ink, fontSize: 17, fontWeight: '700', marginTop: 2 }}>{shown}</Text>
+                    </Press>
+                    {f.deadline && f.iso ? (
+                      <Press onPress={() => toggleReminder(f)} style={[s.bell, { backgroundColor: on ? t.accent : t.accentSoft }]} accessibilityLabel={on ? 'Remove reminder' : 'Remind me'}>
+                        <Ionicons name={on ? 'notifications' : 'notifications-outline'} size={20} color={on ? '#fff' : t.accent} />
+                      </Press>
+                    ) : null}
+                  </View>
+                );
+              })}
+              {facts.some((f) => f.sensitive) && (
+                <Press haptic="none" onPress={() => setReveal((v) => !v)} style={{ alignSelf: 'center', marginTop: 8, padding: 10 }}>
+                  <Text style={{ color: t.brand, fontWeight: '700' }}>{reveal ? 'Hide ID numbers' : 'Show ID numbers'}</Text>
+                </Press>
+              )}
+            </>
+          )}
+        </ScrollView>
       ) : (
         <ScrollView style={{ flex: 1 }} contentContainerStyle={{ padding: 20, paddingBottom: 140 }}>
           {allText ? (
@@ -206,13 +283,15 @@ const s = StyleSheet.create({
   nav: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20, paddingTop: 6 },
   iconBtn: { width: 42, height: 42, borderRadius: 21, alignItems: 'center', justifyContent: 'center' },
   tabs: { flexDirection: 'row', alignSelf: 'center', marginTop: 14, padding: 4, borderRadius: 999, borderWidth: 1, gap: 4 },
-  tab: { paddingHorizontal: 26, paddingVertical: 8, borderRadius: 999 },
+  tab: { paddingHorizontal: 20, paddingVertical: 8, borderRadius: 999 },
+  fact: { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 14, borderRadius: 16, borderWidth: 1, marginBottom: 10 },
+  bell: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center' },
   pageNo: { textAlign: 'center', paddingVertical: 8, fontSize: 13, fontWeight: '600', marginBottom: 90 },
   actions: { position: 'absolute', left: 0, right: 0, bottom: 0, flexDirection: 'row', gap: 12, paddingHorizontal: 20, paddingTop: 10 },
   primary: { flex: 1, height: 56, borderRadius: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8 },
   primaryText: { color: '#fff', fontSize: 17, fontWeight: '800' },
   secondary: { width: 56, height: 56, borderRadius: 18, alignItems: 'center', justifyContent: 'center', borderWidth: 1 },
   toastWrap: { position: 'absolute', top: 110, left: 0, right: 0, alignItems: 'center' },
-  toast: { flexDirection: 'row', gap: 8, alignItems: 'center', backgroundColor: '#101C30', paddingHorizontal: 16, paddingVertical: 12, borderRadius: 999 },
+  toast: { flexDirection: 'row', gap: 8, alignItems: 'center', backgroundColor: '#0E2624', paddingHorizontal: 16, paddingVertical: 12, borderRadius: 999 },
   toastText: { color: '#fff', fontWeight: '700' },
 });

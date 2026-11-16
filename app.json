@@ -7,7 +7,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
-    "backgroundColor": "#0B1B33",
+    "backgroundColor": "#062A2A",
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.samayhuf.clearscan",
@@ -22,7 +22,7 @@
     "android": {
       "package": "com.samayhuf.clearscan",
       "adaptiveIcon": {
-        "backgroundColor": "#0B1B33",
+        "backgroundColor": "#062A2A",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
@@ -37,7 +37,7 @@
           "image": "./assets/splash-icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#0B1B33"
+          "backgroundColor": "#062A2A"
         }
       ],
       "expo-sharing",
@@ -66,6 +66,12 @@
           "ios": {
             "deploymentTarget": "16.4"
           }
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "color": "#0E8F7E"
         }
       ],
       "expo-font"

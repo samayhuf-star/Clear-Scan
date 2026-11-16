@@ -22,6 +22,13 @@ db.execSync(`
   );
   CREATE VIRTUAL TABLE IF NOT EXISTS fts USING fts5(doc_id UNINDEXED, title, body);
   CREATE TABLE IF NOT EXISTS kv (k TEXT PRIMARY KEY NOT NULL, v TEXT NOT NULL);
+  CREATE TABLE IF NOT EXISTS reminders (
+    doc_id TEXT NOT NULL,
+    iso TEXT NOT NULL,
+    label TEXT NOT NULL,
+    notif_ids TEXT NOT NULL DEFAULT '[]',
+    PRIMARY KEY (doc_id, iso, label)
+  );
 `);
 
 export type Doc = {
@@ -115,8 +122,32 @@ export function setKind(id: string, kind: string) {
   db.runSync('UPDATE docs SET kind = ? WHERE id = ?', kind, id);
 }
 
+export type Reminder = { doc_id: string; iso: string; label: string; notif_ids: string };
+
+export function listReminders(): (Reminder & { title: string })[] {
+  return db.getAllSync(
+    'SELECT r.*, d.title AS title FROM reminders r JOIN docs d ON d.id = r.doc_id ORDER BY r.iso ASC'
+  );
+}
+
+export function getDocReminders(docId: string): Reminder[] {
+  return db.getAllSync<Reminder>('SELECT * FROM reminders WHERE doc_id = ?', docId);
+}
+
+export function saveReminder(docId: string, iso: string, label: string, notifIds: string[]) {
+  db.runSync(
+    'INSERT OR REPLACE INTO reminders (doc_id, iso, label, notif_ids) VALUES (?, ?, ?, ?)',
+    docId, iso, label, JSON.stringify(notifIds)
+  );
+}
+
+export function dropReminder(docId: string, iso: string, label: string) {
+  db.runSync('DELETE FROM reminders WHERE doc_id = ? AND iso = ? AND label = ?', docId, iso, label);
+}
+
 export function deleteDoc(id: string) {
   db.withTransactionSync(() => {
+    db.runSync('DELETE FROM reminders WHERE doc_id = ?', id);
     db.runSync('DELETE FROM pages WHERE doc_id = ?', id);
     db.runSync('DELETE FROM fts WHERE doc_id = ?', id);
     db.runSync('DELETE FROM docs WHERE id = ?', id);

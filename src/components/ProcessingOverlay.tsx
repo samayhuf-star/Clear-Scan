@@ -20,7 +20,7 @@ export function ProcessingOverlay({ progress }: { progress: Progress | null }) {
     <Animated.View entering={FadeIn.duration(180)} exiting={FadeOut.duration(200)} style={s.wrap}>
       <View style={s.card}>
         <Animated.View style={a}>
-          <Ionicons name="sync" size={34} color="#5B97FF" />
+          <Ionicons name="sync" size={34} color="#2FC4AE" />
         </Animated.View>
         <Text style={s.title}>{label}</Text>
         <Text style={s.sub}>
@@ -40,5 +40,5 @@ const s = StyleSheet.create({
   title: { color: '#EAF0FA', fontSize: 17, fontWeight: '700', marginTop: 6 },
   sub: { color: '#93A1BA', fontSize: 13, textAlign: 'center' },
   track: { width: '100%', height: 6, borderRadius: 3, backgroundColor: '#1D2B44', marginTop: 10, overflow: 'hidden' },
-  fill: { height: 6, borderRadius: 3, backgroundColor: '#1F6BFF' },
+  fill: { height: 6, borderRadius: 3, backgroundColor: '#0E8F7E' },
 });

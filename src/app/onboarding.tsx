@@ -19,8 +19,8 @@ const SLIDES = [
   },
   {
     key: 'ocr',
-    title: 'Free OCR.\nSearch every word.',
-    body: 'Text is read automatically and made searchable. No extra tap, no upgrade.',
+    title: 'Finds the dates\nthat matter.',
+    body: 'ClearScan reads expiry and due dates, totals and IDs, and reminds you before a passport or policy runs out.',
     Art: OcrScene,
   },
   {
