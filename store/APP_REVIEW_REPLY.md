@@ -10,7 +10,7 @@ Thank you for the feedback on guideline 4.3(a). We have made substantial changes
 
 4. New identity: a new app icon, colour system and onboarding copy built around this "find the dates that matter" concept. The app is developed by a single developer and is not built from a template or shared with other accounts.
 
-All processing remains on the device. There is no account, no server and no tracking. The paywall is optional: scanning, OCR, search, Facts and reminders are free. ClearScan Plus unlocks extra export formats and larger limits.
+All processing remains on the device. There is no account, no server and no tracking. The paywall is optional: scanning, OCR, search, Facts and reminders are free. ClearScan Plus only adds auto-sort by type and Word or Markdown export.
 
 To try it: scan any document that contains a date (for example a bill with a "Due date"), open it, choose the "Facts" tab, and tap the bell next to the date. Then open the calendar icon on the home screen to see it in "Deadlines".
 
