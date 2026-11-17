@@ -1,6 +1,6 @@
 /** Paywall strings derived from a StoreKit product, with App Store fallbacks. */
 
-export type PlanId = 'yearly' | 'monthly' | 'lifetime';
+export type PlanId = 'weekly';
 
 export type IntroLike = {
   price: number;
@@ -14,9 +14,8 @@ export type ProductLike = {
   introPrice: IntroLike;
 } | null;
 
-const PERIOD: Record<Exclude<PlanId, 'lifetime'>, { per: string; billed: string }> = {
-  yearly: { per: 'year', billed: 'Billed once a year' },
-  monthly: { per: 'month', billed: 'Billed once a month' },
+const PERIOD: Record<PlanId, { per: string; billed: string }> = {
+  weekly: { per: 'week', billed: 'Billed once a week' },
 };
 
 /** Free-trial length, e.g. "7 days". Paid intro offers are not described as free. */
@@ -47,14 +46,6 @@ export type PlanCopy = {
  */
 export function planCopy(id: PlanId, product: ProductLike, fallbackPrice: string, fallbackTrial: string | null): PlanCopy {
   const price = product?.priceString || fallbackPrice;
-  if (id === 'lifetime') {
-    return {
-      price,
-      headline: `${price} one-time`,
-      note: 'Pay once. Yours to keep. Does not renew.',
-      trial: null,
-    };
-  }
   const trial = product ? trialLength(product.introPrice) : fallbackTrial;
   const { per, billed } = PERIOD[id];
   if (trial) {
@@ -68,31 +59,19 @@ export function planCopy(id: PlanId, product: ProductLike, fallbackPrice: string
   return {
     price,
     headline: `${price} / ${per}`,
-    note: id === 'monthly' ? 'Cancel any time' : billed,
+    note: 'Cancel any time',
     trial: null,
   };
 }
 
-/** Whole-percent savings of yearly versus 12 monthly payments. Null when it is not a real discount. */
-export function yearlySavingsPercent(monthly: number | undefined, yearly: number | undefined): number | null {
-  if (monthly == null || yearly == null || monthly <= 0 || yearly <= 0) return null;
-  const pct = Math.round((1 - yearly / (monthly * 12)) * 100);
-  if (pct < 5 || pct > 95) return null;
-  return pct;
-}
-
 export function ctaLabel(id: PlanId, copy: PlanCopy): string {
-  if (id === 'lifetime') return `Continue · ${copy.price} one-time`;
   if (copy.trial) return `Start ${copy.trial} free trial`;
   return `Subscribe · ${copy.price}`;
 }
 
 /** Price, period, and renewal terms for the plan the button will buy. Shown next to the button. */
 export function selectionDisclosure(id: PlanId, copy: PlanCopy): string {
-  if (id === 'lifetime') {
-    return `${copy.price} one-time purchase. Charged to your Apple ID at confirmation. Does not renew.`;
-  }
-  const per = id === 'yearly' ? 'year' : 'month';
+  const per = PERIOD[id].per;
   if (copy.trial) {
     return `${copy.trial} free for new subscribers, then ${copy.price} per ${per}. Renews automatically unless you cancel at least 24 hours before the trial ends.`;
   }

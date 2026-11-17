@@ -14,7 +14,7 @@ npx expo start --dev-client
 
 ## Before you ship
 1. Confirm the bundle ID in `app.json` (`com.samayhuf.clearscan`).
-2. App Store products: `com.samayhuf.clearscan.pro.monthly`, `com.samayhuf.clearscan.pro.yearly` (each with a 7-day free trial), and `com.samayhuf.clearscan.pro.lifetime`.
+2. App Store product: `com.samayhuf.clearscan.pro.weekly` ($1.99/week, 7-day free trial). Monthly, yearly and lifetime were retired on 17 Nov 2026.
 3. In RevenueCat add an entitlement `plus`, attach both products, create a current offering.
 4. Set `EXPO_PUBLIC_RC_IOS_KEY` (EAS secret).
 5. Host `PRIVACY.md` at a public URL and update `src/config.ts`.

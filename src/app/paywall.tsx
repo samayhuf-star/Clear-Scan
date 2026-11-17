@@ -8,7 +8,7 @@ import * as Haptics from 'expo-haptics';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Press } from '../components/Press';
 import { CONFIG } from '../config';
-import { ctaLabel, planCopy, selectionDisclosure, yearlySavingsPercent, type PlanId } from '../lib/offerCopy';
+import { ctaLabel, planCopy, selectionDisclosure, type PlanId } from '../lib/offerCopy';
 import { buyPlan, emptyOffer, loadOffer, productOf, purchasesReady, restore, usePlus, type Offer } from '../lib/purchases';
 
 const BENEFITS: { icon: React.ComponentProps<typeof Ionicons>['name']; title: string; sub: string }[] = [
@@ -17,13 +17,13 @@ const BENEFITS: { icon: React.ComponentProps<typeof Ionicons>['name']; title: st
 ];
 
 const LEGAL =
-  'Payment is charged to your Apple ID at confirmation of purchase. A subscription renews automatically unless you cancel at least 24 hours before the end of the trial or the current period. Your account is charged for renewal within 24 hours before the period ends, at the price shown. Manage or cancel in your Apple ID account settings. Any unused part of a free trial is forfeited if you buy another plan. Lifetime is a one-time purchase and does not renew.';
+  'Payment is charged to your Apple ID at confirmation of purchase. A subscription renews automatically unless you cancel at least 24 hours before the end of the trial or the current period. Your account is charged for renewal within 24 hours before the period ends, at the price shown. Manage or cancel in your Apple ID account settings. Any unused part of a free trial is forfeited when you subscribe.';
 
 export default function Paywall() {
   const insets = useSafeAreaInsets();
   const plus = usePlus();
   const [offer, setOffer] = useState<Offer>(emptyOffer);
-  const [plan, setPlan] = useState<PlanId>('yearly');
+  const [plan, setPlan] = useState<PlanId>('weekly');
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
@@ -36,12 +36,11 @@ export default function Paywall() {
 
   const copyFor = (id: PlanId) => {
     const product = productOf(offer[id]);
-    const fallbackTrial = id === 'lifetime' ? null : CONFIG.fallbackTrials[id];
+    const fallbackTrial = CONFIG.fallbackTrials[id];
     return planCopy(id, product ? { priceString: product.priceString, price: product.price, introPrice: product.introPrice } : null, CONFIG.fallbackPrices[id], fallbackTrial);
   };
 
   const selected = copyFor(plan);
-  const savings = yearlySavingsPercent(productOf(offer.monthly)?.price, productOf(offer.yearly)?.price);
 
   const onBuy = async () => {
     const loaded = offer[plan];
@@ -114,31 +113,15 @@ export default function Paywall() {
           <Text style={s.freeText}>Always free: no watermark, OCR, search, PDF export, app lock.</Text>
         </Animated.View>
 
-        <View style={{ flexDirection: 'row', gap: 12, marginTop: 22 }}>
-          <PlanCard
-            active={plan === 'yearly'}
-            onPress={() => setPlan('yearly')}
-            label="Yearly"
-            headline={copyFor('yearly').headline}
-            note={savings != null ? `About ${savings}% less than monthly` : copyFor('yearly').note}
-            badge="BEST VALUE"
-          />
-          <PlanCard
-            active={plan === 'monthly'}
-            onPress={() => setPlan('monthly')}
-            label="Monthly"
-            headline={copyFor('monthly').headline}
-            note={copyFor('monthly').note}
-          />
-        </View>
-        <View style={{ marginTop: 12 }}>
+        <View style={{ marginTop: 22 }}>
           <PlanCard
             wide
-            active={plan === 'lifetime'}
-            onPress={() => setPlan('lifetime')}
-            label="Lifetime"
-            headline={copyFor('lifetime').headline}
-            note={copyFor('lifetime').note}
+            active
+            onPress={() => setPlan('weekly')}
+            label="Weekly"
+            headline={copyFor('weekly').headline}
+            note={copyFor('weekly').note}
+            badge="7 DAYS FREE"
           />
         </View>
       </ScrollView>

@@ -4,15 +4,14 @@ export const CONFIG = {
   // RevenueCat public SDK key for iOS (starts with "appl_"). Set EXPO_PUBLIC_RC_IOS_KEY in EAS secrets.
   revenueCatIosKey: process.env.EXPO_PUBLIC_RC_IOS_KEY ?? '',
   entitlementId: 'plus',
+  // Single plan (17 Nov 2026): weekly auto-renewing subscription, 7-day free trial, then $1.99 per week.
   products: {
-    monthly: 'com.samayhuf.clearscan.pro.monthly',
-    yearly: 'com.samayhuf.clearscan.pro.yearly',
-    lifetime: 'com.samayhuf.clearscan.pro.lifetime',
+    weekly: 'com.samayhuf.clearscan.pro.weekly',
   },
-  // Used only until StoreKit returns a localized price. US prices of the products above.
-  fallbackPrices: { monthly: '$2.99', yearly: '$19.99', lifetime: '$39.99' },
-  // Used only until StoreKit returns the introductory offer. Lifetime has none.
-  fallbackTrials: { monthly: '7 days', yearly: '7 days' },
+  // Used only until StoreKit returns a localized price. US price of the product above.
+  fallbackPrices: { weekly: '$1.99' },
+  // Used only until StoreKit returns the introductory offer.
+  fallbackTrials: { weekly: '7 days' },
   privacyUrl: 'https://samayhuf-star.github.io/Clear-Scan/',
   termsUrl: 'https://samayhuf-star.github.io/app-legal/clearscan/terms.html',
   supportEmail: 'samayhuf@gmail.com',
