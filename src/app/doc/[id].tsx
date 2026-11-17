@@ -11,6 +11,7 @@ import { deleteDoc, getDoc, getDocReminders, getPages, setFavorite, setTitle, ty
 import { abs, remove } from '../../lib/files';
 import { fmtDate } from '../../lib/classify';
 import { QUALITY, type Quality } from '../../lib/pdf';
+import { LOOKS, getLook, rnFilter, setLook, type Look } from '../../lib/look';
 import { shareMarkdown, sharePdf, shareText, shareWord } from '../../lib/export';
 import { extractFacts, maskValue, redactText, type Fact } from '../../lib/facts';
 import { addReminder, clearDocReminders, removeReminder } from '../../lib/reminders';
@@ -30,6 +31,7 @@ export default function DocScreen() {
   const [reveal, setReveal] = useState(false);
   const [reminded, setReminded] = useState<Set<string>>(() => new Set(getDocReminders(id).map((r) => `${r.iso}|${r.label}`)));
   const [index, setIndex] = useState(0);
+  const [look, setLookState] = useState<Look>(() => getLook(id));
   const [busy, setBusy] = useState(false);
   const [showDone, setShowDone] = useState(fresh === '1');
 
@@ -200,7 +202,14 @@ export default function DocScreen() {
       </View>
 
       {tab === 'scan' ? (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, backgroundColor: t.scanBg }}>
+          <View style={s.looks}>
+            {LOOKS.map((l) => (
+              <Press key={l.key} haptic="none" onPress={() => { setLook(id, l.key); setLookState(l.key); }} accessibilityLabel={`${l.label} filter`} style={[s.look, look === l.key && { backgroundColor: t.accent }]}>
+                <Text style={{ color: look === l.key ? '#062A2A' : '#E7EFEE', fontWeight: '800', fontSize: 13 }}>{l.label}</Text>
+              </Press>
+            ))}
+          </View>
           <FlatList
             data={pages}
             horizontal
@@ -210,11 +219,11 @@ export default function DocScreen() {
             onMomentumScrollEnd={(e) => setIndex(Math.round(e.nativeEvent.contentOffset.x / width))}
             renderItem={({ item }) => (
               <View style={{ width, paddingHorizontal: 20, paddingTop: 12 }}>
-                <Image source={{ uri: abs(item.image) }} resizeMode="contain" style={{ width: pageW, height: '100%', borderRadius: 12 }} />
+                <Image source={{ uri: abs(item.image) }} resizeMode="contain" style={[{ width: pageW, height: '100%', borderRadius: 12 }, look !== 'color' && ({ filter: rnFilter(look) } as any)]} />
               </View>
             )}
           />
-          <Text style={[s.pageNo, { color: t.muted }]}>Page {index + 1} of {pages.length}</Text>
+          <Text style={[s.pageNo, { color: '#9AA5A3' }]}>Page {index + 1} of {pages.length}</Text>
         </View>
       ) : tab === 'facts' ? (
         <ScrollView style={{ flex: 1 }} contentContainerStyle={{ padding: 20, paddingBottom: 140 }}>
@@ -315,6 +324,8 @@ function Timeout({ ms, onDone }: { ms: number; onDone: () => void }) {
 }
 
 const s = StyleSheet.create({
+  looks: { flexDirection: 'row', alignSelf: 'center', gap: 6, marginTop: 10, padding: 4, borderRadius: 999, backgroundColor: 'rgba(255,255,255,0.10)' },
+  look: { paddingHorizontal: 16, height: 32, borderRadius: 16, alignItems: 'center', justifyContent: 'center' },
   root: { flex: 1 },
   nav: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20, paddingTop: 6 },
   iconBtn: { width: 42, height: 42, borderRadius: 21, alignItems: 'center', justifyContent: 'center' },

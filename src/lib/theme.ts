@@ -14,6 +14,7 @@ export const light = {
   goodSoft: '#DDF6EA',
   danger: '#E5484D',
   navy: '#062A2A',
+  scanBg: '#2A2F2F',
 };
 
 export const dark: typeof light = {
@@ -30,6 +31,7 @@ export const dark: typeof light = {
   goodSoft: '#0F2E20',
   danger: '#FF7075',
   navy: '#062A2A',
+  scanBg: '#2A2F2F',
 };
 
 export type Theme = typeof light;

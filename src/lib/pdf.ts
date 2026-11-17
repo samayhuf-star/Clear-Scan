@@ -2,6 +2,7 @@ import * as ImageManipulator from 'expo-image-manipulator';
 import * as Print from 'expo-print';
 import { abs, ensureDir, move } from './files';
 import type { PageRow } from './db';
+import { cssFilter, type Look } from './look';
 
 export type Quality = 'small' | 'medium' | 'original';
 
@@ -18,7 +19,7 @@ const esc = (s: string) =>
  * Builds a searchable PDF: each page is the scanned image with the recognised text laid over it as
  * invisible text, so the PDF can be searched and selected in any viewer. No watermark, ever.
  */
-export async function buildPdf(docId: string, pages: PageRow[], quality: Quality = 'medium'): Promise<string> {
+export async function buildPdf(docId: string, pages: PageRow[], quality: Quality = 'medium', look: Look = 'color'): Promise<string> {
   const q = QUALITY[quality];
   const sections: string[] = [];
 
@@ -42,12 +43,12 @@ export async function buildPdf(docId: string, pages: PageRow[], quality: Quality
       html, body { margin: 0; padding: 0; }
       .page { position: relative; width: 595px; height: 842px; page-break-after: always; overflow: hidden; background: #fff; }
       .page:last-child { page-break-after: auto; }
-      .page img { position: absolute; inset: 0; width: 595px; height: 842px; object-fit: contain; }
+      .page img { position: absolute; inset: 0; width: 595px; height: 842px; object-fit: contain; filter: ${cssFilter(look)}; }
       .ocr { position: absolute; inset: 0; color: transparent; font-size: 9px; line-height: 11px; padding: 24px; overflow: hidden; }
     </style></head><body>${sections.join('')}</body></html>`;
 
   const res = await Print.printToFileAsync({ html, width: 595, height: 842 });
-  const rel = `scans/${docId}/document-${quality}.pdf`;
+  const rel = `scans/${docId}/document-${quality}-${look}.pdf`;
   await ensureDir(`scans/${docId}`);
   await move(res.uri, rel);
   return abs(rel);
