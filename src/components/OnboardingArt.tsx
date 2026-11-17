@@ -17,8 +17,8 @@ import { Ionicons } from '@expo/vector-icons';
 
 const NAVY = '#062A2A';
 const BLUE = '#0E8F7E';
-const ORANGE = '#FF8A1F';
-const GREEN = '#25C27A';
+const ORANGE = '#FFA13F';
+const GREEN = '#3DD08A';
 
 function Paper({ children, w = 200, h = 270 }: { children?: React.ReactNode; w?: number; h?: number }) {
   return (

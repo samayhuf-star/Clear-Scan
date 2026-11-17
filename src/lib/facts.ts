@@ -183,3 +183,30 @@ export function redactText(text: string): { text: string; hidden: number } {
   }
   return { text: out, hidden };
 }
+
+
+export type Money = { symbol: string; value: number };
+
+/** Turns "Rs. 1,299.50" or "$12" into { symbol: '₹' | '$' | ..., value }. */
+export function parseAmount(raw: string): Money | null {
+  const m = /^(₹|Rs\.?|INR|US\$|\$|USD|€|EUR|£|GBP)\s?(\d[\d,]*(?:\.\d{1,2})?)$/.exec(raw.trim());
+  if (!m) return null;
+  const value = Number(m[2].replace(/,/g, ''));
+  if (!Number.isFinite(value)) return null;
+  const s = m[1].toUpperCase().replace('.', '');
+  const symbol = s === 'RS' || s === 'INR' || m[1] === '₹' ? '₹' : s === 'EUR' || m[1] === '€' ? '€' : s === 'GBP' || m[1] === '£' ? '£' : '$';
+  return { symbol, value };
+}
+
+/** One headline amount for a scan: the first "Total", otherwise the largest amount found. */
+export function docTotal(facts: Fact[]): Money | null {
+  const amounts = facts.filter((f) => f.kind === 'amount');
+  const total = amounts.find((f) => f.label === 'Total');
+  if (total) return parseAmount(total.value);
+  let best: Money | null = null;
+  for (const a of amounts) {
+    const p = parseAmount(a.value);
+    if (p && (!best || p.value > best.value)) best = p;
+  }
+  return best;
+}

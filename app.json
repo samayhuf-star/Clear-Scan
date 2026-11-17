@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "ClearScan",
+    "name": "Keptly",
     "slug": "clear-scan",
     "scheme": "clearscan",
     "version": "1.0.0",
@@ -14,7 +14,7 @@
       "buildNumber": "5",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
-        "NSCameraUsageDescription": "ClearScan uses the camera to scan your documents. Images stay on your iPhone.",
+        "NSCameraUsageDescription": "Keptly uses the camera to scan your documents. Images stay on your iPhone.",
         "NSPhotoLibraryUsageDescription": "Choose photos from your library to turn into PDFs. Images stay on your iPhone.",
         "NSFaceIDUsageDescription": "Use Face ID to keep your scans private."
       }
@@ -45,7 +45,7 @@
       [
         "react-native-document-scanner-plugin",
         {
-          "cameraPermission": "ClearScan uses the camera to scan your documents. Images stay on your iPhone."
+          "cameraPermission": "Keptly uses the camera to scan your documents. Images stay on your iPhone."
         }
       ],
       [
@@ -75,7 +75,32 @@
           "color": "#0E8F7E"
         }
       ],
-      "expo-font"
+      [
+        "expo-calendar",
+        {
+          "writeOnlyAccess": true,
+          "writeOnlyCalendarPermission": "Allow Keptly to add document deadlines to your calendar"
+        }
+      ],
+      "expo-font",
+      [
+        "expo-widgets",
+        {
+          "widgets": [
+            {
+              "name": "UpcomingWidget",
+              "displayName": "Keptly deadlines",
+              "description": "Your next document deadlines",
+              "ios": {
+                "supportedFamilies": [
+                  "systemSmall",
+                  "systemMedium"
+                ]
+              }
+            }
+          ]
+        }
+      ]
     ],
     "owner": "krosz",
     "extra": {

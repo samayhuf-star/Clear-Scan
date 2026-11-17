@@ -69,7 +69,7 @@ export default function Paywall() {
     setBusy(true);
     try {
       const ok = await restore();
-      if (!ok) Alert.alert('Nothing to restore', 'We could not find an active ClearScan Plus purchase on this Apple ID.');
+      if (!ok) Alert.alert('Nothing to restore', 'We could not find an active Keptly Plus purchase on this Apple ID.');
     } catch (e: any) {
       Alert.alert('Restore failed', e?.message ?? 'Please try again.');
     } finally {
@@ -91,7 +91,7 @@ export default function Paywall() {
           <View style={s.crown}>
             <Ionicons name="sparkles" size={30} color="#fff" />
           </View>
-          <Text style={s.title}>ClearScan Plus</Text>
+          <Text style={s.title}>Keptly Plus</Text>
           <Text style={s.sub}>Scanning, OCR and PDF export stay free. Plus adds auto-sort and Word or Markdown export.</Text>
         </Animated.View>
 
@@ -110,7 +110,7 @@ export default function Paywall() {
         </View>
 
         <Animated.View entering={FadeInUp.delay(400)} style={s.freeBox}>
-          <Ionicons name="shield-checkmark" size={18} color="#25C27A" />
+          <Ionicons name="shield-checkmark" size={18} color="#3DD08A" />
           <Text style={s.freeText}>Always free: no watermark, OCR, search, PDF export, app lock.</Text>
         </Animated.View>
 
@@ -195,29 +195,29 @@ const s = StyleSheet.create({
   close: { position: 'absolute', right: 20, zIndex: 5 },
   crown: { width: 60, height: 60, borderRadius: 18, backgroundColor: '#0E8F7E', alignItems: 'center', justifyContent: 'center', marginBottom: 16 },
   title: { color: '#fff', fontSize: 34, fontWeight: '800', letterSpacing: -0.5 },
-  sub: { color: '#B6C3DA', fontSize: 16, lineHeight: 23, marginTop: 8 },
+  sub: { color: '#C8ECE6', fontSize: 16, lineHeight: 23, marginTop: 8 },
   benefit: { flexDirection: 'row', alignItems: 'center', gap: 14, backgroundColor: 'rgba(255,255,255,0.06)', borderRadius: 16, padding: 14 },
   benefitIcon: { width: 40, height: 40, borderRadius: 12, backgroundColor: 'rgba(91,151,255,0.16)', alignItems: 'center', justifyContent: 'center' },
   benefitTitle: { color: '#fff', fontSize: 16, fontWeight: '700' },
-  benefitSub: { color: '#93A1BA', fontSize: 13, marginTop: 2 },
+  benefitSub: { color: '#96B2AC', fontSize: 13, marginTop: 2 },
   freeBox: { flexDirection: 'row', gap: 10, alignItems: 'center', marginTop: 16, padding: 12, borderRadius: 14, backgroundColor: 'rgba(37,194,122,0.12)' },
   freeText: { color: '#CDEFDD', fontSize: 13, flex: 1, lineHeight: 18 },
   plan: { flex: 1, borderRadius: 18, padding: 14, borderWidth: 2, borderColor: 'rgba(255,255,255,0.14)', backgroundColor: 'rgba(255,255,255,0.05)' },
   planWide: { borderRadius: 18, padding: 14, borderWidth: 2, borderColor: 'rgba(255,255,255,0.14)', backgroundColor: 'rgba(255,255,255,0.05)' },
-  planActive: { borderColor: '#0E8F7E', backgroundColor: 'rgba(31,107,255,0.16)' },
-  badge: { position: 'absolute', top: -11, right: 10, backgroundColor: '#FF8A1F', borderRadius: 999, paddingHorizontal: 8, paddingVertical: 3 },
+  planActive: { borderColor: '#0E8F7E', backgroundColor: 'rgba(14,143,126,0.22)' },
+  badge: { position: 'absolute', top: -11, right: 10, backgroundColor: '#FFA13F', borderRadius: 999, paddingHorizontal: 8, paddingVertical: 3 },
   badgeText: { color: '#fff', fontSize: 10, fontWeight: '800', letterSpacing: 0.5 },
   radioRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   radio: { width: 20, height: 20, borderRadius: 10, borderWidth: 2, borderColor: '#5B6B88', alignItems: 'center', justifyContent: 'center' },
   radioDot: { width: 10, height: 10, borderRadius: 5, backgroundColor: '#0E8F7E' },
   planLabel: { color: '#fff', fontWeight: '700', fontSize: 15 },
   planPrice: { color: '#fff', fontSize: 15, fontWeight: '800', marginTop: 10, lineHeight: 20 },
-  planNote: { color: '#93A1BA', fontSize: 12, marginTop: 4, lineHeight: 16 },
+  planNote: { color: '#96B2AC', fontSize: 12, marginTop: 4, lineHeight: 16 },
   footer: { paddingHorizontal: 24, paddingTop: 12, backgroundColor: '#062A2A', borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: '#1D2B44' },
   cta: { backgroundColor: '#0E8F7E', borderRadius: 18, paddingVertical: 17, alignItems: 'center', minHeight: 56, justifyContent: 'center', paddingHorizontal: 16 },
   ctaText: { color: '#fff', fontSize: 17, fontWeight: '700', textAlign: 'center' },
   selection: { color: '#C5D0E4', fontSize: 12, textAlign: 'center', marginTop: 10, lineHeight: 17 },
   legal: { color: '#6F7F9B', fontSize: 11, textAlign: 'center', marginTop: 8, lineHeight: 15 },
   links: { flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap', gap: 14, marginTop: 10 },
-  link: { color: '#93A1BA', fontSize: 13, fontWeight: '600' },
+  link: { color: '#96B2AC', fontSize: 13, fontWeight: '600' },
 });

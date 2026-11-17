@@ -20,7 +20,7 @@ function LockGate({ children }: { children: React.ReactNode }) {
     if (busy.current) return;
     busy.current = true;
     try {
-      const res = await LocalAuthentication.authenticateAsync({ promptMessage: 'Unlock ClearScan' });
+      const res = await LocalAuthentication.authenticateAsync({ promptMessage: 'Unlock Keptly' });
       if (res.success) setLocked(false);
     } finally {
       busy.current = false;
@@ -44,7 +44,7 @@ function LockGate({ children }: { children: React.ReactNode }) {
       {locked && (
         <View style={[s.lock, { backgroundColor: t.navy }]}>
           <Ionicons name="lock-closed" size={44} color="#fff" />
-          <Text style={s.lockTitle}>ClearScan is locked</Text>
+          <Text style={s.lockTitle}>Keptly is locked</Text>
           <Press onPress={unlock} style={s.lockBtn}>
             <Text style={s.lockBtnText}>Unlock</Text>
           </Press>
@@ -71,6 +71,7 @@ export default function RootLayout() {
             <Stack.Screen name="doc/[id]" options={{ animation: 'slide_from_right' }} />
             <Stack.Screen name="settings" options={{ presentation: 'modal' }} />
             <Stack.Screen name="deadlines" options={{ animation: 'slide_from_right' }} />
+            <Stack.Screen name="totals" options={{ animation: 'slide_from_right' }} />
             <Stack.Screen name="paywall" options={{ presentation: 'fullScreenModal', animation: 'slide_from_bottom' }} />
           </Stack>
         </LockGate>

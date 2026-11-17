@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { ActionSheetIOS, Alert, FlatList, Image, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { ActionSheetIOS, Alert, FlatList, Image, Platform, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import Animated, { FadeIn, ZoomIn } from 'react-native-reanimated';
 import { router, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -7,14 +7,14 @@ import * as Clipboard from 'expo-clipboard';
 import * as Haptics from 'expo-haptics';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Press } from '../../components/Press';
-import { deleteDoc, getDoc, getPages, setFavorite, setTitle, type Doc } from '../../lib/db';
+import { deleteDoc, getDoc, getDocReminders, getPages, setFavorite, setTitle, type Doc, type Repeat } from '../../lib/db';
 import { abs, remove } from '../../lib/files';
 import { fmtDate } from '../../lib/classify';
 import { QUALITY, type Quality } from '../../lib/pdf';
 import { shareMarkdown, sharePdf, shareText, shareWord } from '../../lib/export';
 import { extractFacts, maskValue, redactText, type Fact } from '../../lib/facts';
 import { addReminder, clearDocReminders, removeReminder } from '../../lib/reminders';
-import { getDocReminders } from '../../lib/db';
+import { addToCalendar } from '../../lib/calendar';
 import { usePlus } from '../../lib/purchases';
 import { useTheme } from '../../lib/theme';
 
@@ -60,14 +60,45 @@ export default function DocScreen() {
       setReminded((prev) => { const n = new Set(prev); n.delete(key); return n; });
       return;
     }
-    const res = await addReminder(doc.id, doc.title, f.label, f.iso);
+    const repeat = await chooseRepeat();
+    if (!repeat) return;
+    const res = await addReminder(doc.id, doc.title, f.label, f.iso, repeat);
     if (res === 'ok') {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       setReminded((prev) => new Set(prev).add(key));
     } else if (res === 'denied') {
-      Alert.alert('Notifications are off', 'Turn on notifications for ClearScan in Settings to get reminders.');
+      Alert.alert('Notifications are off', 'Turn on notifications for Keptly in Settings to get reminders.');
     } else {
       Alert.alert('Already passed', 'That date is in the past, so there is nothing to remind you about.');
+    }
+  };
+
+  const chooseRepeat = () =>
+    new Promise<Repeat | null>((resolve) => {
+      const opts: { label: string; value: Repeat | null }[] = [
+        { label: 'Remind me once (30 days, 7 days, 1 day, on the day)', value: 'none' },
+        { label: 'Repeat every year', value: 'yearly' },
+        { label: 'Repeat every month', value: 'monthly' },
+        { label: 'Cancel', value: null },
+      ];
+      ActionSheetIOS.showActionSheetWithOptions(
+        { title: 'Reminder', message: 'Renewals can repeat on their own.', options: opts.map((o) => o.label), cancelButtonIndex: 3 },
+        (i) => resolve(opts[i]?.value ?? null)
+      );
+    });
+
+  const saveToCalendar = async (f: Fact) => {
+    if (!f.iso) return;
+    try {
+      const r = await addToCalendar(doc.title, f.label, f.iso);
+      if (r === 'ok') {
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+        Alert.alert('Added to Calendar', `${f.label} on ${f.value} is now in your calendar.`);
+      } else if (r === 'denied') {
+        Alert.alert('Calendar access is off', 'Allow Keptly to add events in Settings.');
+      }
+    } catch (e: any) {
+      Alert.alert('Could not add to Calendar', e?.message ?? 'Please try again.');
     }
   };
 
@@ -189,12 +220,12 @@ export default function DocScreen() {
         <ScrollView style={{ flex: 1 }} contentContainerStyle={{ padding: 20, paddingBottom: 140 }}>
           {facts.length === 0 ? (
             <Text style={{ color: t.muted, lineHeight: 22 }}>
-              No dates, amounts or contact details were found in this scan. Facts appear here when ClearScan reads them.
+              No dates, amounts or contact details were found in this scan. Facts appear here when Keptly reads them.
             </Text>
           ) : (
             <>
               <Text style={{ color: t.muted, fontSize: 13, marginBottom: 12 }}>
-                Found on your iPhone. Tap a fact to copy it. Tap the bell on a date to get a reminder.
+                Found on your iPhone. Tap a fact to copy it. Tap the bell on a date for a reminder, or the calendar to add it to Calendar.
               </Text>
               {facts.map((f) => {
                 const key = `${f.iso}|${f.label}`;
@@ -213,6 +244,11 @@ export default function DocScreen() {
                       <Text style={{ color: t.muted, fontSize: 12, fontWeight: '700' }}>{f.label.toUpperCase()}</Text>
                       <Text selectable style={{ color: t.ink, fontSize: 17, fontWeight: '700', marginTop: 2 }}>{shown}</Text>
                     </Press>
+                    {f.deadline && f.iso && Platform.OS === 'ios' ? (
+                      <Press onPress={() => saveToCalendar(f)} style={[s.bell, { backgroundColor: t.brandSoft }]} accessibilityLabel="Add to Calendar">
+                        <Ionicons name="calendar-outline" size={20} color={t.brand} />
+                      </Press>
+                    ) : null}
                     {f.deadline && f.iso ? (
                       <Press onPress={() => toggleReminder(f)} style={[s.bell, { backgroundColor: on ? t.accent : t.accentSoft }]} accessibilityLabel={on ? 'Remove reminder' : 'Remind me'}>
                         <Ionicons name={on ? 'notifications' : 'notifications-outline'} size={20} color={on ? '#fff' : t.accent} />
@@ -260,7 +296,7 @@ export default function DocScreen() {
       {showDone && (
         <Animated.View entering={FadeIn} style={s.toastWrap} pointerEvents="none">
           <Animated.View entering={ZoomIn.springify().damping(12)} style={s.toast}>
-            <Ionicons name="checkmark-circle" size={22} color="#25C27A" />
+            <Ionicons name="checkmark-circle" size={22} color="#3DD08A" />
             <Text style={s.toastText}>Saved. Text read on-device</Text>
           </Animated.View>
         </Animated.View>

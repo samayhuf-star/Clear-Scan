@@ -36,9 +36,9 @@ export function ProcessingOverlay({ progress }: { progress: Progress | null }) {
 
 const s = StyleSheet.create({
   wrap: { ...StyleSheet.absoluteFill, backgroundColor: 'rgba(8,17,31,0.72)', alignItems: 'center', justifyContent: 'center', zIndex: 50 },
-  card: { width: 280, backgroundColor: '#101C30', borderRadius: 24, padding: 24, alignItems: 'center', gap: 8 },
-  title: { color: '#EAF0FA', fontSize: 17, fontWeight: '700', marginTop: 6 },
-  sub: { color: '#93A1BA', fontSize: 13, textAlign: 'center' },
-  track: { width: '100%', height: 6, borderRadius: 3, backgroundColor: '#1D2B44', marginTop: 10, overflow: 'hidden' },
+  card: { width: 280, backgroundColor: '#0E2624', borderRadius: 24, padding: 24, alignItems: 'center', gap: 8 },
+  title: { color: '#FFFFFF', fontSize: 17, fontWeight: '700', marginTop: 6 },
+  sub: { color: '#96B2AC', fontSize: 13, textAlign: 'center' },
+  track: { width: '100%', height: 6, borderRadius: 3, backgroundColor: '#1B3A37', marginTop: 10, overflow: 'hidden' },
   fill: { height: 6, borderRadius: 3, backgroundColor: '#0E8F7E' },
 });
