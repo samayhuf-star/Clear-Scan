@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { FlatList, Image, StyleSheet, Text, View } from 'react-native';
 import { router, useFocusEffect } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -45,7 +45,7 @@ export default function Deadlines() {
         contentContainerStyle={{ padding: 20, paddingBottom: insets.bottom + 40, flexGrow: 1 }}
         ListEmptyComponent={
           <View style={s.empty}>
-            <Ionicons name="calendar-outline" size={44} color={t.brand} />
+            <Image source={require('../../assets/images/deadlines-empty.png')} style={{ width: 180, height: 180 }} accessibilityIgnoresInvertColors />
             <Text style={{ color: t.ink, fontWeight: '800', fontSize: 18, marginTop: 12 }}>No deadlines yet</Text>
             <Text style={{ color: t.muted, textAlign: 'center', marginTop: 6, lineHeight: 21 }}>
               Scan a passport, insurance paper, warranty or bill. Open its Facts tab and tap the bell on an expiry or due date.
