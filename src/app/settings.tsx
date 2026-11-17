@@ -96,6 +96,7 @@ export default function Settings() {
             Alert.alert('Restore failed', e?.message ?? 'Please try again.');
           }
         }} />
+        <Row icon="help-circle" label="How to use Keptly" sub="Scan, books, filters, PDF, deadlines" onPress={() => router.push('/howto')} />
         <Row icon="star" label="Rate Keptly" onPress={async () => { if (await StoreReview.hasAction()) StoreReview.requestReview(); }} />
         <Row icon="mail" label="Contact support" sub={CONFIG.supportEmail} onPress={() => Linking.openURL(`mailto:${CONFIG.supportEmail}?subject=Keptly%20support`)} />
         <Row icon="document-text" label="Privacy Policy" onPress={() => Linking.openURL(CONFIG.privacyUrl)} />

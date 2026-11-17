@@ -69,6 +69,8 @@ export default function RootLayout() {
             <Stack.Screen name="index" />
             <Stack.Screen name="onboarding" options={{ gestureEnabled: false, animation: 'fade' }} />
             <Stack.Screen name="doc/[id]" options={{ animation: 'slide_from_right' }} />
+            <Stack.Screen name="whatyouget" options={{ gestureEnabled: false, animation: 'slide_from_right' }} />
+            <Stack.Screen name="howto" options={{ presentation: 'modal' }} />
             <Stack.Screen name="settings" options={{ presentation: 'modal' }} />
             <Stack.Screen name="deadlines" options={{ animation: 'slide_from_right' }} />
             <Stack.Screen name="totals" options={{ animation: 'slide_from_right' }} />

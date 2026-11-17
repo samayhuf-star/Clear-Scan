@@ -121,7 +121,7 @@ export default function Onboarding() {
           <Press
             haptic="medium"
             onPress={() => {
-              if (last) finish(true);
+              if (last) router.push('/whatyouget');
               else {
                 const next = page + 1;
                 list.current?.scrollTo({ x: next * width, animated: true });
@@ -130,7 +130,7 @@ export default function Onboarding() {
             }}
             style={s.cta}
           >
-            <Text style={s.ctaText}>{last ? 'Try your first scan' : 'Continue'}</Text>
+            <Text style={s.ctaText}>{last ? 'See what you get' : 'Continue'}</Text>
           </Press>
           {last && (
             <Press onPress={() => finish(false)} style={{ marginTop: 14, alignItems: 'center' }}>
