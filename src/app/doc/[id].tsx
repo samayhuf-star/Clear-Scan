@@ -7,10 +7,13 @@ import * as Clipboard from 'expo-clipboard';
 import * as Haptics from 'expo-haptics';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Press } from '../../components/Press';
+import { ProcessingOverlay } from '../../components/ProcessingOverlay';
 import { deleteDoc, getDoc, getDocReminders, getPages, setFavorite, setTitle, type Doc, type Repeat } from '../../lib/db';
 import { abs, remove } from '../../lib/files';
 import { fmtDate } from '../../lib/classify';
 import { QUALITY, type Quality } from '../../lib/pdf';
+import { useScan } from '../../lib/useScan';
+import { rotatePage } from '../../lib/scan';
 import { LOOKS, getLook, rnFilter, setLook, type Look } from '../../lib/look';
 import { shareMarkdown, sharePdf, shareText, shareWord } from '../../lib/export';
 import { extractFacts, maskValue, redactText, type Fact } from '../../lib/facts';
@@ -26,7 +29,9 @@ export default function DocScreen() {
   const { width } = useWindowDimensions();
   const plus = usePlus();
   const [doc, setDoc] = useState<Doc | null>(() => getDoc(id));
-  const pages = useMemo(() => getPages(id), [id]);
+  const [pages, setPages] = useState(() => getPages(id));
+  const [rev, setRev] = useState(0);
+  const { progress, addTo } = useScan();
   const [tab, setTab] = useState<'scan' | 'text' | 'facts'>('scan');
   const [reveal, setReveal] = useState(false);
   const [reminded, setReminded] = useState<Set<string>>(() => new Set(getDocReminders(id).map((r) => `${r.iso}|${r.label}`)));
@@ -210,6 +215,14 @@ export default function DocScreen() {
               </Press>
             ))}
           </View>
+          <View style={[s.looks, { marginTop: 8, backgroundColor: 'transparent' }]}>
+            <Press haptic="light" accessibilityLabel="Rotate page" onPress={async () => { try { await rotatePage(pages[index].image); setRev((n) => n + 1); } catch (e: any) { Alert.alert('Could not rotate', e?.message ?? 'Try again.'); } }} style={[s.look, { backgroundColor: 'rgba(255,255,255,0.10)', flexDirection: 'row', gap: 6 }]}>
+              <Ionicons name="refresh" size={16} color="#E7EFEE" /><Text style={{ color: '#E7EFEE', fontWeight: '800', fontSize: 13 }}>Rotate</Text>
+            </Press>
+            <Press haptic="light" accessibilityLabel="Add pages" onPress={async () => { if (await addTo(id)) { setPages(getPages(id)); setDoc(getDoc(id)); } }} style={[s.look, { backgroundColor: t.brand }]}>
+              <Text style={{ color: '#fff', fontWeight: '800', fontSize: 13 }}>+ Page</Text>
+            </Press>
+          </View>
           <FlatList
             data={pages}
             horizontal
@@ -219,7 +232,7 @@ export default function DocScreen() {
             onMomentumScrollEnd={(e) => setIndex(Math.round(e.nativeEvent.contentOffset.x / width))}
             renderItem={({ item }) => (
               <View style={{ width, paddingHorizontal: 20, paddingTop: 12 }}>
-                <Image source={{ uri: abs(item.image) }} resizeMode="contain" style={[{ width: pageW, height: '100%', borderRadius: 12 }, look !== 'color' && ({ filter: rnFilter(look) } as any)]} />
+                <Image key={rev} source={{ uri: abs(item.image), cache: 'reload' }} resizeMode="contain" style={[{ width: pageW, height: '100%', borderRadius: 12 }, look !== 'color' && ({ filter: rnFilter(look) } as any)]} />
               </View>
             )}
           />
@@ -311,6 +324,7 @@ export default function DocScreen() {
         </Animated.View>
       )}
       {showDone && <Timeout ms={2200} onDone={() => setShowDone(false)} />}
+      <ProcessingOverlay progress={progress} />
     </View>
   );
 }

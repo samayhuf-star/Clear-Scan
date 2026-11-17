@@ -72,6 +72,21 @@ export function insertDoc(doc: Doc, pages: { image: string; text: string }[]) {
   });
 }
 
+export function appendPages(docId: string, pgs: { image: string; text: string }[]) {
+  db.withTransactionSync(() => {
+    const row = db.getFirstSync<{ n: number }>('SELECT COUNT(*) AS n FROM pages WHERE doc_id = ?', docId);
+    const start = row?.n ?? 0;
+    pgs.forEach((p, i) => {
+      db.runSync('INSERT INTO pages (doc_id, idx, image, text) VALUES (?, ?, ?, ?)', docId, start + i, p.image, p.text);
+    });
+    db.runSync('UPDATE docs SET pages = ? WHERE id = ?', start + pgs.length, docId);
+    const title = db.getFirstSync<{ title: string }>('SELECT title FROM docs WHERE id = ?', docId)?.title ?? '';
+    const all = db.getAllSync<{ text: string }>('SELECT text FROM pages WHERE doc_id = ? ORDER BY idx', docId).map((r) => r.text).join('\n');
+    db.runSync('DELETE FROM fts WHERE doc_id = ?', docId);
+    db.runSync('INSERT INTO fts (doc_id, title, body) VALUES (?, ?, ?)', docId, title, all);
+  });
+}
+
 function ftsQuery(q: string): string {
   const tokens = q
     .replace(/["']/g, ' ')

@@ -52,6 +52,12 @@ export function insertDoc(doc: Doc, pgs: { image: string; text: string }[]) {
   pgs.forEach((p, i) => pages.push({ doc_id: doc.id, idx: i, image: p.image, text: p.text }));
 }
 
+export function appendPages(docId: string, pgs: { image: string; text: string }[]) {
+  const start = getPages(docId).length;
+  pgs.forEach((p, i) => pages.push({ doc_id: docId, idx: start + i, image: p.image, text: p.text }));
+  const d = getDoc(docId); if (d) d.pages = start + pgs.length;
+}
+
 export function listDocs(opts: { query?: string; kind?: string; favorites?: boolean } = {}): Doc[] {
   const q = opts.query?.trim().toLowerCase();
   return docs

@@ -25,7 +25,7 @@ export default function Home() {
   const t = useTheme();
   const insets = useSafeAreaInsets();
   const plus = usePlus();
-  const { progress, scan, importPhotos } = useScan();
+  const { progress, scan, importPhotos, mode, setMode } = useScan();
   const [docs, setDocs] = useState<Doc[]>([]);
   const [query, setQuery] = useState('');
   const [chip, setChip] = useState<string>('All');
@@ -154,6 +154,14 @@ export default function Home() {
         itemLayoutAnimation={LinearTransition}
       />
 
+      <View style={[s.modeRow, { bottom: insets.bottom + 96, backgroundColor: t.surface, borderColor: t.line }]}>
+        {([['doc', 'Document', 'document-text-outline'], ['book', 'Book', 'book-outline']] as const).map(([k, label, icon]) => (
+          <Press key={k} haptic="none" onPress={() => setMode(k)} accessibilityLabel={`${label} scan mode`} style={[s.modeChip, mode === k && { backgroundColor: t.brand }]}>
+            <Ionicons name={icon} size={16} color={mode === k ? '#fff' : t.ink} />
+            <Text style={{ color: mode === k ? '#fff' : t.ink, fontWeight: '800', fontSize: 13 }}>{label}</Text>
+          </Press>
+        ))}
+      </View>
       <View style={[s.bar, { paddingBottom: insets.bottom + 12 }]} pointerEvents="box-none">
         <Press onPress={importMenu} style={[s.secondary, { backgroundColor: t.surface, borderColor: t.line }]} accessibilityLabel="Import photos">
           <Ionicons name="images-outline" size={24} color={t.ink} />
@@ -223,6 +231,8 @@ function ScanButton({ onPress }: { onPress: () => void }) {
 }
 
 const s = StyleSheet.create({
+  modeRow: { position: 'absolute', alignSelf: 'center', flexDirection: 'row', gap: 4, padding: 4, borderRadius: 999, borderWidth: 1 },
+  modeChip: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 14, height: 34, borderRadius: 17 },
   root: { flex: 1 },
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 20, paddingTop: 8 },
   h1: { fontSize: 34, fontWeight: '800', letterSpacing: -0.6 },
