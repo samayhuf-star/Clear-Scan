@@ -1,10 +1,13 @@
+import { Platform } from 'react-native';
 import * as Notifications from 'expo-notifications';
 import { dropReminder, getDocReminders, saveReminder, type Repeat } from './db';
 import { syncWidget } from './widget';
 
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({ shouldShowBanner: true, shouldShowList: true, shouldPlaySound: false, shouldSetBadge: false }),
-});
+if (Platform.OS !== 'web') {
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({ shouldShowBanner: true, shouldShowList: true, shouldPlaySound: false, shouldSetBadge: false }),
+  });
+}
 
 /** 9:00 local time on the given yyyy-mm-dd, minus `daysBefore`. */
 export function reminderDate(iso: string, daysBefore: number): Date {
@@ -38,6 +41,10 @@ export async function addReminder(
   iso: string,
   repeat: Repeat = 'none'
 ): Promise<'ok' | 'denied' | 'past'> {
+  if (Platform.OS === 'web') {
+    saveReminder(docId, iso, label, [], repeat);
+    return 'ok';
+  }
   if (!(await ensurePermission())) return 'denied';
   const now = Date.now();
   const ids: string[] = [];
@@ -71,7 +78,7 @@ export async function addReminder(
 export async function removeReminder(docId: string, iso: string, label: string) {
   const row = getDocReminders(docId).find((r) => r.iso === iso && r.label === label);
   if (row) {
-    for (const id of JSON.parse(row.notif_ids) as string[]) {
+    for (const id of Platform.OS === 'web' ? [] : (JSON.parse(row.notif_ids) as string[])) {
       await Notifications.cancelScheduledNotificationAsync(id).catch(() => {});
     }
   }
