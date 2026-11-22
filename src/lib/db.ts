@@ -31,6 +31,12 @@ db.execSync(`
   );
 `);
 
+try {
+  db.execSync("ALTER TABLE reminders ADD COLUMN repeat TEXT NOT NULL DEFAULT 'none'");
+} catch {
+  // column already exists
+}
+
 export type Doc = {
   id: string;
   title: string;
@@ -63,6 +69,21 @@ export function insertDoc(doc: Doc, pages: { image: string; text: string }[]) {
       'INSERT INTO fts (doc_id, title, body) VALUES (?, ?, ?)',
       doc.id, doc.title, pages.map((p) => p.text).join('\n')
     );
+  });
+}
+
+export function appendPages(docId: string, pgs: { image: string; text: string }[]) {
+  db.withTransactionSync(() => {
+    const row = db.getFirstSync<{ n: number }>('SELECT COUNT(*) AS n FROM pages WHERE doc_id = ?', docId);
+    const start = row?.n ?? 0;
+    pgs.forEach((p, i) => {
+      db.runSync('INSERT INTO pages (doc_id, idx, image, text) VALUES (?, ?, ?, ?)', docId, start + i, p.image, p.text);
+    });
+    db.runSync('UPDATE docs SET pages = ? WHERE id = ?', start + pgs.length, docId);
+    const title = db.getFirstSync<{ title: string }>('SELECT title FROM docs WHERE id = ?', docId)?.title ?? '';
+    const all = db.getAllSync<{ text: string }>('SELECT text FROM pages WHERE doc_id = ? ORDER BY idx', docId).map((r) => r.text).join('\n');
+    db.runSync('DELETE FROM fts WHERE doc_id = ?', docId);
+    db.runSync('INSERT INTO fts (doc_id, title, body) VALUES (?, ?, ?)', docId, title, all);
   });
 }
 
@@ -122,7 +143,8 @@ export function setKind(id: string, kind: string) {
   db.runSync('UPDATE docs SET kind = ? WHERE id = ?', kind, id);
 }
 
-export type Reminder = { doc_id: string; iso: string; label: string; notif_ids: string };
+export type Repeat = 'none' | 'monthly' | 'yearly';
+export type Reminder = { doc_id: string; iso: string; label: string; notif_ids: string; repeat: Repeat };
 
 export function listReminders(): (Reminder & { title: string })[] {
   return db.getAllSync(
@@ -134,10 +156,22 @@ export function getDocReminders(docId: string): Reminder[] {
   return db.getAllSync<Reminder>('SELECT * FROM reminders WHERE doc_id = ?', docId);
 }
 
-export function saveReminder(docId: string, iso: string, label: string, notifIds: string[]) {
+export function saveReminder(docId: string, iso: string, label: string, notifIds: string[], repeat: Repeat = 'none') {
   db.runSync(
-    'INSERT OR REPLACE INTO reminders (doc_id, iso, label, notif_ids) VALUES (?, ?, ?, ?)',
-    docId, iso, label, JSON.stringify(notifIds)
+    'INSERT OR REPLACE INTO reminders (doc_id, iso, label, notif_ids, repeat) VALUES (?, ?, ?, ?, ?)',
+    docId, iso, label, JSON.stringify(notifIds), repeat
+  );
+}
+
+/** Recognised text of every scan of the given kinds created between two timestamps (ms). */
+export function listTextsByKinds(kinds: string[], from: number, to: number): { id: string; title: string; kind: string; created: number; text: string }[] {
+  const marks = kinds.map(() => '?').join(',');
+  return db.getAllSync(
+    `SELECT d.id AS id, d.title AS title, d.kind AS kind, d.created AS created, COALESCE(group_concat(p.text, char(10)), '') AS text
+     FROM docs d LEFT JOIN pages p ON p.doc_id = d.id
+     WHERE d.kind IN (${marks}) AND d.created >= ? AND d.created < ?
+     GROUP BY d.id ORDER BY d.created DESC`,
+    ...kinds, from, to
   );
 }
 

@@ -20,7 +20,7 @@ const SLIDES = [
   {
     key: 'ocr',
     title: 'Finds the dates\nthat matter.',
-    body: 'ClearScan reads expiry and due dates, totals and IDs, and reminds you before a passport or policy runs out.',
+    body: 'Keptly reads expiry and due dates, totals and IDs, and reminds you before a passport or policy runs out.',
     Art: OcrScene,
   },
   {
@@ -86,9 +86,9 @@ export default function Onboarding() {
 
   return (
     <View style={s.root}>
-      <LinearGradient colors={['#0B1B33', '#10294D', '#0B1B33']} style={StyleSheet.absoluteFill} />
+      <LinearGradient colors={['#062A2A', '#0B4A47', '#062A2A']} style={StyleSheet.absoluteFill} />
       <View style={[s.top, { paddingTop: insets.top + 8 }]}>
-        <Text style={s.brand}>ClearScan</Text>
+        <Text style={s.brand}>Keptly</Text>
         {!last && (
           <Press onPress={() => finish(false)} hitSlop={12} accessibilityLabel="Skip introduction">
             <Text style={s.skip}>Skip</Text>
@@ -121,7 +121,7 @@ export default function Onboarding() {
           <Press
             haptic="medium"
             onPress={() => {
-              if (last) finish(true);
+              if (last) router.push('/whatyouget');
               else {
                 const next = page + 1;
                 list.current?.scrollTo({ x: next * width, animated: true });
@@ -130,7 +130,7 @@ export default function Onboarding() {
             }}
             style={s.cta}
           >
-            <Text style={s.ctaText}>{last ? 'Try your first scan' : 'Continue'}</Text>
+            <Text style={s.ctaText}>{last ? 'See what you get' : 'Continue'}</Text>
           </Press>
           {last && (
             <Press onPress={() => finish(false)} style={{ marginTop: 14, alignItems: 'center' }}>
@@ -145,16 +145,16 @@ export default function Onboarding() {
 }
 
 const s = StyleSheet.create({
-  root: { flex: 1, backgroundColor: '#0B1B33' },
+  root: { flex: 1, backgroundColor: '#062A2A' },
   top: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 24, paddingBottom: 4 },
   brand: { color: '#fff', fontSize: 18, fontWeight: '800', letterSpacing: 0.3 },
-  skip: { color: '#93A1BA', fontSize: 16, fontWeight: '600' },
+  skip: { color: '#96B2AC', fontSize: 16, fontWeight: '600' },
   copy: { paddingHorizontal: 28, paddingBottom: 8, minHeight: 170, alignSelf: 'stretch' },
   title: { color: '#fff', fontSize: 34, fontWeight: '800', lineHeight: 40, letterSpacing: -0.5 },
-  body: { color: '#B6C3DA', fontSize: 16, lineHeight: 23, marginTop: 12 },
+  body: { color: '#C8ECE6', fontSize: 16, lineHeight: 23, marginTop: 12 },
   bottom: { paddingHorizontal: 24, gap: 18, alignItems: 'center' },
   dots: { flexDirection: 'row', gap: 6, height: 8 },
   dot: { height: 8, borderRadius: 4, backgroundColor: '#fff' },
-  cta: { backgroundColor: '#1F6BFF', borderRadius: 18, paddingVertical: 17, alignItems: 'center', shadowColor: '#1F6BFF', shadowOpacity: 0.5, shadowRadius: 18, shadowOffset: { width: 0, height: 8 } },
+  cta: { backgroundColor: '#0E8F7E', borderRadius: 18, paddingVertical: 17, alignItems: 'center', shadowColor: '#0E8F7E', shadowOpacity: 0.5, shadowRadius: 18, shadowOffset: { width: 0, height: 8 } },
   ctaText: { color: '#fff', fontSize: 17, fontWeight: '700' },
 });

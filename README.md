@@ -1,4 +1,4 @@
-# ClearScan
+# Keptly
 
 Private iOS document scanner. Unlimited scans, on-device OCR, no watermark, no account. Optional Plus subscription.
 

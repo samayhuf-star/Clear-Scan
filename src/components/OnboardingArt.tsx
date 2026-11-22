@@ -17,8 +17,8 @@ import { Ionicons } from '@expo/vector-icons';
 
 const NAVY = '#062A2A';
 const BLUE = '#0E8F7E';
-const ORANGE = '#FF8A1F';
-const GREEN = '#25C27A';
+const ORANGE = '#FFA13F';
+const GREEN = '#3DD08A';
 
 function Paper({ children, w = 200, h = 270 }: { children?: React.ReactNode; w?: number; h?: number }) {
   return (
@@ -28,10 +28,10 @@ function Paper({ children, w = 200, h = 270 }: { children?: React.ReactNode; w?:
   );
 }
 
-function Lines({ rows = 8, tint = '#D5DCE8' }: { rows?: number; tint?: string }) {
+function Lines({ rows = 8, tint = '#CFE6E2' }: { rows?: number; tint?: string }) {
   return (
     <View style={{ gap: 11, padding: 18 }}>
-      <View style={{ height: 12, width: '55%', borderRadius: 6, backgroundColor: '#9FB0CC' }} />
+      <View style={{ height: 12, width: '55%', borderRadius: 6, backgroundColor: '#8CC9BF' }} />
       {Array.from({ length: rows }).map((_, i) => (
         <View key={i} style={{ height: 7, width: `${100 - ((i * 13) % 38)}%`, borderRadius: 4, backgroundColor: tint }} />
       ))}
@@ -73,7 +73,7 @@ export function ScanScene() {
           <Text style={s.stampText}>WATERMARK</Text>
         </Animated.View>
         <Animated.View style={[s.beam, beamStyle]}>
-          <LinearGradient colors={['rgba(31,107,255,0)', 'rgba(31,107,255,0.55)']} style={{ flex: 1 }} />
+          <LinearGradient colors={['rgba(14,143,126,0)', 'rgba(14,143,126,0.55)']} style={{ flex: 1 }} />
           <View style={{ height: 2, backgroundColor: BLUE }} />
         </Animated.View>
         <View style={[s.corner, { top: 8, left: 8, borderTopWidth: 3, borderLeftWidth: 3 }]} />
@@ -118,7 +118,7 @@ function OcrRow({ i, t }: { i: number; t: SharedValue<number> }) {
   });
   const width = `${100 - ((i * 17) % 40)}%` as `${number}%`;
   return (
-    <View style={{ width, height: 9, borderRadius: 5, backgroundColor: '#D5DCE8', overflow: 'hidden' }}>
+    <View style={{ width, height: 9, borderRadius: 5, backgroundColor: '#CFE6E2', overflow: 'hidden' }}>
       <Animated.View style={[{ height: 9, borderRadius: 5, backgroundColor: i === 3 ? ORANGE : BLUE }, a]} />
     </View>
   );

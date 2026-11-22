@@ -1,6 +1,6 @@
 // Central place for IDs and links. Product IDs match the App Store Connect products.
 export const CONFIG = {
-  appName: 'ClearScan',
+  appName: 'Keptly',
   // RevenueCat public SDK key for iOS (starts with "appl_"). Set EXPO_PUBLIC_RC_IOS_KEY in EAS secrets.
   revenueCatIosKey: process.env.EXPO_PUBLIC_RC_IOS_KEY ?? '',
   entitlementId: 'plus',

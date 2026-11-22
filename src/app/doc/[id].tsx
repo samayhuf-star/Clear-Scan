@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { ActionSheetIOS, Alert, FlatList, Image, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { ActionSheetIOS, Alert, FlatList, Image, Platform, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import Animated, { FadeIn, ZoomIn } from 'react-native-reanimated';
 import { router, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -7,14 +7,18 @@ import * as Clipboard from 'expo-clipboard';
 import * as Haptics from 'expo-haptics';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Press } from '../../components/Press';
-import { deleteDoc, getDoc, getPages, setFavorite, setTitle, type Doc } from '../../lib/db';
+import { ProcessingOverlay } from '../../components/ProcessingOverlay';
+import { deleteDoc, getDoc, getDocReminders, getPages, setFavorite, setTitle, type Doc, type Repeat } from '../../lib/db';
 import { abs, remove } from '../../lib/files';
 import { fmtDate } from '../../lib/classify';
 import { QUALITY, type Quality } from '../../lib/pdf';
+import { useScan } from '../../lib/useScan';
+import { rotatePage } from '../../lib/scan';
+import { LOOKS, getLook, rnFilter, setLook, type Look } from '../../lib/look';
 import { shareMarkdown, sharePdf, shareText, shareWord } from '../../lib/export';
 import { extractFacts, maskValue, redactText, type Fact } from '../../lib/facts';
 import { addReminder, clearDocReminders, removeReminder } from '../../lib/reminders';
-import { getDocReminders } from '../../lib/db';
+import { addToCalendar } from '../../lib/calendar';
 import { usePlus } from '../../lib/purchases';
 import { useTheme } from '../../lib/theme';
 
@@ -25,11 +29,14 @@ export default function DocScreen() {
   const { width } = useWindowDimensions();
   const plus = usePlus();
   const [doc, setDoc] = useState<Doc | null>(() => getDoc(id));
-  const pages = useMemo(() => getPages(id), [id]);
+  const [pages, setPages] = useState(() => getPages(id));
+  const [rev, setRev] = useState(0);
+  const { progress, addTo } = useScan();
   const [tab, setTab] = useState<'scan' | 'text' | 'facts'>('scan');
   const [reveal, setReveal] = useState(false);
   const [reminded, setReminded] = useState<Set<string>>(() => new Set(getDocReminders(id).map((r) => `${r.iso}|${r.label}`)));
   const [index, setIndex] = useState(0);
+  const [look, setLookState] = useState<Look>(() => getLook(id));
   const [busy, setBusy] = useState(false);
   const [showDone, setShowDone] = useState(fresh === '1');
 
@@ -60,14 +67,45 @@ export default function DocScreen() {
       setReminded((prev) => { const n = new Set(prev); n.delete(key); return n; });
       return;
     }
-    const res = await addReminder(doc.id, doc.title, f.label, f.iso);
+    const repeat = await chooseRepeat();
+    if (!repeat) return;
+    const res = await addReminder(doc.id, doc.title, f.label, f.iso, repeat);
     if (res === 'ok') {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       setReminded((prev) => new Set(prev).add(key));
     } else if (res === 'denied') {
-      Alert.alert('Notifications are off', 'Turn on notifications for ClearScan in Settings to get reminders.');
+      Alert.alert('Notifications are off', 'Turn on notifications for Keptly in Settings to get reminders.');
     } else {
       Alert.alert('Already passed', 'That date is in the past, so there is nothing to remind you about.');
+    }
+  };
+
+  const chooseRepeat = () =>
+    new Promise<Repeat | null>((resolve) => {
+      const opts: { label: string; value: Repeat | null }[] = [
+        { label: 'Remind me once (30 days, 7 days, 1 day, on the day)', value: 'none' },
+        { label: 'Repeat every year', value: 'yearly' },
+        { label: 'Repeat every month', value: 'monthly' },
+        { label: 'Cancel', value: null },
+      ];
+      ActionSheetIOS.showActionSheetWithOptions(
+        { title: 'Reminder', message: 'Renewals can repeat on their own.', options: opts.map((o) => o.label), cancelButtonIndex: 3 },
+        (i) => resolve(opts[i]?.value ?? null)
+      );
+    });
+
+  const saveToCalendar = async (f: Fact) => {
+    if (!f.iso) return;
+    try {
+      const r = await addToCalendar(doc.title, f.label, f.iso);
+      if (r === 'ok') {
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+        Alert.alert('Added to Calendar', `${f.label} on ${f.value} is now in your calendar.`);
+      } else if (r === 'denied') {
+        Alert.alert('Calendar access is off', 'Allow Keptly to add events in Settings.');
+      }
+    } catch (e: any) {
+      Alert.alert('Could not add to Calendar', e?.message ?? 'Please try again.');
     }
   };
 
@@ -169,7 +207,22 @@ export default function DocScreen() {
       </View>
 
       {tab === 'scan' ? (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, backgroundColor: t.scanBg }}>
+          <View style={s.looks}>
+            {LOOKS.map((l) => (
+              <Press key={l.key} haptic="none" onPress={() => { setLook(id, l.key); setLookState(l.key); }} accessibilityLabel={`${l.label} filter`} style={[s.look, look === l.key && { backgroundColor: t.accent }]}>
+                <Text style={{ color: look === l.key ? '#062A2A' : '#E7EFEE', fontWeight: '800', fontSize: 13 }}>{l.label}</Text>
+              </Press>
+            ))}
+          </View>
+          <View style={[s.looks, { marginTop: 8, backgroundColor: 'transparent' }]}>
+            <Press haptic="light" accessibilityLabel="Rotate page" onPress={async () => { try { await rotatePage(pages[index].image); setRev((n) => n + 1); } catch (e: any) { Alert.alert('Could not rotate', e?.message ?? 'Try again.'); } }} style={[s.look, { backgroundColor: 'rgba(255,255,255,0.10)', flexDirection: 'row', gap: 6 }]}>
+              <Ionicons name="refresh" size={16} color="#E7EFEE" /><Text style={{ color: '#E7EFEE', fontWeight: '800', fontSize: 13 }}>Rotate</Text>
+            </Press>
+            <Press haptic="light" accessibilityLabel="Add pages" onPress={async () => { if (await addTo(id)) { setPages(getPages(id)); setDoc(getDoc(id)); } }} style={[s.look, { backgroundColor: t.brand }]}>
+              <Text style={{ color: '#fff', fontWeight: '800', fontSize: 13 }}>+ Page</Text>
+            </Press>
+          </View>
           <FlatList
             data={pages}
             horizontal
@@ -179,22 +232,22 @@ export default function DocScreen() {
             onMomentumScrollEnd={(e) => setIndex(Math.round(e.nativeEvent.contentOffset.x / width))}
             renderItem={({ item }) => (
               <View style={{ width, paddingHorizontal: 20, paddingTop: 12 }}>
-                <Image source={{ uri: abs(item.image) }} resizeMode="contain" style={{ width: pageW, height: '100%', borderRadius: 12 }} />
+                <Image key={rev} source={{ uri: abs(item.image), cache: 'reload' }} resizeMode="contain" style={[{ width: pageW, height: '100%', borderRadius: 12 }, look !== 'color' && ({ filter: rnFilter(look) } as any)]} />
               </View>
             )}
           />
-          <Text style={[s.pageNo, { color: t.muted }]}>Page {index + 1} of {pages.length}</Text>
+          <Text style={[s.pageNo, { color: '#9AA5A3' }]}>Page {index + 1} of {pages.length}</Text>
         </View>
       ) : tab === 'facts' ? (
         <ScrollView style={{ flex: 1 }} contentContainerStyle={{ padding: 20, paddingBottom: 140 }}>
           {facts.length === 0 ? (
             <Text style={{ color: t.muted, lineHeight: 22 }}>
-              No dates, amounts or contact details were found in this scan. Facts appear here when ClearScan reads them.
+              No dates, amounts or contact details were found in this scan. Facts appear here when Keptly reads them.
             </Text>
           ) : (
             <>
               <Text style={{ color: t.muted, fontSize: 13, marginBottom: 12 }}>
-                Found on your iPhone. Tap a fact to copy it. Tap the bell on a date to get a reminder.
+                Found on your iPhone. Tap a fact to copy it. Tap the bell on a date for a reminder, or the calendar to add it to Calendar.
               </Text>
               {facts.map((f) => {
                 const key = `${f.iso}|${f.label}`;
@@ -213,6 +266,11 @@ export default function DocScreen() {
                       <Text style={{ color: t.muted, fontSize: 12, fontWeight: '700' }}>{f.label.toUpperCase()}</Text>
                       <Text selectable style={{ color: t.ink, fontSize: 17, fontWeight: '700', marginTop: 2 }}>{shown}</Text>
                     </Press>
+                    {f.deadline && f.iso && Platform.OS === 'ios' ? (
+                      <Press onPress={() => saveToCalendar(f)} style={[s.bell, { backgroundColor: t.brandSoft }]} accessibilityLabel="Add to Calendar">
+                        <Ionicons name="calendar-outline" size={20} color={t.brand} />
+                      </Press>
+                    ) : null}
                     {f.deadline && f.iso ? (
                       <Press onPress={() => toggleReminder(f)} style={[s.bell, { backgroundColor: on ? t.accent : t.accentSoft }]} accessibilityLabel={on ? 'Remove reminder' : 'Remind me'}>
                         <Ionicons name={on ? 'notifications' : 'notifications-outline'} size={20} color={on ? '#fff' : t.accent} />
@@ -260,12 +318,13 @@ export default function DocScreen() {
       {showDone && (
         <Animated.View entering={FadeIn} style={s.toastWrap} pointerEvents="none">
           <Animated.View entering={ZoomIn.springify().damping(12)} style={s.toast}>
-            <Ionicons name="checkmark-circle" size={22} color="#25C27A" />
+            <Ionicons name="checkmark-circle" size={22} color="#3DD08A" />
             <Text style={s.toastText}>Saved. Text read on-device</Text>
           </Animated.View>
         </Animated.View>
       )}
       {showDone && <Timeout ms={2200} onDone={() => setShowDone(false)} />}
+      <ProcessingOverlay progress={progress} />
     </View>
   );
 }
@@ -279,6 +338,8 @@ function Timeout({ ms, onDone }: { ms: number; onDone: () => void }) {
 }
 
 const s = StyleSheet.create({
+  looks: { flexDirection: 'row', alignSelf: 'center', gap: 6, marginTop: 10, padding: 4, borderRadius: 999, backgroundColor: 'rgba(255,255,255,0.10)' },
+  look: { paddingHorizontal: 16, height: 32, borderRadius: 16, alignItems: 'center', justifyContent: 'center' },
   root: { flex: 1 },
   nav: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20, paddingTop: 6 },
   iconBtn: { width: 42, height: 42, borderRadius: 21, alignItems: 'center', justifyContent: 'center' },

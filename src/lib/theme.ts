@@ -1,26 +1,27 @@
 import { useColorScheme } from 'react-native';
 
 export const light = {
-  bg: '#F4F6FA',
+  bg: '#EDF7F5',
   surface: '#FFFFFF',
-  ink: '#0B1B33',
-  muted: '#62708A',
-  line: '#E1E6EF',
+  ink: '#062A2A',
+  muted: '#547773',
+  line: '#D2E8E4',
   brand: '#0E8F7E',
   brandSoft: '#DDF4F0',
-  accent: '#FF8A1F',
-  accentSoft: '#FFF0E0',
-  good: '#12A15B',
-  goodSoft: '#E0F6EB',
+  accent: '#FFA13F',
+  accentSoft: '#FFF0DC',
+  good: '#1FAF73',
+  goodSoft: '#DDF6EA',
   danger: '#E5484D',
   navy: '#062A2A',
+  scanBg: '#2A2F2F',
 };
 
 export const dark: typeof light = {
   bg: '#061817',
   surface: '#0E2624',
-  ink: '#EAF0FA',
-  muted: '#93A1BA',
+  ink: '#FFFFFF',
+  muted: '#96B2AC',
   line: '#1B3A37',
   brand: '#2FC4AE',
   brandSoft: '#0F2E2A',
@@ -30,6 +31,7 @@ export const dark: typeof light = {
   goodSoft: '#0F2E20',
   danger: '#FF7075',
   navy: '#062A2A',
+  scanBg: '#2A2F2F',
 };
 
 export type Theme = typeof light;

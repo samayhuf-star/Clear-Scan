@@ -25,7 +25,7 @@ export default function Home() {
   const t = useTheme();
   const insets = useSafeAreaInsets();
   const plus = usePlus();
-  const { progress, scan, importPhotos } = useScan();
+  const { progress, scan, importPhotos, mode, setMode } = useScan();
   const [docs, setDocs] = useState<Doc[]>([]);
   const [query, setQuery] = useState('');
   const [chip, setChip] = useState<string>('All');
@@ -69,14 +69,17 @@ export default function Home() {
       <View style={s.header}>
         <View>
           <Text style={[s.h1, { color: t.ink }]}>Scans</Text>
-          <Text style={[s.sub, { color: t.muted }]}>{plus ? 'ClearScan Plus' : 'Free, no watermark'}</Text>
+          <Text style={[s.sub, { color: t.muted }]}>{plus ? 'Keptly Plus' : 'Free, no watermark'}</Text>
         </View>
         <View style={{ flexDirection: 'row', gap: 10 }}>
           {!plus && (
-            <Press onPress={() => router.push('/paywall')} style={[s.iconBtn, { backgroundColor: t.accentSoft }]} accessibilityLabel="ClearScan Plus">
+            <Press onPress={() => router.push('/paywall')} style={[s.iconBtn, { backgroundColor: t.accentSoft }]} accessibilityLabel="Keptly Plus">
               <Ionicons name="sparkles" size={20} color={t.accent} />
             </Press>
           )}
+          <Press onPress={() => router.push('/totals')} style={[s.iconBtn, { backgroundColor: t.surface }]} accessibilityLabel="Receipt totals">
+            <Ionicons name="stats-chart-outline" size={20} color={t.ink} />
+          </Press>
           <Press onPress={() => router.push('/deadlines')} style={[s.iconBtn, { backgroundColor: t.surface }]} accessibilityLabel="Deadlines">
             <Ionicons name="calendar-outline" size={20} color={t.ink} />
           </Press>
@@ -126,7 +129,7 @@ export default function Home() {
             <Animated.View entering={FadeInDown} style={[s.promo, { backgroundColor: t.accentSoft }]}>
               <Ionicons name="sparkles" size={20} color={t.accent} />
               <View style={{ flex: 1 }}>
-                <Text style={{ color: t.ink, fontWeight: '700' }}>Enjoying ClearScan?</Text>
+                <Text style={{ color: t.ink, fontWeight: '700' }}>Enjoying Keptly?</Text>
                 <Text style={{ color: t.muted, fontSize: 13 }}>Plus sorts scans for you. Everything you use now stays free.</Text>
               </View>
               <Press onPress={() => router.push('/paywall')} style={[s.promoBtn, { backgroundColor: t.accent }]}>
@@ -151,6 +154,14 @@ export default function Home() {
         itemLayoutAnimation={LinearTransition}
       />
 
+      <View style={[s.modeRow, { bottom: insets.bottom + 96, backgroundColor: t.surface, borderColor: t.line }]}>
+        {([['doc', 'Document', 'document-text-outline'], ['book', 'Book', 'book-outline']] as const).map(([k, label, icon]) => (
+          <Press key={k} haptic="none" onPress={() => setMode(k)} accessibilityLabel={`${label} scan mode`} style={[s.modeChip, mode === k && { backgroundColor: t.brand }]}>
+            <Ionicons name={icon} size={16} color={mode === k ? '#fff' : t.ink} />
+            <Text style={{ color: mode === k ? '#fff' : t.ink, fontWeight: '800', fontSize: 13 }}>{label}</Text>
+          </Press>
+        ))}
+      </View>
       <View style={[s.bar, { paddingBottom: insets.bottom + 12 }]} pointerEvents="box-none">
         <Press onPress={importMenu} style={[s.secondary, { backgroundColor: t.surface, borderColor: t.line }]} accessibilityLabel="Import photos">
           <Ionicons name="images-outline" size={24} color={t.ink} />
@@ -220,6 +231,8 @@ function ScanButton({ onPress }: { onPress: () => void }) {
 }
 
 const s = StyleSheet.create({
+  modeRow: { position: 'absolute', alignSelf: 'center', flexDirection: 'row', gap: 4, padding: 4, borderRadius: 999, borderWidth: 1 },
+  modeChip: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 14, height: 34, borderRadius: 17 },
   root: { flex: 1 },
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 20, paddingTop: 8 },
   h1: { fontSize: 34, fontWeight: '800', letterSpacing: -0.6 },
@@ -238,7 +251,7 @@ const s = StyleSheet.create({
   emptyIcon: { width: 96, height: 96, borderRadius: 30, alignItems: 'center', justifyContent: 'center' },
   bar: { position: 'absolute', left: 0, right: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 28, paddingTop: 10 },
   secondary: { width: 56, height: 56, borderRadius: 28, alignItems: 'center', justifyContent: 'center', borderWidth: 1 },
-  scanBtn: { flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: '#1F6BFF', paddingHorizontal: 34, height: 62, borderRadius: 31, shadowColor: '#1F6BFF', shadowOpacity: 0.5, shadowRadius: 20, shadowOffset: { width: 0, height: 10 } },
+  scanBtn: { flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: '#0E8F7E', paddingHorizontal: 34, height: 62, borderRadius: 31, shadowColor: '#0E8F7E', shadowOpacity: 0.5, shadowRadius: 20, shadowOffset: { width: 0, height: 10 } },
   scanText: { color: '#fff', fontSize: 18, fontWeight: '800' },
-  pulse: { position: 'absolute', width: 150, height: 62, borderRadius: 31, backgroundColor: '#1F6BFF' },
+  pulse: { position: 'absolute', width: 150, height: 62, borderRadius: 31, backgroundColor: '#0E8F7E' },
 });

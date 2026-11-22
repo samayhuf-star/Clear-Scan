@@ -2,12 +2,13 @@ import * as Sharing from 'expo-sharing';
 import { Share } from 'react-native';
 import { abs, ensureDir, writeText } from './files';
 import { buildPdf, type Quality } from './pdf';
+import { getLook } from './look';
 import type { Doc, PageRow } from './db';
 
 const safeName = (s: string) => s.replace(/[^\p{L}\p{N} _.-]/gu, '').trim().slice(0, 60) || 'Scan';
 
 export async function sharePdf(doc: Doc, pages: PageRow[], quality: Quality) {
-  const uri = await buildPdf(doc.id, pages, quality);
+  const uri = await buildPdf(doc.id, pages, quality, getLook(doc.id));
   await Sharing.shareAsync(uri, { mimeType: 'application/pdf', UTI: 'com.adobe.pdf', dialogTitle: doc.title });
 }
 

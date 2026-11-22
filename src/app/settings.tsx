@@ -59,8 +59,8 @@ export default function Settings() {
       <ScrollView contentContainerStyle={{ padding: 20, gap: 10 }}>
         <Row
           icon="sparkles"
-          label={plus ? 'ClearScan Plus is active' : 'Get ClearScan Plus'}
-          sub={plus ? 'Thank you for supporting ClearScan' : 'Auto-sort and Word or Markdown export'}
+          label={plus ? 'Keptly Plus is active' : 'Get Keptly Plus'}
+          sub={plus ? 'Thank you for supporting Keptly' : 'Auto-sort and Word or Markdown export'}
           onPress={plus ? () => Linking.openURL('https://apps.apple.com/account/subscriptions') : () => router.push('/paywall')}
         />
         <Row
@@ -91,16 +91,17 @@ export default function Settings() {
         <Row icon="refresh" label="Restore Purchases" onPress={async () => {
           try {
             const ok = await restore();
-            Alert.alert(ok ? 'Restored' : 'Nothing to restore', ok ? 'ClearScan Plus is active again.' : 'No active ClearScan Plus purchase was found on this Apple ID.');
+            Alert.alert(ok ? 'Restored' : 'Nothing to restore', ok ? 'Keptly Plus is active again.' : 'No active Keptly Plus purchase was found on this Apple ID.');
           } catch (e: any) {
             Alert.alert('Restore failed', e?.message ?? 'Please try again.');
           }
         }} />
-        <Row icon="star" label="Rate ClearScan" onPress={async () => { if (await StoreReview.hasAction()) StoreReview.requestReview(); }} />
-        <Row icon="mail" label="Contact support" sub={CONFIG.supportEmail} onPress={() => Linking.openURL(`mailto:${CONFIG.supportEmail}?subject=ClearScan%20support`)} />
+        <Row icon="help-circle" label="How to use Keptly" sub="Scan, books, filters, PDF, deadlines" onPress={() => router.push('/howto')} />
+        <Row icon="star" label="Rate Keptly" onPress={async () => { if (await StoreReview.hasAction()) StoreReview.requestReview(); }} />
+        <Row icon="mail" label="Contact support" sub={CONFIG.supportEmail} onPress={() => Linking.openURL(`mailto:${CONFIG.supportEmail}?subject=Keptly%20support`)} />
         <Row icon="document-text" label="Privacy Policy" onPress={() => Linking.openURL(CONFIG.privacyUrl)} />
         <Row icon="reader" label="Terms of Use" onPress={() => Linking.openURL(CONFIG.termsUrl)} />
-        <Text style={{ color: t.muted, textAlign: 'center', marginTop: 8, fontSize: 12 }}>ClearScan 1.0.0</Text>
+        <Text style={{ color: t.muted, textAlign: 'center', marginTop: 8, fontSize: 12 }}>Keptly 1.0.0</Text>
       </ScrollView>
     </View>
   );
