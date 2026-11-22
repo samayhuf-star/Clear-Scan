@@ -1,0 +1,11 @@
+{
+  "demoAccount": {
+    "loginType": "email",
+    "email": "",
+    "password": ""
+  },
+  "appReviewNotes": "No account, login, or demo account is required. ClearScan is a document scanner: scanning, on-device text recognition, search, PDF export and Face ID app lock are free and have no watermark. Scans stay on the device. To reach the paywall, open Settings and tap Get ClearScan Plus. Restore Purchases is on the paywall and in Settings.",
+  "privacyPolicyUrl": "https://samayhuf-star.github.io/Clear-Scan/",
+  "supportUrl": "https://samayhuf-star.github.io/Clear-Scan/support.html",
+  "screenshotsPath": "store/screenshots"
+}
