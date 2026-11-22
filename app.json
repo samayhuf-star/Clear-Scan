@@ -17,7 +17,9 @@
         "ITSAppUsesNonExemptEncryption": false,
         "NSCameraUsageDescription": "Keptly uses the camera to scan your documents. Images stay on your iPhone.",
         "NSPhotoLibraryUsageDescription": "Choose photos from your library to turn into PDFs. Images stay on your iPhone.",
-        "NSFaceIDUsageDescription": "Use Face ID to keep your scans private."
+        "NSFaceIDUsageDescription": "Use Face ID to keep your scans private.",
+        "NSCalendarsWriteOnlyAccessUsageDescription": "Allow Keptly to add document deadlines to your calendar",
+        "NSCalendarsUsageDescription": "Allow Keptly to add document deadlines to your calendar"
       },
       "privacyManifests": {
         "NSPrivacyTracking": false,
