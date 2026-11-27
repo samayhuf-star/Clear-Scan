@@ -1,0 +1,35 @@
+{
+  "configVersion": 0,
+  "apple": {
+    "categories": [
+      "PRODUCTIVITY",
+      "BUSINESS"
+    ],
+    "info": {
+      "en-US": {
+        "title": "Keptly: Document Scanner",
+        "subtitle": "PDF Scan & Deadline Reminder",
+        "description": "Scan it. Find the dates that matter. Never miss a deadline.\n\nKeptly turns your iPhone into a document scanner that reads every page on your device and pulls out the details you would otherwise forget: expiry dates, due dates, renewal dates, totals, ID numbers, emails, phone numbers and links. No watermark. No account. No ads.\n\nSCAN ANYTHING, INTO ONE PDF\n• Automatic edge detection and straightening on every page\n• Document mode for single sheets, Book mode for open books: each photo is split into two pages\n• Scan many pages into one PDF, and add more pages to a scan any time\n• Clean-up look for every scan: Auto, Colour, Grey or Black & White\n• Rotate any page with one tap\n• Import photos from your library\n\nFINDS THE DATES THAT MATTER\n• Facts tab: after a scan, see expiry, due and renewal dates, totals and contact details in one place. Tap any fact to copy it\n• Deadline reminders: tap the bell on a date and Keptly reminds you 7 days before, 1 day before and on the day. Repeat reminders for yearly or monthly dates\n• Deadlines screen: every upcoming date from all your scans in one list, for passports, insurance, warranties and bills\n• Add any deadline to your Calendar, and see the next ones in a home-screen widget\n• Receipt totals: see what you spent by month at a glance\n• Share-safe text: share the text of a scan with card, Aadhaar, PAN and IBAN numbers hidden except the last four digits\n\nSCAN AND SEARCH, FREE ALWAYS\n• Unlimited scans, no watermark\n• Text recognition (OCR) on your iPhone, no internet needed\n• Search names and the text inside every scan\n• Export a searchable PDF or the recognised text\n• Choose PDF size: small, medium or original\n• Lock the app with Face ID\n\nPRIVATE BY DESIGN\n• Everything is processed on your iPhone. Nothing is uploaded\n• Reminders are scheduled on your device\n• No sign-up, no tracking, no ads\n\nKEPTLY PLUS (optional)\n• Auto-sort scans into Receipts, Invoices, IDs and Letters\n• Export as Word or Markdown\nMonthly is $2.99 with a 7-day free trial for new subscribers. Yearly is $19.99 with a 7-day free trial for new subscribers. Lifetime is $39.99 once and does not renew. Subscriptions renew automatically unless cancelled at least 24 hours before the trial or period ends. Manage in your Apple ID settings.\n\nTerms: https://samayhuf-star.github.io/app-legal/clearscan/terms.html\nPrivacy: https://samayhuf-star.github.io/Clear-Scan/",
+        "keywords": [
+          "ocr",
+          "receipt",
+          "camera",
+          "cam",
+          "doc",
+          "expiry",
+          "renewal",
+          "warranty",
+          "passport",
+          "id",
+          "bill",
+          "offline",
+          "watermark",
+          "converter"
+        ],
+        "promoText": "Scan one page or a whole book into one PDF. Keptly cleans up every page, finds the dates that matter and reminds you in time. On-device, no watermark, no account.",
+        "supportUrl": "https://samayhuf-star.github.io/app-legal/clearscan/support.html",
+        "privacyPolicyUrl": "https://samayhuf-star.github.io/app-legal/clearscan/privacy.html"
+      }
+    }
+  }
+}

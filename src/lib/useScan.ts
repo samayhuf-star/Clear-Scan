@@ -3,6 +3,7 @@ import { Alert } from 'react-native';
 import { router } from 'expo-router';
 import * as Haptics from 'expo-haptics';
 import { addPagesToDoc, captureWithCamera, pickFromLibrary, saveScan, type Progress, type ScanMode } from './scan';
+import { noteSuccess } from './reviewPrompt';
 
 /** Shared scan flow: capture, read text on-device, save, open the result. */
 export function useScan() {
@@ -18,6 +19,7 @@ export function useScan() {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       setProgress(null);
       router.push({ pathname: '/doc/[id]', params: { id, fresh: '1' } });
+      noteSuccess(2); // rating prompt after the 2nd saved scan
       return id;
     } catch (e: any) {
       setProgress(null);
