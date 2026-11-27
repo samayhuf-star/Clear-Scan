@@ -1,6 +1,6 @@
 /** Paywall strings derived from a StoreKit product, with App Store fallbacks. */
 
-export type PlanId = 'yearly' | 'monthly' | 'lifetime';
+export type PlanId = 'yearly' | 'monthly' | 'weekly' | 'lifetime';
 
 export type IntroLike = {
   price: number;
@@ -17,6 +17,7 @@ export type ProductLike = {
 const PERIOD: Record<Exclude<PlanId, 'lifetime'>, { per: string; billed: string }> = {
   yearly: { per: 'year', billed: 'Billed once a year' },
   monthly: { per: 'month', billed: 'Billed once a month' },
+  weekly: { per: 'week', billed: 'Billed once a week' },
 };
 
 /** Free-trial length, e.g. "7 days". Paid intro offers are not described as free. */
@@ -68,7 +69,7 @@ export function planCopy(id: PlanId, product: ProductLike, fallbackPrice: string
   return {
     price,
     headline: `${price} / ${per}`,
-    note: id === 'monthly' ? 'Cancel any time' : billed,
+    note: id === 'yearly' ? billed : 'Cancel any time',
     trial: null,
   };
 }
@@ -92,7 +93,7 @@ export function selectionDisclosure(id: PlanId, copy: PlanCopy): string {
   if (id === 'lifetime') {
     return `${copy.price} one-time purchase. Charged to your Apple ID at confirmation. Does not renew.`;
   }
-  const per = id === 'yearly' ? 'year' : 'month';
+  const per = PERIOD[id].per;
   if (copy.trial) {
     return `${copy.trial} free for new subscribers, then ${copy.price} per ${per}. Renews automatically unless you cancel at least 24 hours before the trial ends.`;
   }

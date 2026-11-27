@@ -45,7 +45,7 @@ export function usePlus(): boolean {
 export type LoadedPlan = { pkg?: PurchasesPackage; product?: PurchasesStoreProduct };
 export type Offer = Record<PlanId, LoadedPlan>;
 
-export const emptyOffer = (): Offer => ({ yearly: {}, monthly: {}, lifetime: {} });
+export const emptyOffer = (): Offer => ({ yearly: {}, monthly: {}, weekly: {}, lifetime: {} });
 
 function sameProduct(identifier: string, productId: string) {
   return identifier === productId || identifier.startsWith(`${productId}:`);
@@ -76,7 +76,7 @@ export function productOf(plan: LoadedPlan | undefined): PurchasesStoreProduct |
 }
 
 async function attachStoreProducts(offer: Offer) {
-  const missingSubs = (['monthly', 'yearly'] as const).filter((id) => !offer[id].pkg);
+  const missingSubs = (['weekly', 'monthly', 'yearly'] as const).filter((id) => !offer[id].pkg);
   if (missingSubs.length) {
     try {
       const products = await Purchases.getProducts(
@@ -106,6 +106,7 @@ export async function loadOffer(): Promise<Offer> {
     const offerings = await Purchases.getOfferings();
     const pkgs = uniquePackages(offerings);
     const offer: Offer = {
+      weekly: { pkg: pick(pkgs, CONFIG.products.weekly, Purchases.PACKAGE_TYPE.WEEKLY) },
       monthly: { pkg: pick(pkgs, CONFIG.products.monthly, Purchases.PACKAGE_TYPE.MONTHLY) },
       yearly: { pkg: pick(pkgs, CONFIG.products.yearly, Purchases.PACKAGE_TYPE.ANNUAL) },
       lifetime: { pkg: pick(pkgs, CONFIG.products.lifetime, Purchases.PACKAGE_TYPE.LIFETIME) },
