@@ -5,7 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Press } from '../components/Press';
-import { OcrScene, PrivateScene, ScanScene } from '../components/OnboardingArt';
+import { FeatureScene, OcrScene, PrivateScene, ScanScene } from '../components/OnboardingArt';
 import { ProcessingOverlay } from '../components/ProcessingOverlay';
 import { kvSet } from '../lib/db';
 import { useScan } from '../lib/useScan';
@@ -29,7 +29,52 @@ const SLIDES = [
     body: 'Scanning and reading happen on the device. No account, no uploads, works offline.',
     Art: PrivateScene,
   },
+  {
+    key: 'sort',
+    title: 'Filed for you,\nautomatically.',
+    body: 'Receipts, invoices, IDs and letters land in the right group the moment you scan them.',
+    Art: () => <FeatureScene icon="albums" chips={[{ icon: 'receipt', label: 'Receipts' }, { icon: 'card', label: 'IDs' }, { icon: 'mail', label: 'Letters' }]} />,
+  },
+  {
+    key: 'search',
+    title: 'Search inside\nevery page.',
+    body: 'Type a word, a name or an amount and jump straight to the scan that has it.',
+    Art: () => <FeatureScene icon="search" chips={[{ icon: 'text', label: 'Any word' }, { icon: 'cash', label: 'Amounts' }, { icon: 'person', label: 'Names' }]} />,
+  },
+  {
+    key: 'remind',
+    title: 'Never miss\na deadline.',
+    body: 'Get a reminder before a bill is due or a policy, licence or passport expires.',
+    Art: () => <FeatureScene icon="notifications" tint="#FFA13F" chips={[{ icon: 'alarm', label: 'Due dates' }, { icon: 'airplane', label: 'Passport' }, { icon: 'repeat', label: 'Repeats' }]} />,
+  },
+  {
+    key: 'calendar',
+    title: 'Deadlines in\nyour calendar.',
+    body: 'Add any date Keptly finds to your calendar in one tap, and see what is next on a Home Screen widget.',
+    Art: () => <FeatureScene icon="calendar" chips={[{ icon: 'add-circle', label: 'One tap' }, { icon: 'apps', label: 'Widget' }]} />,
+  },
+  {
+    key: 'totals',
+    title: 'Totals without\nthe maths.',
+    body: 'Keptly reads the amounts on your receipts and invoices and adds them up for you.',
+    Art: () => <FeatureScene icon="calculator" tint="#3DD08A" chips={[{ icon: 'receipt', label: 'Receipts' }, { icon: 'stats-chart', label: 'Totals' }]} />,
+  },
+  {
+    key: 'export',
+    title: 'Share it\nyour way.',
+    body: 'Send a clean PDF in seconds, or turn a scan into editable Word or Markdown text.',
+    Art: () => <FeatureScene icon="share-social" chips={[{ icon: 'document', label: 'PDF' }, { icon: 'document-text', label: 'Word' }, { icon: 'code-slash', label: 'Markdown' }]} />,
+  },
+  {
+    key: 'lock',
+    title: 'Locked with\nFace ID.',
+    body: 'Turn on app lock so your IDs and statements open only for you.',
+    Art: () => <FeatureScene icon="finger-print" chips={[{ icon: 'scan', label: 'Face ID' }, { icon: 'eye-off', label: 'Private' }]} />,
+  },
 ] as const;
+
+/** Read by the autopilot panel. Keep equal to SLIDES.length. */
+export const ONBOARDING_SCREENS = 10;
 
 function Dot({ i, x, w }: { i: number; x: SharedValue<number>; w: number }) {
   const a = useAnimatedStyle(() => ({

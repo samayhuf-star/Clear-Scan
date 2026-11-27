@@ -41,3 +41,10 @@ test('yearly savings use the store prices, not a fixed percent', () => {
   assert.equal(yearlySavingsPercent(2.99, 19.99), 44);
   assert.equal(yearlySavingsPercent(undefined, 19.99), null);
 });
+
+test('weekly renews weekly and has no trial unless StoreKit offers one', () => {
+  const weekly = planCopy('weekly', { priceString: '$2.99', price: 2.99, introPrice: null }, '$2.99', null);
+  assert.equal(weekly.headline, '$2.99 / week');
+  assert.equal(weekly.note, 'Cancel any time');
+  assert.match(selectionDisclosure('weekly', weekly), /per week/);
+});

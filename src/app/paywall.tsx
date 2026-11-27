@@ -131,9 +131,17 @@ export default function Paywall() {
             note={copyFor('monthly').note}
           />
         </View>
-        <View style={{ marginTop: 12 }}>
+        <View style={{ flexDirection: 'row', gap: 12, marginTop: 12 }}>
+          {productOf(offer.weekly) ? (
           <PlanCard
-            wide
+            active={plan === 'weekly'}
+            onPress={() => setPlan('weekly')}
+            label="Weekly"
+            headline={copyFor('weekly').headline}
+            note={copyFor('weekly').note}
+          />
+          ) : null}
+          <PlanCard
             active={plan === 'lifetime'}
             onPress={() => setPlan('lifetime')}
             label="Lifetime"

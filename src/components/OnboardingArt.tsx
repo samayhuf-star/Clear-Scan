@@ -251,3 +251,48 @@ const s = StyleSheet.create({
     shadowOffset: { width: 0, height: 12 },
   },
 });
+
+type IconName = React.ComponentProps<typeof Ionicons>['name'];
+
+/** Feature scene: a floating card with a large icon and up to three labelled chips that pop in. */
+export function FeatureScene({ icon, chips, tint = BLUE }: { icon: IconName; chips: readonly { icon: IconName; label: string }[]; tint?: string }) {
+  const float = useSharedValue(0);
+  const pop = useSharedValue(0);
+  useEffect(() => {
+    float.value = withRepeat(withSequence(withTiming(1, { duration: 1600, easing: Easing.inOut(Easing.quad) }), withTiming(0, { duration: 1600, easing: Easing.inOut(Easing.quad) })), -1, false);
+    pop.value = withDelay(250, withSpring(1, { damping: 11, stiffness: 140 }));
+  }, [float, pop]);
+  const cardStyle = useAnimatedStyle(() => ({ transform: [{ translateY: interpolate(float.value, [0, 1], [0, -10]) }] }));
+  return (
+    <View style={s.stage}>
+      <Animated.View style={[fs.card, { backgroundColor: tint, shadowColor: tint }, cardStyle]}>
+        <Ionicons name={icon} size={72} color="#fff" />
+      </Animated.View>
+      <View style={fs.chips}>
+        {chips.map((c, i) => (
+          <Chip key={c.label} index={i} pop={pop} icon={c.icon} label={c.label} />
+        ))}
+      </View>
+    </View>
+  );
+}
+
+function Chip({ index, pop, icon, label }: { index: number; pop: SharedValue<number>; icon: IconName; label: string }) {
+  const st = useAnimatedStyle(() => {
+    const v = Math.min(1, Math.max(0, pop.value * 1.6 - index * 0.3));
+    return { opacity: v, transform: [{ translateY: interpolate(v, [0, 1], [12, 0]) }] };
+  });
+  return (
+    <Animated.View style={[fs.chip, st]}>
+      <Ionicons name={icon} size={16} color={BLUE} />
+      <Text style={fs.chipText}>{label}</Text>
+    </Animated.View>
+  );
+}
+
+const fs = StyleSheet.create({
+  card: { width: 150, height: 150, borderRadius: 40, alignItems: 'center', justifyContent: 'center', shadowOpacity: 0.6, shadowRadius: 24, shadowOffset: { width: 0, height: 12 } },
+  chips: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: 8, marginTop: 26, paddingHorizontal: 20 },
+  chip: { flexDirection: 'row', alignItems: 'center', gap: 6, backgroundColor: '#fff', borderRadius: 999, paddingVertical: 8, paddingHorizontal: 12 },
+  chipText: { color: NAVY, fontWeight: '700', fontSize: 13 },
+});
